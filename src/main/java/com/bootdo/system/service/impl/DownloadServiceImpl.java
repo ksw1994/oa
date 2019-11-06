@@ -82,7 +82,6 @@ public class DownloadServiceImpl implements DownloadService {
         int loadType = 1;
         File file = null;
         try {
-
             file = new WordExportUtil().createDocFile(templateFilePath,dataMap,exportFilePath,loadType);
         } catch (Exception e) {
             e.printStackTrace();
