@@ -23,7 +23,7 @@ public class DownloadController {
         //id : 要导出的简历id
         //String fileanme = request.getParameter("filename");
        // String fileName = URLEncoder.encode( "报销信息导出.doc","utf-8");
-       // String path = "/home/ksw/Desktop/word/报销信息导出.doc";
+       // String path = "/home/ksw/De ktop/word/报销信息导出.doc";
        // File file = new File(path);
         File file = downloadService.downloadResume(resumeId);
         if (file.exists()) {
