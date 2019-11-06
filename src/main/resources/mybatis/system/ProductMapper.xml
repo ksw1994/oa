@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.ProductDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.ProductDO">
+		select `pid`,`name`,`address`,`img`,`price`,`disc` from sy_product where pid = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.ProductDO">
+		select `pid`,`name`,`address`,`img`,`price`,`disc` from sy_product
+        <where>  
+		  		  <if test="pid != null and pid != ''"> and pid = #{pid} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="address != null and address != ''"> and address = #{address} </if>
+		  		  <if test="img != null and img != ''"> and img = #{img} </if>
+		  		  <if test="price != null and price != ''"> and price = #{price} </if>
+		  		  <if test="disc != null and disc != ''"> and disc = #{disc} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by pid desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from sy_product
+		 <where>  
+		  		  <if test="pid != null and pid != ''"> and pid = #{pid} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="address != null and address != ''"> and address = #{address} </if>
+		  		  <if test="img != null and img != ''"> and img = #{img} </if>
+		  		  <if test="price != null and price != ''"> and price = #{price} </if>
+		  		  <if test="disc != null and disc != ''"> and disc = #{disc} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.ProductDO" useGeneratedKeys="true" keyProperty="pid">
+		insert into sy_product
+		(
+			`name`, 
+			`address`, 
+			`img`, 
+			`price`, 
+			`disc`
+		)
+		values
+		(
+			#{name}, 
+			#{address}, 
+			#{img}, 
+			#{price}, 
+			#{disc}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.ProductDO">
+		update sy_product 
+		<set>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="address != null">`address` = #{address}, </if>
+			<if test="img != null">`img` = #{img}, </if>
+			<if test="price != null">`price` = #{price}, </if>
+			<if test="disc != null">`disc` = #{disc}</if>
+		</set>
+		where pid = #{pid}
+	</update>
+	
+	<delete id="remove">
+		delete from sy_product where pid = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from sy_product where pid in 
+		<foreach item="pid" collection="array" open="(" separator="," close=")">
+			#{pid}
+		</foreach>
+	</delete>
+
+</mapper>

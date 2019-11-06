@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>欢迎页</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+<div class="panel panel-default">
+    <div class="panel-heading">您好！</div>
+    <div style="padding: 10px 0 20px 10px;">
+        <h3>欢迎使用本OA系统</h3>
+        <button class="btn" onclick="openPage('https://www.baidu.com','baidu.com')">新打开tab页事例</button>
+    </div>
+    <form enctype="multipart/form-data" id="batchUpload"  action="/excel/import" method="post" class="form-horizontal">
+        <button class="btn btn-success btn-xs" id="uploadEventBtn" style="height:26px;"  type="button" >选择文件</button>
+        <input type="file" name="file"  style="width:0px;height:0px;" id="uploadEventFile">
+        <input id="uploadEventPath"  disabled="disabled"  type="text" placeholder="请择excel表" style="border: 1px solid #e6e6e6; height: 26px;width: 200px;" />
+    </form>
+    <button type="button" class="btn btn-success btn-sm"  onclick="user.uploadBtn()" >上传</button>
+
+    <a href="/download/downloadResume">导出简历</a>
+</div>
+</body>
+<script src="js/jquery.min.js"></script>
+<script src="js/openTab.js"></script>
+<script type="text/javascript">
+    var User = function() {
+        this.init = function() {
+            //模拟上传excel
+            $("#uploadEventBtn").unbind("click").bind("click", function() {
+                $("#uploadEventFile").click();
+            });
+            $("#uploadEventFile").bind("change", function() {
+                $("#uploadEventPath").attr("value",    $("#uploadEventFile").val());
+            });
+        };
+        //点击上传钮
+        this.uploadBtn = function() {
+            var uploadEventFile = $("#uploadEventFile").val();
+            if (uploadEventFile == '') {
+                alert("请择excel,再上传");
+            } else if (uploadEventFile.lastIndexOf(".xls") < 0) {//可判断以.xls和.xlsx结尾的excel
+                alert("只能上传Excel文件");
+            } else {
+                var url = "excel/import";
+                var formData = new FormData($('form')[0]);
+                user.sendAjaxRequest(url, "POST", formData);
+            }
+        };
+        this.sendAjaxRequest = function(url, type, data) {
+            $.ajax({
+                url : url,
+                type : type,
+                data : data,
+                dataType : "json",
+                success : function(result) {
+                    alert(result.message);
+                },
+                error : function(result) {
+                    alert(result.message);
+                },
+                cache : false,
+                contentType : false,
+                processData : false
+            });
+        };
+    };
+    var user;
+    $(function() {
+        user = new User();
+        user.init();
+    });
+</script>
+</html>
