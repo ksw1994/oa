@@ -1,7 +1,6 @@
 package com.bootdo.testDemo;
 
 
-import com.bootdo.common.excel.ExportExcelUtil;
 import com.bootdo.common.utils.Base64Utils;
 import com.bootdo.common.word.WordExportUtil;
 import org.junit.Test;
@@ -19,7 +18,7 @@ public class TestDemo {
     @Test
     public void test() {
 
-            ExportExcelUtil<Student> util = new ExportExcelUtil<Student>();
+          /*  ExportExcelUtil<Student> util = new ExportExcelUtil<Student>();
             // 准备数据
             List<Student> list = new ArrayList<>();
             for (int i = 0; i < 10; i++) {
@@ -32,7 +31,7 @@ public class TestDemo {
                 util.exportExcel("用户导出", columnNames, list, new FileOutputStream("/home/ksw/Desktop/test.xls"), ExportExcelUtil.EXCEL_FILE_2003);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
 
 
