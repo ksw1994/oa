@@ -3,6 +3,11 @@ package com.bootdo.testDemo;
 
 import com.bootdo.common.utils.Base64Utils;
 import com.bootdo.common.word.WordExportUtil;
+import com.xiaoleilu.hutool.collection.CollUtil;
+import com.xiaoleilu.hutool.poi.excel.ExcelUtil;
+import com.xiaoleilu.hutool.poi.excel.ExcelWriter;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,21 +23,74 @@ public class TestDemo {
     @Test
     public void test() {
 
-          /*  ExportExcelUtil<Student> util = new ExportExcelUtil<Student>();
-            // 准备数据
-            List<Student> list = new ArrayList<>();
-            for (int i = 0; i < 10; i++) {
-                list.add(new Student(111,"张三asdf","男"));
-                list.add(new Student(111,"李四asd","男"));
-                list.add(new Student(111,"王五","女"));
-            }
-            String[] columnNames = { "ID", "姓名", "性别" };
-            try {
-                util.exportExcel("用户导出", columnNames, list, new FileOutputStream("/home/ksw/Desktop/test.xls"), ExportExcelUtil.EXCEL_FILE_2003);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }*/
+        List<String> row1 = CollUtil.newArrayList("aa", "bb", "cc", "dd");
+        List<String> row2 = CollUtil.newArrayList("aa1", "bb1", "cc1", "dd1");
+        List<String> row3 = CollUtil.newArrayList("aa2", "bb2", "cc2", "dd2");
+        List<String> row4 = CollUtil.newArrayList("aa3", "bb3", "cc3", "dd3");
+        List<String> row5 = CollUtil.newArrayList("aa4", "bb4", "cc4", "dd4");
+        System.out.println(row1.size());
+        List<List<String>> rows = CollUtil.newArrayList(row1, row2, row3, row4, row5);
+
+        //通过工具类创建writer
+        String path = "/home/ksw/Desktop/writeTest.xlsx";
+        ExcelWriter writer = ExcelUtil.getWriter(path);
+        File file = new File(path);
+        if(file.exists()) {
+            file.delete();
         }
+        //通过构造方法创建writer
+        //ExcelWriter writer = new ExcelWriter("d:/writeTest.xls");
+
+        //跳过当前行，既第一行，非必须，在此演示用
+        writer.passCurrentRow();
+        writer.passCurrentRow();
+
+        //合并单元格后的标题行，使用默认标题样式
+        Workbook workbook = writer.getWorkbook();
+        //writer.merge(row1.size()-2, "测试标题");
+
+        workbook.setSheetName(0, "这个是test");
+        Sheet sheet = workbook.getSheetAt(0);
+        Row row = sheet.createRow(1);
+        Cell cell = row.createCell(1);
+        cell.setCellValue("women");
+        sheet.addMergedRegionUnsafe(new CellRangeAddress(
+                1, //first row (0-based)
+                1, //last row  (0-based)
+                1, //first column (0-based)
+                2  //last column  (0-based)
+        ));
+        //给某个单元格设置边框
+       /* Row row = sheet.getRow(1);
+        Cell cell = row.createCell(1);
+        cell.setCellValue("333");
+*/
+        //Style the cell with borders all around.
+        CellStyle style = workbook.createCellStyle();
+
+        //style.setBorderBottom(BorderStyle.HAIR);
+        //style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+        style.setBorderLeft(BorderStyle.THIN);
+        style.setLeftBorderColor(IndexedColors.GREEN.getIndex());
+
+        style.setBorderRight(BorderStyle.THIN);
+        style.setRightBorderColor(IndexedColors.BLUE.getIndex());
+        style.setBorderTop(BorderStyle.THIN);
+        style.setTopBorderColor(IndexedColors.BLACK.getIndex());
+        cell.setCellStyle(style);
+        style.setAlignment(HorizontalAlignment.CENTER); // 居中
+        Cell cell2 = row.createCell(2);
+        cell2.setCellStyle(style);
+
+        //一次性写出内容
+        writer.write(rows);
+        //关闭writer，释放内存
+        writer.close();
+
+        System.out.println("over");
+    }
+
+
 
 
     @Test

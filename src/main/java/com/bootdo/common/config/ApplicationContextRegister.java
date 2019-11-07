@@ -25,7 +25,8 @@ public class ApplicationContextRegister implements ApplicationContextAware {
      * @param applicationContext spring上下文
      * @throws BeansException
      * */
-    @Override  public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         logger.debug("ApplicationContext registed-->{}", applicationContext);
         APPLICATION_CONTEXT = applicationContext;
     }

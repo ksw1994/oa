@@ -4,6 +4,9 @@ import com.bootdo.common.utils.Base64Utils;
 import com.bootdo.common.utils.DateUtils;
 import com.bootdo.common.word.WordExportUtil;
 import com.bootdo.system.service.DownloadService;
+import org.activiti.rest.editor.model.ModelEditorJsonRestResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,8 @@ import java.util.*;
 
 @Service
 public class DownloadServiceImpl implements DownloadService {
+
+    protected static final Logger LOGGER = LoggerFactory.getLogger(ModelEditorJsonRestResource.class);
 
     @Value("${bootdo.templatePath}")
     private String templatePath;
@@ -84,7 +89,7 @@ public class DownloadServiceImpl implements DownloadService {
         try {
             file = new WordExportUtil().createDocFile(templateFilePath,dataMap,exportFilePath,loadType);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
         return file;
     }

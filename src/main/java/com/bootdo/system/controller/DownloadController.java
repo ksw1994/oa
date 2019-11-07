@@ -1,6 +1,9 @@
 package com.bootdo.system.controller;
 
 import com.bootdo.system.service.DownloadService;
+import org.activiti.rest.editor.model.ModelEditorJsonRestResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +16,8 @@ import java.net.URLEncoder;
 @Controller
 @RequestMapping("/download")
 public class DownloadController {
+
+    protected static final Logger LOGGER = LoggerFactory.getLogger(ModelEditorJsonRestResource.class);
 
     @Autowired
     private DownloadService downloadService;
@@ -48,12 +53,14 @@ public class DownloadController {
                 return "success";
             } catch (Exception e) {
                 e.printStackTrace();
+                LOGGER.error(e.getMessage());
             } finally {
                 if (bis != null) {
                     try {
                         bis.close();
                     } catch (IOException e) {
                         e.printStackTrace();
+                        LOGGER.error(e.getMessage());
                     }
                 }
                 if (fis != null) {
@@ -61,6 +68,7 @@ public class DownloadController {
                         fis.close();
                     } catch (IOException e) {
                         e.printStackTrace();
+                        LOGGER.error(e.getMessage());
                     }
                 }
             }
