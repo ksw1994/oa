@@ -80,3 +80,127 @@
 2019-11-05 16:27:28,430 - ResourceManager : found templates/common/generator/list.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
 2019-11-05 16:27:28,433 - ResourceManager : found templates/common/generator/add.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
 2019-11-05 16:27:28,434 - ResourceManager : found templates/common/generator/edit.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-11 10:29:06,550 - Log4JLogChute initialized using file 'velocity.log'
+2019-11-11 10:29:06,551 - Initializing Velocity, Calling init()...
+2019-11-11 10:29:06,551 - Starting Apache Velocity v1.7 (compiled: 2010-11-19 12:14:37)
+2019-11-11 10:29:06,551 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2019-11-11 10:29:06,551 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2019-11-11 10:29:06,551 - Target log system for org.apache.velocity.runtime.log.AvalonLogChute is not available (java.lang.NoClassDefFoundError: org/apache/log/Priority).  Falling back to next log system...
+2019-11-11 10:29:06,551 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2019-11-11 10:29:06,551 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2019-11-11 10:29:06,555 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-11 10:29:06,564 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2019-11-11 10:29:06,567 - Loaded System Directive: org.apache.velocity.runtime.directive.Stop
+2019-11-11 10:29:06,569 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2019-11-11 10:29:06,570 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2019-11-11 10:29:06,571 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2019-11-11 10:29:06,572 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2019-11-11 10:29:06,573 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2019-11-11 10:29:06,573 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2019-11-11 10:29:06,574 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2019-11-11 10:29:06,575 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2019-11-11 10:29:06,585 - Created '20' parsers.
+2019-11-11 10:29:06,587 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2019-11-11 10:29:06,588 - Could not load resource 'VM_global_library.vm' from ResourceLoader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader: ClasspathResourceLoader Error: cannot find resource VM_global_library.vm
+2019-11-11 10:29:06,588 - Velocimacro : Default library not found.
+2019-11-11 10:29:06,588 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2019-11-11 10:29:06,588 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2019-11-11 10:29:06,588 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2019-11-11 10:29:06,588 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2019-11-11 10:29:06,601 - ResourceManager : found templates/common/generator/domain.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-11 10:29:06,613 - ResourceManager : found templates/common/generator/Dao.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-11 10:29:06,622 - ResourceManager : found templates/common/generator/Mapper.xml.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-11 10:29:06,629 - Null reference [template 'templates/common/generator/Mapper.xml.vm', line 19, column 26] : ${sort} cannot be resolved.
+2019-11-11 10:29:06,629 - Null reference [template 'templates/common/generator/Mapper.xml.vm', line 19, column 34] : ${order} cannot be resolved.
+2019-11-11 10:29:06,633 - ResourceManager : found templates/common/generator/Service.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-11 10:29:06,635 - ResourceManager : found templates/common/generator/ServiceImpl.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-11 10:29:06,638 - ResourceManager : found templates/common/generator/Controller.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-11 10:29:06,640 - ResourceManager : found templates/common/generator/list.html.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-11 10:29:06,641 - ResourceManager : found templates/common/generator/add.html.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-11 10:29:06,643 - ResourceManager : found templates/common/generator/edit.html.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-11 10:29:06,645 - ResourceManager : found templates/common/generator/list.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-11 10:29:06,646 - ResourceManager : found templates/common/generator/add.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-11 10:29:06,647 - ResourceManager : found templates/common/generator/edit.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:55,871 - Log4JLogChute initialized using file 'velocity.log'
+2019-11-12 16:54:55,872 - Initializing Velocity, Calling init()...
+2019-11-12 16:54:55,872 - Starting Apache Velocity v1.7 (compiled: 2010-11-19 12:14:37)
+2019-11-12 16:54:55,872 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2019-11-12 16:54:55,872 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2019-11-12 16:54:55,872 - Target log system for org.apache.velocity.runtime.log.AvalonLogChute is not available (java.lang.NoClassDefFoundError: org/apache/log/Priority).  Falling back to next log system...
+2019-11-12 16:54:55,872 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2019-11-12 16:54:55,872 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2019-11-12 16:54:55,876 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:55,883 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2019-11-12 16:54:55,885 - Loaded System Directive: org.apache.velocity.runtime.directive.Stop
+2019-11-12 16:54:55,886 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2019-11-12 16:54:55,887 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2019-11-12 16:54:55,888 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2019-11-12 16:54:55,889 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2019-11-12 16:54:55,889 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2019-11-12 16:54:55,891 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2019-11-12 16:54:55,892 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2019-11-12 16:54:55,894 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2019-11-12 16:54:55,904 - Created '20' parsers.
+2019-11-12 16:54:55,905 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2019-11-12 16:54:55,906 - Could not load resource 'VM_global_library.vm' from ResourceLoader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader: ClasspathResourceLoader Error: cannot find resource VM_global_library.vm
+2019-11-12 16:54:55,907 - Velocimacro : Default library not found.
+2019-11-12 16:54:55,907 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2019-11-12 16:54:55,907 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2019-11-12 16:54:55,907 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2019-11-12 16:54:55,907 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2019-11-12 16:54:55,929 - ResourceManager : found templates/common/generator/domain.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:55,943 - ResourceManager : found templates/common/generator/Dao.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:55,955 - ResourceManager : found templates/common/generator/Mapper.xml.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:55,963 - Null reference [template 'templates/common/generator/Mapper.xml.vm', line 19, column 26] : ${sort} cannot be resolved.
+2019-11-12 16:54:55,963 - Null reference [template 'templates/common/generator/Mapper.xml.vm', line 19, column 34] : ${order} cannot be resolved.
+2019-11-12 16:54:55,967 - ResourceManager : found templates/common/generator/Service.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:55,970 - ResourceManager : found templates/common/generator/ServiceImpl.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:55,976 - ResourceManager : found templates/common/generator/Controller.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:55,978 - ResourceManager : found templates/common/generator/list.html.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:55,980 - ResourceManager : found templates/common/generator/add.html.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:55,982 - ResourceManager : found templates/common/generator/edit.html.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:55,985 - ResourceManager : found templates/common/generator/list.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:55,988 - ResourceManager : found templates/common/generator/add.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:55,990 - ResourceManager : found templates/common/generator/edit.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,007 - ResourceManager : found templates/common/generator/domain.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,010 - ResourceManager : found templates/common/generator/Dao.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,015 - ResourceManager : found templates/common/generator/Mapper.xml.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,016 - Null reference [template 'templates/common/generator/Mapper.xml.vm', line 19, column 26] : ${sort} cannot be resolved.
+2019-11-12 16:54:56,016 - Null reference [template 'templates/common/generator/Mapper.xml.vm', line 19, column 34] : ${order} cannot be resolved.
+2019-11-12 16:54:56,019 - ResourceManager : found templates/common/generator/Service.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,022 - ResourceManager : found templates/common/generator/ServiceImpl.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,026 - ResourceManager : found templates/common/generator/Controller.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,028 - ResourceManager : found templates/common/generator/list.html.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,029 - ResourceManager : found templates/common/generator/add.html.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,031 - ResourceManager : found templates/common/generator/edit.html.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,032 - ResourceManager : found templates/common/generator/list.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,034 - ResourceManager : found templates/common/generator/add.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,034 - ResourceManager : found templates/common/generator/edit.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,044 - ResourceManager : found templates/common/generator/domain.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,046 - ResourceManager : found templates/common/generator/Dao.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,052 - ResourceManager : found templates/common/generator/Mapper.xml.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,053 - Null reference [template 'templates/common/generator/Mapper.xml.vm', line 19, column 26] : ${sort} cannot be resolved.
+2019-11-12 16:54:56,053 - Null reference [template 'templates/common/generator/Mapper.xml.vm', line 19, column 34] : ${order} cannot be resolved.
+2019-11-12 16:54:56,058 - ResourceManager : found templates/common/generator/Service.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,061 - ResourceManager : found templates/common/generator/ServiceImpl.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,066 - ResourceManager : found templates/common/generator/Controller.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,068 - ResourceManager : found templates/common/generator/list.html.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,070 - ResourceManager : found templates/common/generator/add.html.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,072 - ResourceManager : found templates/common/generator/edit.html.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,074 - ResourceManager : found templates/common/generator/list.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,076 - ResourceManager : found templates/common/generator/add.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,077 - ResourceManager : found templates/common/generator/edit.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,085 - ResourceManager : found templates/common/generator/domain.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,087 - ResourceManager : found templates/common/generator/Dao.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,093 - ResourceManager : found templates/common/generator/Mapper.xml.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,094 - Null reference [template 'templates/common/generator/Mapper.xml.vm', line 19, column 26] : ${sort} cannot be resolved.
+2019-11-12 16:54:56,094 - Null reference [template 'templates/common/generator/Mapper.xml.vm', line 19, column 34] : ${order} cannot be resolved.
+2019-11-12 16:54:56,097 - ResourceManager : found templates/common/generator/Service.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,100 - ResourceManager : found templates/common/generator/ServiceImpl.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,104 - ResourceManager : found templates/common/generator/Controller.java.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,105 - ResourceManager : found templates/common/generator/list.html.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,107 - ResourceManager : found templates/common/generator/add.html.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,108 - ResourceManager : found templates/common/generator/edit.html.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,111 - ResourceManager : found templates/common/generator/list.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,112 - ResourceManager : found templates/common/generator/add.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+2019-11-12 16:54:56,112 - ResourceManager : found templates/common/generator/edit.js.vm with loader org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader

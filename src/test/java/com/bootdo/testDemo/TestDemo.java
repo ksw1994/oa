@@ -2,6 +2,7 @@ package com.bootdo.testDemo;
 
 
 import com.bootdo.common.utils.Base64Utils;
+import com.bootdo.common.utils.UUIDUtils;
 import com.bootdo.common.word.WordExportUtil;
 import com.xiaoleilu.hutool.collection.CollUtil;
 import com.xiaoleilu.hutool.poi.excel.ExcelUtil;
@@ -12,6 +13,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import redis.clients.jedis.Jedis;
+
 import java.io.*;
 import java.util.*;
 
@@ -96,6 +99,8 @@ public class TestDemo {
     @Test
     public void test3() {
 
+        String id = UUIDUtils.randomUUID();
+
         String image = "/home/ksw/Pictures/desktop.jpg";
         String templateFilePath = "/home/ksw/Desktop/word/简历.ftl";
         String exportFilePath = "/home/ksw/Desktop/word/张三简历.doc";
@@ -122,5 +127,25 @@ public class TestDemo {
             e.printStackTrace();
         }
         System.out.println(file.getName());
+    }
+
+    @Test
+    public void redisTest(){
+        Jedis jedis = new Jedis("localhost",6379,100000);
+        int i = 0;
+        try {
+            long start = System.currentTimeMillis();
+            while (true){
+                long end = System.currentTimeMillis();
+                if (end - start >= 1000){
+                    break;
+                }
+                i++;
+                jedis.set("test" + i,i+"");
+            }
+        }finally {
+            jedis.close();
+        }
+        System.out.println("redis每秒写操作:"+i+"次");
     }
 }

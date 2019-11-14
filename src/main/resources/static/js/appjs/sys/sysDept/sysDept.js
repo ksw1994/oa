@@ -1,12 +1,10 @@
 
 var prefix = "/system/sysDept";
 $(function() {
-	var searchName = null;
-	load(searchName);
+	load();
 });
 
-function load(searchName) {
-	console.log("searchName :"+searchName);
+function load() {
 	$('#exampleTable')
 		.bootstrapTreeTable(
 			{
@@ -14,12 +12,21 @@ function load(searchName) {
 				code : 'deptId',
                 parentCode : 'parentId',
 				type : "GET", // 请求数据的ajax类型
-				url : prefix + '/list/'+ searchName, // 请求数据的ajax的url
+				url : prefix + '/list', // 请求数据的ajax的url
 				ajaxParams : {}, // 请求数据的ajax的data属性
 				expandColumn : '1', // 在哪一列上面显示展开按钮
 				striped : true, // 是否各行渐变色
 				bordered : true, // 是否显示边框
 				expandAll : false, // 是否全部展开
+				queryParams : function(params) {
+					return {
+						//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
+						limit: params.limit,
+						offset:params.offset,
+						name:$('#searchName').val()
+						// username:$('#searchName').val()
+					};
+				},
 				// toolbar : '#exampleToolbar',
 				columns : [
 					{
@@ -27,14 +34,14 @@ function load(searchName) {
 						field : 'deptId',
 						visible : false,
 						align : 'center',
-						valign : 'center',
+						align : 'center',
 						width : '50px',
 						checkbox : true
 					},
 					{
 						field : 'name',
 						title : '部门名称',
-                        valign : 'center',
+                        align : 'center',
 						witth :20
 					},
 					{
@@ -47,7 +54,7 @@ function load(searchName) {
 						field : 'delFlag',
 						title : '状态',
 						align : 'center',
-                        valign : 'center',
+                        align : 'center',
 						formatter : function(item, index) {
 							if (item.delFlag == '0') {
 								return '<span class="label label-danger">禁用</span>';
@@ -79,12 +86,8 @@ function load(searchName) {
 					} ]
 			});
 }
-function reLoad(searchName) {
-	var searchName = $('#searchName').val();
-	if (searchName =="" ||undefined || null){
-		searchName ='null'
-	}
-	load(searchName);
+function reLoad() {
+	load();
 }
 function add(pId) {
 	layer.open({

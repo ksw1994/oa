@@ -10,6 +10,8 @@ import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +35,7 @@ public class ExcelUtil {
     public static final String POINT = ".";
     public static SimpleDateFormat sdf =   new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
 
-    public static List<List<String>> readExcel(MultipartFile file){
+    public static List<List<String>> readExcel(MultipartFile file,int sheet){
         String postfix = getPostfix(file.getOriginalFilename());
         List<List<String>> list = new ArrayList<List<String>>();
         // IO流读取文件
@@ -51,7 +53,7 @@ public class ExcelUtil {
                 return null;
             }
 
-            Sheet xssfSheet = wb.getSheetAt(0);  //读取sheet(页)
+            Sheet xssfSheet = wb.getSheetAt(sheet);  //读取sheet(页)
             int totalRows = xssfSheet.getLastRowNum();
 
             for(int rowNum = 1;rowNum <=totalRows;rowNum++){ //读取Row,从第二行开始
@@ -256,4 +258,7 @@ public class ExcelUtil {
         }
         return fileUrl;
     }
+
+
+
 }

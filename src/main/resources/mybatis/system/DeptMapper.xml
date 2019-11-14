@@ -9,7 +9,7 @@
 		where dept_id = #{value}
 	</select>
 
-	<select id="list" parameterType="Map" resultType="com.bootdo.system.domain.DeptDO">
+	<select id="list" resultType="com.bootdo.system.domain.DeptDO">
 		select `dept_id`,`parent_id`,`name`,`order_num`,`del_flag` from
 		sys_dept
 		<where>

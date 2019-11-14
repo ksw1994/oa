@@ -3,11 +3,11 @@ package com.bootdo.system.controller;
 import com.bootdo.common.config.Constant;
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.domain.Tree;
+import com.bootdo.common.utils.PageUtils;
+import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
-import com.bootdo.common.utils.StringUtils;
 import com.bootdo.system.domain.DeptDO;
 import com.bootdo.system.service.DeptService;
-import io.netty.util.internal.StringUtil;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,15 +42,14 @@ public class DeptController extends BaseController {
 
 	@ApiOperation(value="获取部门列表", notes="")
 	@ResponseBody
-	@GetMapping("/list/{searchName}")
+	@GetMapping("/list")
 	@RequiresPermissions("system:sysDept:sysDept")
-	public List<DeptDO> list(@PathVariable("searchName") String searchName) {
-		Map<String, Object> query = new HashMap<>(16);
-		if(StringUtils.isNotBlank(searchName) && !searchName.equals("null")){
-			query.put("name",searchName);
-		}
+	public PageUtils list(@RequestParam Map<String, Object> params) {
+		Query query = new Query(params);
 		List<DeptDO> sysDeptList = sysDeptService.list(query);
-		return sysDeptList;
+		int total = sysDeptList.size();
+		PageUtils pageUtils = new PageUtils(sysDeptList, total);
+		return pageUtils;
 	}
 
 	@GetMapping("/add/{pId}")

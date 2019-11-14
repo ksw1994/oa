@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${xmjl.id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">基础信息编号：</label>
+								<div class="col-sm-8">
+									<input id="jcxxId" name="jcxxId" th:value="${xmjl.jcxxId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">项目序号：</label>
+								<div class="col-sm-8">
+									<input id="itemSeq" name="itemSeq" th:value="${xmjl.itemSeq}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">项目名称：</label>
+								<div class="col-sm-8">
+									<input id="itemName" name="itemName" th:value="${xmjl.itemName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">是否建行项目：</label>
+								<div class="col-sm-8">
+									<input id="isJhItem" name="isJhItem" th:value="${xmjl.isJhItem}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">使用建行新一代框架：</label>
+								<div class="col-sm-8">
+									<input id="frame" name="frame" th:value="${xmjl.frame}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">是否中农工交银行项目：</label>
+								<div class="col-sm-8">
+									<input id="isZngjItem" name="isZngjItem" th:value="${xmjl.isZngjItem}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">是否中农工交以外其银行：</label>
+								<div class="col-sm-8">
+									<input id="isNozngjItem" name="isNozngjItem" th:value="${xmjl.isNozngjItem}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">项目业务类型：</label>
+								<div class="col-sm-8">
+									<input id="itemType" name="itemType" th:value="${xmjl.itemType}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">开始日期：</label>
+								<div class="col-sm-8">
+									<input id="sdate" name="sdate" th:value="${xmjl.sdate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">结束日期：</label>
+								<div class="col-sm-8">
+									<input id="edate" name="edate" th:value="${xmjl.edate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">项目角色：</label>
+								<div class="col-sm-8">
+									<input id="itemRole" name="itemRole" th:value="${xmjl.itemRole}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">证明人：</label>
+								<div class="col-sm-8">
+									<input id="witness" name="witness" th:value="${xmjl.witness}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">证明人电话：</label>
+								<div class="col-sm-8">
+									<input id="witnessPhone" name="witnessPhone" th:value="${xmjl.witnessPhone}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">项目简述：</label>
+								<div class="col-sm-8">
+									<input id="desc" name="desc" th:value="${xmjl.desc}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">项目职责：</label>
+								<div class="col-sm-8">
+									<input id="duty" name="duty" th:value="${xmjl.duty}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">使用工具/技能：</label>
+								<div class="col-sm-8">
+									<input id="skill" name="skill" th:value="${xmjl.skill}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/oa/xmjl/edit.js">
+	</script>
+</body>
+</html>

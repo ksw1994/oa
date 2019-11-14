@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.oa.dao.JyjlDao">
+
+	<select id="get" resultType="com.bootdo.oa.domain.JyjlDO">
+		select `id`,`jcxx_id`,`study_bg`,`degree`,`school_name`,`school_type`,`major_name`,`diploma_id`,`degree_id`,`sdate`,`edate`,`major_type` from jl_jyjl where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.oa.domain.JyjlDO">
+		select `id`,`jcxx_id`,`study_bg`,`degree`,`school_name`,`school_type`,`major_name`,`diploma_id`,`degree_id`,`sdate`,`edate` from jl_jyjl
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="jcxxId != null and jcxxId != ''"> and jcxx_id = #{jcxxId} </if>
+		  		  <if test="studyBg != null and studyBg != ''"> and study_bg = #{studyBg} </if>
+		  		  <if test="degree != null and degree != ''"> and degree = #{degree} </if>
+		  		  <if test="schoolName != null and schoolName != ''"> and school_name = #{schoolName} </if>
+		  		  <if test="schoolType != null and schoolType != ''"> and school_type = #{schoolType} </if>
+		  		  <if test="majorName != null and majorName != ''"> and major_name = #{majorName} </if>
+		  		  <if test="diplomaId != null and diplomaId != ''"> and diploma_id = #{diplomaId} </if>
+		  		  <if test="degreeId != null and degreeId != ''"> and degree_id = #{degreeId} </if>
+		  		  <if test="sdate != null and sdate != ''"> and sdate = #{sdate} </if>
+		  		  <if test="edate != null and edate != ''"> and edate = #{edate} </if>
+			      <if test="majorType != null and majorType != ''"> and major_type = #{majorType} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from jl_jyjl
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="jcxxId != null and jcxxId != ''"> and jcxx_id = #{jcxxId} </if>
+		  		  <if test="studyBg != null and studyBg != ''"> and study_bg = #{studyBg} </if>
+		  		  <if test="degree != null and degree != ''"> and degree = #{degree} </if>
+		  		  <if test="schoolName != null and schoolName != ''"> and school_name = #{schoolName} </if>
+		  		  <if test="schoolType != null and schoolType != ''"> and school_type = #{schoolType} </if>
+		  		  <if test="majorName != null and majorName != ''"> and major_name = #{majorName} </if>
+		  		  <if test="diplomaId != null and diplomaId != ''"> and diploma_id = #{diplomaId} </if>
+		  		  <if test="degreeId != null and degreeId != ''"> and degree_id = #{degreeId} </if>
+		  		  <if test="sdate != null and sdate != ''"> and sdate = #{sdate} </if>
+		  		  <if test="edate != null and edate != ''"> and edate = #{edate} </if>
+			      <if test="majorType != null and majorType != ''"> and major_type = #{majorType} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.oa.domain.JyjlDO">
+		insert into jl_jyjl
+		(
+			`id`, 
+			`jcxx_id`, 
+			`study_bg`, 
+			`degree`, 
+			`school_name`, 
+			`school_type`, 
+			`major_name`, 
+			`diploma_id`, 
+			`degree_id`, 
+			`sdate`, 
+			`edate`,
+			`major_type`
+		)
+		values
+		(
+			#{id}, 
+			#{jcxxId}, 
+			#{studyBg}, 
+			#{degree}, 
+			#{schoolName}, 
+			#{schoolType}, 
+			#{majorName}, 
+			#{diplomaId}, 
+			#{degreeId}, 
+			#{sdate}, 
+			#{edate},
+			#{majorType}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.oa.domain.JyjlDO">
+		update jl_jyjl 
+		<set>
+			<if test="jcxxId != null">`jcxx_id` = #{jcxxId}, </if>
+			<if test="studyBg != null">`study_bg` = #{studyBg}, </if>
+			<if test="degree != null">`degree` = #{degree}, </if>
+			<if test="schoolName != null">`school_name` = #{schoolName}, </if>
+			<if test="schoolType != null">`school_type` = #{schoolType}, </if>
+			<if test="majorName != null">`major_name` = #{majorName}, </if>
+			<if test="majorType != null">`major_type` = #{majorType}, </if>
+			<if test="diplomaId != null">`diploma_id` = #{diplomaId}, </if>
+			<if test="degreeId != null">`degree_id` = #{degreeId}, </if>
+			<if test="sdate != null">`sdate` = #{sdate}, </if>
+			<if test="edate != null">`edate` = #{edate}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from jl_jyjl where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jl_jyjl where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<delete id="deleteByJcxxId">
+		delete from jl_jyjl where jcxx_id = #{value}
+	</delete>
+
+</mapper>

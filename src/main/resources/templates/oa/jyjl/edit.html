@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${jyjl.id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">基础信息编号：</label>
+								<div class="col-sm-8">
+									<input id="jcxxId" name="jcxxId" th:value="${jyjl.jcxxId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">学历：</label>
+								<div class="col-sm-8">
+									<input id="studyBg" name="studyBg" th:value="${jyjl.studyBg}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">学位：</label>
+								<div class="col-sm-8">
+									<input id="degree" name="degree" th:value="${jyjl.degree}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">毕业学校名称：</label>
+								<div class="col-sm-8">
+									<input id="schoolName" name="schoolName" th:value="${jyjl.schoolName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">毕业学校类别：</label>
+								<div class="col-sm-8">
+									<input id="schoolType" name="schoolType" th:value="${jyjl.schoolType}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">专业名称：</label>
+								<div class="col-sm-8">
+									<input id="majorName" name="majorName" th:value="${jyjl.majorName}" class="form-control" type="text">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">专业类别：</label>
+								<div class="col-sm-8">
+									<input id="majorType" name="majorType" th:value="${jyjl.majorType}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">毕业证号：</label>
+								<div class="col-sm-8">
+									<input id="diplomaId" name="diplomaId" th:value="${jyjl.diplomaId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">学位证号：</label>
+								<div class="col-sm-8">
+									<input id="degreeId" name="degreeId" th:value="${jyjl.degreeId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">入学日期：</label>
+								<div class="col-sm-8">
+									<input id="sdate" name="sdate" th:value="${jyjl.sdate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">毕业日期：</label>
+								<div class="col-sm-8">
+									<input id="edate" name="edate" th:value="${jyjl.edate}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/oa/jyjl/edit.js">
+	</script>
+</body>
+</html>

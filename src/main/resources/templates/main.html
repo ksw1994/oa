@@ -42,11 +42,12 @@
             var uploadEventFile = $("#uploadEventFile").val();
             if (uploadEventFile == '') {
                 alert("请择excel,再上传");
-            } else if (uploadEventFile.lastIndexOf(".xls") < 0) {//可判断以.xls和.xlsx结尾的excel
+            } /*else if (uploadEventFile.lastIndexOf(".xls") < 0) {//可判断以.xls和.xlsx结尾的excel
                 alert("只能上传Excel文件");
-            } else {
+            } */else {
                 var url = "excel/import";
                 var formData = new FormData($('form')[0]);
+                console.log(formData);
                 user.sendAjaxRequest(url, "POST", formData);
             }
         };

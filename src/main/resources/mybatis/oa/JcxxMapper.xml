@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.oa.dao.JcxxDao">
+
+	<select id="get" resultType="com.bootdo.oa.domain.JcxxDO">
+		select `id`,`name`,`sex`,`card_type`,`card_id`,`address`,`phone`,`email`,`company_name`,`site`,`desc`,`pact_sdate`,`pact_edate`,`birthday`,`status`,`update_time`,`is_fj` from jl_jcxx where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.oa.domain.JcxxDO">
+		select `id`,`name`,`sex`,`card_type`,`card_id`,`address`,`phone`,`email`,`company_name`,`site`,`desc`,`pact_sdate`,`pact_edate`,`birthday`,`status`,`update_time`,`is_fj` from jl_jcxx
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="name != null and name != ''"> and name like CONCAT(CONCAT('%',#{name},'%')) </if>
+		  		  <if test="sex != null and sex != ''"> and sex = #{sex} </if>
+		  		  <if test="cardType != null and cardType != ''"> and card_type = #{cardType} </if>
+		  		  <if test="cardId != null and cardId != ''"> and card_id = #{cardId} </if>
+		  		  <if test="address != null and address != ''"> and address = #{address} </if>
+		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		  <if test="email != null and email != ''"> and email = #{email} </if>
+		  		  <if test="companyName != null and companyName != ''"> and company_name = #{companyName} </if>
+		  		  <if test="site != null and site != ''"> and site = #{site} </if>
+		  		  <if test="desc != null and desc != ''"> and desc = #{desc} </if>
+		  		  <if test="pactSdate != null and pactSdate != ''"> and pact_sdate = #{pactSdate} </if>
+		  		  <if test="pactEdate != null and pactEdate != ''"> and pact_edate = #{pactEdate} </if>
+		  		  <if test="birthday != null and birthday != ''"> and birthday = #{birthday} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+			      <if test="isFj != null and isFj != ''"> and is_fj = #{isFj} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from jl_jcxx
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="sex != null and sex != ''"> and sex = #{sex} </if>
+		  		  <if test="cardType != null and cardType != ''"> and card_type = #{cardType} </if>
+		  		  <if test="cardId != null and cardId != ''"> and card_id = #{cardId} </if>
+		  		  <if test="address != null and address != ''"> and address = #{address} </if>
+		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		  <if test="email != null and email != ''"> and email = #{email} </if>
+		  		  <if test="companyName != null and companyName != ''"> and company_name = #{companyName} </if>
+		  		  <if test="site != null and site != ''"> and site = #{site} </if>
+		  		  <if test="desc != null and desc != ''"> and desc = #{desc} </if>
+		  		  <if test="pactSdate != null and pactSdate != ''"> and pact_sdate = #{pactSdate} </if>
+		  		  <if test="pactEdate != null and pactEdate != ''"> and pact_edate = #{pactEdate} </if>
+		  		  <if test="birthday != null and birthday != ''"> and birthday = #{birthday} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+				  <if test="isFj != null and isFj != ''"> and is_fj = #{isFj} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.oa.domain.JcxxDO">
+		insert into jl_jcxx
+		(
+			`id`, 
+			`name`, 
+			`sex`, 
+			`card_type`, 
+			`card_id`, 
+			`address`, 
+			`phone`, 
+			`email`, 
+			`company_name`, 
+			`site`, 
+			`desc`, 
+			`pact_sdate`, 
+			`pact_edate`, 
+			`birthday`, 
+			`status`, 
+			`update_time`,
+			`is_fj`
+		)
+		values
+		(
+			#{id}, 
+			#{name}, 
+			#{sex}, 
+			#{cardType}, 
+			#{cardId}, 
+			#{address}, 
+			#{phone}, 
+			#{email}, 
+			#{companyName}, 
+			#{site}, 
+			#{desc}, 
+			#{pactSdate}, 
+			#{pactEdate}, 
+			#{birthday}, 
+			#{status}, 
+			#{updateTime},
+			#{isFj}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.oa.domain.JcxxDO">
+		update jl_jcxx 
+		<set>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="sex != null">`sex` = #{sex}, </if>
+			<if test="cardType != null">`card_type` = #{cardType}, </if>
+			<if test="cardId != null">`card_id` = #{cardId}, </if>
+			<if test="address != null">`address` = #{address}, </if>
+			<if test="phone != null">`phone` = #{phone}, </if>
+			<if test="email != null">`email` = #{email}, </if>
+			<if test="companyName != null">`company_name` = #{companyName}, </if>
+			<if test="site != null">`site` = #{site}, </if>
+			<if test="desc != null">`desc` = #{desc}, </if>
+			<if test="pactSdate != null">`pact_sdate` = #{pactSdate}, </if>
+			<if test="pactEdate != null">`pact_edate` = #{pactEdate}, </if>
+			<if test="birthday != null">`birthday` = #{birthday}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime},</if>
+			<if test="isFj != null">`is_fj` = #{isFj}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from jl_jcxx where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jl_jcxx where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<select id="getByCardId" resultType="com.bootdo.oa.domain.JcxxDO">
+		select `id`,`name`,`sex`,`card_type`,`card_id`,`address`,`phone`,`email`,`company_name`,`site`,`desc`,`pact_sdate`,`pact_edate`,`birthday`,`status`,`update_time`,`is_fj` from jl_jcxx where card_id = #{value}
+	</select>
+
+</mapper>
