@@ -17,6 +17,7 @@ import com.bootdo.common.utils.R;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 简历附件表 
@@ -115,7 +116,7 @@ public class FjController {
 	@RequestMapping(value = "/filesUpload", method= RequestMethod.POST)
 	@ResponseBody
 	@RequiresPermissions("oa:fj:filesUpload")
-	public R filesUpload(@RequestParam("file")MultipartFile[]  files, HttpServletRequest request, String jcxxId){
+	public R filesUpload(@RequestParam(value = "jcxxId",required = false) String jcxxId,@RequestParam(value = "files",required = false) MultipartFile[]  files, HttpServletRequest request,HttpServletResponse response){
 		fjService.filesUpload(files,jcxxId);
 		return R.ok();
 	}

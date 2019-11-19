@@ -29,6 +29,8 @@ public class GzjlDO implements Serializable {
 	private String desc;
 	//工作职责
 	private String duty;
+	//姓名
+	private String name;
 
 	/**
 	 * 设置：编号
@@ -113,5 +115,13 @@ public class GzjlDO implements Serializable {
 	 */
 	public String getDuty() {
 		return duty;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

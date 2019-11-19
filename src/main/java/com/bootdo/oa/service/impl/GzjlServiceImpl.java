@@ -3,6 +3,7 @@ package com.bootdo.oa.service.impl;
 import com.bootdo.common.utils.UUIDUtils;
 import com.bootdo.oa.domain.JcxxDO;
 import com.bootdo.oa.service.JcxxService;
+import io.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,6 +70,9 @@ public class GzjlServiceImpl implements GzjlService {
 	public List<GzjlDO> getExcel(List<List<String>> list) {
 		List<GzjlDO> gzjlList = new ArrayList<>();
 		for (List<String> strings : list) {
+			if (StringUtil.isNullOrEmpty(strings.get(1))){
+				continue;
+			}
 			GzjlDO gzjlDO = new GzjlDO();
 			String cardId = strings.get(1);
 			JcxxDO jcxx = jcxxService.getByCardId(cardId);
@@ -81,6 +85,11 @@ public class GzjlServiceImpl implements GzjlService {
 			gzjlList.add(gzjlDO);
 		}
 		return gzjlList;
+	}
+
+	@Override
+	public List<GzjlDO> getByJcxxId(String jcxxId) {
+		return gzjlDao.getByJcxxId(jcxxId);
 	}
 
 }

@@ -43,7 +43,8 @@
 			<script type="text/javascript">
 				var s_edit_h = 'hidden';
 				var s_remove_h = 'hidden';
-				var s_resetPwd_h = 'hidden';
+				var s_exportJcxx_h = 'hidden';
+				var s_filesUpload_h = 'hidden';
 			</script>
 		</div>
 		<div shiro:hasPermission="oa:jcxx:edit">
@@ -56,9 +57,14 @@
 				var s_remove_h = '';
 			</script>
 		</div>
-		<div shiro:hasPermission="oa:jcxx:resetPwd">
+		<div shiro:hasPermission="oa:jcxx:exportJcxx">
 			<script type="text/javascript">
-				var s_resetPwd_h = '';
+				var s_exportJcxx_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="oa:fj:filesUpload">
+			<script type="text/javascript">
+				var s_filesUpload_h = '';
 			</script>
 		</div>
 	</div>
@@ -100,6 +106,7 @@
 					dataType : "json",
 					success : function(result) {
 						alert(result.msg);
+						reLoad();
 					},
 					error : function(result) {
 						alert(result.msg);
@@ -115,6 +122,9 @@
 			user = new User();
 			user.init();
 		});
+
+
+
 	</script>
 </body>
 </html>

@@ -32,8 +32,8 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
-								offset:params.offset
-					           // name:$('#searchName').val(),
+								offset:params.offset,
+					            name:$('#searchName').val()
 					           // username:$('#searchName').val()
 							};
 						},
@@ -48,52 +48,59 @@ function load() {
 									checkbox : true
 								},
 																{
-									field : 'id', 
-									title : '编号' 
-								},
-																{
-									field : 'jcxxId', 
-									title : '基础信息编号' 
+									field : 'name',
+									title : '姓名',
+									align : "center"
 								},
 																{
 									field : 'studyBg', 
-									title : '学历' 
+									title : '学历',
+									align : "center"
 								},
 																{
 									field : 'degree', 
-									title : '学位' 
+									title : '学位',
+									align : "center"
 								},
 																{
 									field : 'schoolName', 
-									title : '毕业学校名称' 
+									title : '毕业学校名称',
+									align : "center"
 								},
 																{
 									field : 'schoolType', 
-									title : '毕业学校类别' 
+									title : '毕业学校类别',
+									align : "center"
 								},
 																{
 									field : 'majorName', 
-									title : '专业名称' 
+									title : '专业名称',
+									align : "center"
 								},
 																{
 									field : 'majorType',
-									title : '专业类别'
+									title : '专业类别',
+									align : "center"
 								},
 																{
 									field : 'diplomaId', 
-									title : '毕业证号' 
+									title : '毕业证号',
+									align : "center"
 								},
 																{
 									field : 'degreeId', 
-									title : '学位证号' 
+									title : '学位证号',
+									align : "center"
 								},
 																{
 									field : 'sdate', 
-									title : '入学日期' 
+									title : '入学日期',
+									align : "center"
 								},
 																{
 									field : 'edate', 
-									title : '毕业日期' 
+									title : '毕业日期',
+									align : "center"
 								},
 																{
 									title : '操作',

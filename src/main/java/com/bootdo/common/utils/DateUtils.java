@@ -3,7 +3,9 @@ package com.bootdo.common.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -88,4 +90,27 @@ public class DateUtils {
         r += "前";
         return r;
     }
+
+    public static int getYears(String oldDate) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        Date nowDate = new Date();
+        Calendar bef = Calendar.getInstance();
+        Calendar aft = Calendar.getInstance();
+        bef.setTime(sdf.parse(oldDate));
+        aft.setTime(sdf.parse(sdf.format(nowDate)));
+        int surplus = aft.get(Calendar.DATE) - bef.get(Calendar.DATE);
+        int year = aft.get(Calendar.YEAR) - bef.get(Calendar.YEAR);
+        if(year < 0){
+            year = 1;
+        }else if(year == 0){
+            year = surplus <= 0 ? 1 : 0;
+        }
+        return year;
+    }
+
+    public static void main(String[] args) throws ParseException {
+        int years = getYears("2012/06/18");
+        System.out.println(years);
+    }
+
 }

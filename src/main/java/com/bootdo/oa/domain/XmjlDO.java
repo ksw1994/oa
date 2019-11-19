@@ -49,6 +49,8 @@ public class XmjlDO implements Serializable {
 	private String duty;
 	//使用工具/技能
 	private String skill;
+	//姓名
+	private String name;
 
 	/**
 	 * 设置：编号
@@ -253,5 +255,13 @@ public class XmjlDO implements Serializable {
 	 */
 	public String getSkill() {
 		return skill;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

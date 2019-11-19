@@ -8,22 +8,25 @@
 	</select>
 
 	<select id="list" resultType="com.bootdo.oa.domain.GzjlDO">
-		select `id`,`jcxx_id`,`company_name`,`sdate`,`edate`,`desc`,`duty` from jl_gzjl
+		select t1.*,t2.name from
+		jl_gzjl t1
+		left join jl_jcxx t2 on t1.jcxx_id = t2.id
         <where>  
-		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="jcxxId != null and jcxxId != ''"> and jcxx_id = #{jcxxId} </if>
-		  		  <if test="companyName != null and companyName != ''"> and company_name = #{companyName} </if>
-		  		  <if test="sdate != null and sdate != ''"> and sdate = #{sdate} </if>
-		  		  <if test="edate != null and edate != ''"> and edate = #{edate} </if>
-		  		  <if test="desc != null and desc != ''"> and desc = #{desc} </if>
-		  		  <if test="duty != null and duty != ''"> and duty = #{duty} </if>
+		  		  <if test="id != null and id != ''"> and t1.id = #{id} </if>
+		  		  <if test="jcxxId != null and jcxxId != ''"> and t1.jcxx_id = #{jcxxId} </if>
+		  		  <if test="companyName != null and companyName != ''"> and t1.company_name = #{companyName} </if>
+		  		  <if test="sdate != null and sdate != ''"> and t1.sdate = #{sdate} </if>
+		  		  <if test="edate != null and edate != ''"> and t1.edate = #{edate} </if>
+		  		  <if test="desc != null and desc != ''"> and t1.desc = #{desc} </if>
+		  		  <if test="duty != null and duty != ''"> and t1.duty = #{duty} </if>
+			      <if test="name != null and name != ''"> and t2.name like CONCAT(CONCAT('%',#{name},'%')) </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
                 order by ${sort} ${order}
             </when>
 			<otherwise>
-                order by id desc
+                order by t1.id desc
 			</otherwise>
         </choose>
 		<if test="offset != null and limit != null">
@@ -94,5 +97,12 @@
 	<delete id="deleteByJcxxId">
 		delete from jl_gzjl where jcxx_id = #{value}
 	</delete>
+
+	<select id="getByJcxxId" resultType="com.bootdo.oa.domain.GzjlDO">
+		select `id`,`jcxx_id`,`company_name`,`sdate`,`edate`,`desc`,`duty` from jl_gzjl
+		where jcxx_id = #{value}
+		order by
+			sdate asc
+	</select>
 
 </mapper>

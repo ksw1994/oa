@@ -8,20 +8,23 @@
 	</select>
 
 	<select id="list" resultType="com.bootdo.oa.domain.JyjlDO">
-		select `id`,`jcxx_id`,`study_bg`,`degree`,`school_name`,`school_type`,`major_name`,`diploma_id`,`degree_id`,`sdate`,`edate` from jl_jyjl
+		select t1.*,t2.name from
+		jl_jyjl t1
+		left join jl_jcxx t2 on t1.jcxx_id = t2.id
         <where>  
-		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="jcxxId != null and jcxxId != ''"> and jcxx_id = #{jcxxId} </if>
-		  		  <if test="studyBg != null and studyBg != ''"> and study_bg = #{studyBg} </if>
-		  		  <if test="degree != null and degree != ''"> and degree = #{degree} </if>
-		  		  <if test="schoolName != null and schoolName != ''"> and school_name = #{schoolName} </if>
-		  		  <if test="schoolType != null and schoolType != ''"> and school_type = #{schoolType} </if>
-		  		  <if test="majorName != null and majorName != ''"> and major_name = #{majorName} </if>
-		  		  <if test="diplomaId != null and diplomaId != ''"> and diploma_id = #{diplomaId} </if>
-		  		  <if test="degreeId != null and degreeId != ''"> and degree_id = #{degreeId} </if>
-		  		  <if test="sdate != null and sdate != ''"> and sdate = #{sdate} </if>
-		  		  <if test="edate != null and edate != ''"> and edate = #{edate} </if>
-			      <if test="majorType != null and majorType != ''"> and major_type = #{majorType} </if>
+		  		  <if test="id != null and id != ''"> and t1.id = #{id} </if>
+		  		  <if test="jcxxId != null and jcxxId != ''"> and t1.jcxx_id = #{jcxxId} </if>
+		  		  <if test="studyBg != null and studyBg != ''"> and t1.study_bg = #{studyBg} </if>
+		  		  <if test="degree != null and degree != ''"> and t1.degree = #{degree} </if>
+		  		  <if test="schoolName != null and schoolName != ''"> and t1.school_name = #{schoolName} </if>
+		  		  <if test="schoolType != null and schoolType != ''"> and t1.school_type = #{schoolType} </if>
+		  		  <if test="majorName != null and majorName != ''"> and t1.major_name = #{majorName} </if>
+		  		  <if test="diplomaId != null and diplomaId != ''"> and t1.diploma_id = #{diplomaId} </if>
+		  		  <if test="degreeId != null and degreeId != ''"> and t1.degree_id = #{degreeId} </if>
+		  		  <if test="sdate != null and sdate != ''"> and t1.sdate = #{sdate} </if>
+		  		  <if test="edate != null and edate != ''"> and t1.edate = #{edate} </if>
+			      <if test="majorType != null and majorType != ''"> and t1.major_type = #{majorType} </if>
+			      <if test="name != null and name != ''"> and t2.name like CONCAT(CONCAT('%',#{name},'%')) </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -119,5 +122,9 @@
 	<delete id="deleteByJcxxId">
 		delete from jl_jyjl where jcxx_id = #{value}
 	</delete>
+
+	<select id="getByJcxxId" resultType="com.bootdo.oa.domain.JyjlDO">
+		select `id`,`jcxx_id`,`study_bg`,`degree`,`school_name`,`school_type`,`major_name`,`diploma_id`,`degree_id`,`sdate`,`edate`,`major_type` from jl_jyjl where jcxx_id = #{value}
+	</select>
 
 </mapper>

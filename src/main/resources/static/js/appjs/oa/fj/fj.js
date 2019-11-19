@@ -32,8 +32,8 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
-								offset:params.offset
-					           // name:$('#searchName').val(),
+								offset:params.offset,
+					            name:$('#searchName').val()
 					           // username:$('#searchName').val()
 							};
 						},
@@ -48,28 +48,29 @@ function load() {
 									checkbox : true
 								},
 																{
-									field : 'id', 
-									title : '编号' 
-								},
-																{
-									field : 'jcxxId', 
-									title : '基础信息编号' 
+									field : 'name',
+									title : '姓名',
+									align : "center"
 								},
 																{
 									field : 'studyImg', 
-									title : '毕业证书' 
+									title : '毕业证书' ,
+									align : "center"
 								},
 																{
 									field : 'degreeImg', 
-									title : '学位证书' 
+									title : '学位证书' ,
+									align : "center"
 								},
 																{
 									field : 'cardImgF', 
-									title : '身份证正面' 
+									title : '身份证正面',
+									align : "center"
 								},
 																{
 									field : 'cardImgR', 
-									title : '身份证反面' 
+									title : '身份证反面',
+									align : "center"
 								},
 																{
 									title : '操作',

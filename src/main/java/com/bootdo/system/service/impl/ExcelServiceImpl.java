@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,20 +21,11 @@ public class ExcelServiceImpl implements ExcelService {
     private String uploadPath;
 
     @Override
-    public String readExcelFile(MultipartFile file) throws Exception {
-        String result = "";
-        //创建处理EXCEL的类
-        //List<List<String>> list = ExcelUtil.readExcel(file,0);
-        //解析excel，获取上传的事件单
-        //List<Map<String, Object>> userList = readExcel.getExcelInfo(file);
-        //至此已经将excel中的数据转换到list里面了,接下来就可以操作list,可以进行保存到数据库,或者其他操作,
-
-        String path = FileUtil.uploadFile(file.getBytes(), uploadPath, FileUtil.renameToUUID(file.getOriginalFilename()));
-
-        if(!StringUtil.isNullOrEmpty(path)){
-            result = "上传成功";
-        }else{
-            result = "上传失败";
+    public List<String> readExcelFile(MultipartFile[] files) throws Exception {
+        List<String> result = new ArrayList<>();
+        for (MultipartFile file : files) {
+            String path = FileUtil.uploadFile(file.getBytes(), uploadPath, FileUtil.renameToUUID(file.getOriginalFilename()));
+            result.add(path);
         }
         return result;
     }

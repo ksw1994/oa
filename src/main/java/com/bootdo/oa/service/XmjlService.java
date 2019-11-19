@@ -36,4 +36,6 @@ public interface XmjlService {
 	int deleteByJcxxId(String jcxxId);
 
 	List<XmjlDO> getExcel(List<List<String>> list);
+
+    List<XmjlDO> getByJcxxId(String jcxxId);
 }

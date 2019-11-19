@@ -36,4 +36,6 @@ public interface GzjlDao {
 	 * @return
 	 */
 	int deleteByJcxxId(String jcxxId);
+
+    List<GzjlDO> getByJcxxId(String jcxxId);
 }

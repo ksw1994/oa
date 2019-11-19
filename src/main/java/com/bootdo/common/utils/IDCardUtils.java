@@ -593,7 +593,7 @@ public class IDCardUtils extends StringUtils {
 				}
 			 }
         }
-        System.out.println("年龄age:"+age);
+        //System.out.println("年龄age:"+age);
         return age;
     }
 

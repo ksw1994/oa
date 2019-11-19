@@ -36,4 +36,11 @@ public interface GzjlService {
 	int deleteByJcxxId(String jcxxId);
 
 	List<GzjlDO> getExcel(List<List<String>> list);
+
+	/**
+	 * 根据jcxxId获取工作经历列表
+	 * @param jcxxId
+	 * @return
+	 */
+	List<GzjlDO> getByJcxxId(String jcxxId);
 }

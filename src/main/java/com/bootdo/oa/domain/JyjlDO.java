@@ -39,6 +39,8 @@ public class JyjlDO implements Serializable {
 	private String sdate;
 	//毕业日期
 	private String edate;
+	//姓名
+	private String name;
 
 	/**
 	 * 设置：编号
@@ -179,5 +181,13 @@ public class JyjlDO implements Serializable {
 
 	public void setMajorType(String majorType) {
 		this.majorType = majorType;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

@@ -35,4 +35,6 @@ public interface JyjlService {
 	int deleteByJcxxId(String jcxxId);
 
 	List<JyjlDO> getExcel(List<List<String>> list);
+
+	JyjlDO getByJcxxId(String jcxxId);
 }

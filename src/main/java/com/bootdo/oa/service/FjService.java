@@ -42,4 +42,6 @@ public interface FjService {
 	 * @param jcxxId
 	 */
     void filesUpload(MultipartFile[] files, String jcxxId);
+
+	FjDO getByJcxxId(String jcxxId);
 }

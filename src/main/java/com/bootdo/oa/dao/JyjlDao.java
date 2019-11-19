@@ -36,4 +36,6 @@ public interface JyjlDao {
 	 * @return
 	 */
     int deleteByJcxxId(String jcxxId);
+
+	JyjlDO getByJcxxId(String jcxxId);
 }

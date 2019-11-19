@@ -1,6 +1,5 @@
 package com.bootdo.system.controller;
 
-import com.bootdo.common.word.WordExport;
 import com.bootdo.system.service.ExcelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,10 +25,10 @@ class ExcelController {
     //导入excel
     @RequestMapping(value = "/import", method= RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> importExcel(@RequestParam(value="file",required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public Map<String, Object> importExcel(@RequestParam(value="files",required = false) MultipartFile[] files, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
-        String result = excelService.readExcelFile(file);
-        map.put("message", result);
+        List<String> result = excelService.readExcelFile(files);
+        map.put("url",result);
         return map;
     }
 }

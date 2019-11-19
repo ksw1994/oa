@@ -8,21 +8,24 @@
 	</select>
 
 	<select id="list" resultType="com.bootdo.oa.domain.FjDO">
-		select `id`,`jcxx_id`,`study_img`,`degree_img`,`card_img_f`,`card_img_r` from jl_fj
+		select t1.*,t2.name
+		from
+		jl_fj t1 left join jl_jcxx t2 on t1.jcxx_id = t2.id
         <where>  
-		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="jcxxId != null and jcxxId != ''"> and jcxx_id = #{jcxxId} </if>
-		  		  <if test="studyImg != null and studyImg != ''"> and study_img = #{studyImg} </if>
-		  		  <if test="degreeImg != null and degreeImg != ''"> and degree_img = #{degreeImg} </if>
-		  		  <if test="cardImgF != null and cardImgF != ''"> and card_img_f = #{cardImgF} </if>
-		  		  <if test="cardImgR != null and cardImgR != ''"> and card_img_r = #{cardImgR} </if>
+		  		  <if test="id != null and id != ''"> and t1.id = #{id} </if>
+		  		  <if test="jcxxId != null and jcxxId != ''"> and t1.jcxx_id = #{jcxxId} </if>
+		  		  <if test="studyImg != null and studyImg != ''"> and t1.study_img = #{studyImg} </if>
+		  		  <if test="degreeImg != null and degreeImg != ''"> and t1.degree_img = #{degreeImg} </if>
+		  		  <if test="cardImgF != null and cardImgF != ''"> and t1.card_img_f = #{cardImgF} </if>
+		  		  <if test="cardImgR != null and cardImgR != ''"> and t1.card_img_r = #{cardImgR} </if>
+                  <if test="name != null and name != ''"> and t2.name like CONCAT(CONCAT('%',#{name},'%')) </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
                 order by ${sort} ${order}
             </when>
 			<otherwise>
-                order by id desc
+                order by t1.id desc
 			</otherwise>
         </choose>
 		<if test="offset != null and limit != null">

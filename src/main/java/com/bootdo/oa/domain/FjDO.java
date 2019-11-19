@@ -27,6 +27,8 @@ public class FjDO implements Serializable {
 	private String cardImgF;
 	//身份证反面
 	private String cardImgR;
+	//名称
+	private String name;
 
 	/**
 	 * 设置：编号
@@ -99,5 +101,13 @@ public class FjDO implements Serializable {
 	 */
 	public String getCardImgR() {
 		return cardImgR;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

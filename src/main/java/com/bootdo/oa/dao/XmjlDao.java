@@ -36,4 +36,6 @@ public interface XmjlDao {
 	 * @return
 	 */
 	int deleteByJcxxId(String jcxxId);
+
+    List<XmjlDO> getByJcxxId(String jcxxId);
 }

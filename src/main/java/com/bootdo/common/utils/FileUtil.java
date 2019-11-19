@@ -6,6 +6,14 @@ import java.util.UUID;
 
 public class FileUtil {
 
+	/**
+	 * 放回保存的绝对路径
+	 * @param file
+	 * @param filePath
+	 * @param fileName
+	 * @return
+	 * @throws Exception
+	 */
 	public static String uploadFile(byte[] file, String filePath, String fileName) throws Exception {
 		File targetFile = new File(filePath);
 		if (!targetFile.exists()) {
@@ -28,6 +36,11 @@ public class FileUtil {
 		}
 	}
 
+	/**
+	 * 生成一个随机的文件名
+	 * @param fileName
+	 * @return
+	 */
 	public static String renameToUUID(String fileName) {
 		return UUID.randomUUID() + "." + fileName.substring(fileName.lastIndexOf(".") + 1);
 	}

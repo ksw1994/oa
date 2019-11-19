@@ -32,8 +32,8 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
-								offset:params.offset
-					           // name:$('#searchName').val(),
+								offset:params.offset,
+					            name:$('#searchName').val()
 					           // username:$('#searchName').val()
 							};
 						},
@@ -48,32 +48,34 @@ function load() {
 									checkbox : true
 								},
 																{
-									field : 'id', 
-									title : '编号' 
-								},
-																{
-									field : 'jcxxId', 
-									title : '基础信息编号' 
+									field : 'name',
+									title : '姓名',
+									align : "center"
 								},
 																{
 									field : 'companyName', 
-									title : '公司名称' 
+									title : '公司名称',
+									align : "center"
 								},
 																{
 									field : 'sdate', 
-									title : '开始日期' 
+									title : '开始日期',
+									align : "center"
 								},
 																{
 									field : 'edate', 
-									title : '结束日期' 
+									title : '结束日期',
+									align : "center"
 								},
 																{
 									field : 'desc', 
-									title : '职务描述' 
+									title : '职务描述',
+									align : "center"
 								},
 																{
 									field : 'duty', 
-									title : '工作职责' 
+									title : '工作职责',
+									align : "center"
 								},
 																{
 									title : '操作',

@@ -3,6 +3,7 @@ package com.bootdo.oa.service;
 import com.bootdo.oa.domain.JcxxDO;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -41,4 +42,11 @@ public interface JcxxService {
 	 * @return
 	 */
 	JcxxDO getByCardId(String cardId);
+
+	/**
+	 * 导出单个文件简历
+	 * @param jcxxId
+	 * @return
+	 */
+    File exportJcxx(String jcxxId);
 }

@@ -32,8 +32,8 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
-								offset:params.offset
-					           // name:$('#searchName').val(),
+								offset:params.offset,
+					            name:$('#searchName').val()
 					           // username:$('#searchName').val()
 							};
 						},
@@ -48,72 +48,54 @@ function load() {
 									checkbox : true
 								},
 																{
-									field : 'id', 
-									title : '编号' 
-								},
-																{
-									field : 'jcxxId', 
-									title : '基础信息编号' 
+									field : 'name',
+									title : '姓名',
+									align : "center"
 								},
 																{
 									field : 'itemSeq', 
-									title : '项目序号' 
+									title : '项目序号',
+									align : "center"
 								},
 																{
 									field : 'itemName', 
-									title : '项目名称' 
-								},
-																{
-									field : 'isJhItem', 
-									title : '是否建行项目' 
-								},
-																{
-									field : 'frame', 
-									title : '使用建行新一代框架' 
-								},
-																{
-									field : 'isZngjItem', 
-									title : '是否中农工交银行项目' 
-								},
-																{
-									field : 'isNozngjItem', 
-									title : '是否中农工交以外其银行' 
+									title : '项目名称',
+									align : "center"
 								},
 																{
 									field : 'itemType', 
-									title : '项目业务类型' 
+									title : '项目业务类型',
+									align : "center"
 								},
 																{
 									field : 'sdate', 
-									title : '开始日期' 
+									title : '开始日期',
+									align : "center"
 								},
 																{
 									field : 'edate', 
-									title : '结束日期' 
+									title : '结束日期',
+									align : "center"
 								},
 																{
 									field : 'itemRole', 
-									title : '项目角色' 
+									title : '项目角色',
+									align : "center"
 								},
 																{
 									field : 'witness', 
-									title : '证明人' 
+									title : '证明人',
+									align : "center"
 								},
 																{
 									field : 'witnessPhone', 
-									title : '证明人电话' 
-								},
-																{
-									field : 'desc', 
-									title : '项目简述' 
+									title : '证明人电话',
+									align : "center"
 								},
 																{
 									field : 'duty', 
-									title : '项目职责' 
-								},
-																{
-									field : 'skill', 
-									title : '使用工具/技能' 
+									title : '项目职责',
+									align : "center"
 								},
 																{
 									title : '操作',
