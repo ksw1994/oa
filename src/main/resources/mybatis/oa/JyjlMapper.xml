@@ -4,7 +4,7 @@
 <mapper namespace="com.bootdo.oa.dao.JyjlDao">
 
 	<select id="get" resultType="com.bootdo.oa.domain.JyjlDO">
-		select `id`,`jcxx_id`,`study_bg`,`degree`,`school_name`,`school_type`,`major_name`,`diploma_id`,`degree_id`,`sdate`,`edate`,`major_type` from jl_jyjl where id = #{value}
+		select `id`,`jcxx_id`,`study_bg`,`degree`,`school_name`,`school_type`,`major_name`,`diploma_id`,`degree_id`,`sdate`,`edate`,`major_type`,`create_by`,`create_time`,`update_by`,`update_time` from jl_jyjl where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.bootdo.oa.domain.JyjlDO">
@@ -25,6 +25,10 @@
 		  		  <if test="edate != null and edate != ''"> and t1.edate = #{edate} </if>
 			      <if test="majorType != null and majorType != ''"> and t1.major_type = #{majorType} </if>
 			      <if test="name != null and name != ''"> and t2.name like CONCAT(CONCAT('%',#{name},'%')) </if>
+			      <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+			      <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+			      <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+			      <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -54,6 +58,10 @@
 		  		  <if test="sdate != null and sdate != ''"> and sdate = #{sdate} </if>
 		  		  <if test="edate != null and edate != ''"> and edate = #{edate} </if>
 			      <if test="majorType != null and majorType != ''"> and major_type = #{majorType} </if>
+			      <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+			      <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+			      <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+			      <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
 		  		</where>
 	</select>
 	 
@@ -71,7 +79,9 @@
 			`degree_id`, 
 			`sdate`, 
 			`edate`,
-			`major_type`
+			`major_type`,
+			`create_by`,
+			`create_time`
 		)
 		values
 		(
@@ -86,7 +96,9 @@
 			#{degreeId}, 
 			#{sdate}, 
 			#{edate},
-			#{majorType}
+			#{majorType},
+			#{createBy},
+			#{createTime}
 		)
 	</insert>
 	 
@@ -103,7 +115,9 @@
 			<if test="diplomaId != null">`diploma_id` = #{diplomaId}, </if>
 			<if test="degreeId != null">`degree_id` = #{degreeId}, </if>
 			<if test="sdate != null">`sdate` = #{sdate}, </if>
-			<if test="edate != null">`edate` = #{edate}</if>
+			<if test="edate != null">`edate` = #{edate},</if>
+			<if test="updateBy != null">`update_by` = #{updateBy},</if>
+			<if test="updateTime != null">`update_time` = #{updateTime}</if>
 		</set>
 		where id = #{id}
 	</update>
@@ -124,7 +138,7 @@
 	</delete>
 
 	<select id="getByJcxxId" resultType="com.bootdo.oa.domain.JyjlDO">
-		select `id`,`jcxx_id`,`study_bg`,`degree`,`school_name`,`school_type`,`major_name`,`diploma_id`,`degree_id`,`sdate`,`edate`,`major_type` from jl_jyjl where jcxx_id = #{value}
+		select `id`,`jcxx_id`,`study_bg`,`degree`,`school_name`,`school_type`,`major_name`,`diploma_id`,`degree_id`,`sdate`,`edate`,`major_type`,`create_by`,`create_time`,`update_by`,`update_time` from jl_jyjl where jcxx_id = #{value}
 	</select>
 
 </mapper>

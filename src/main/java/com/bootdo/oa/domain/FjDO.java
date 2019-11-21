@@ -12,7 +12,7 @@ import java.util.Date;
  * @email 1992lcg@163.com
  * @date 2019-11-12 16:54:55
  */
-public class FjDO implements Serializable {
+public class FjDO extends BaseDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//编号

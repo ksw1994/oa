@@ -1,5 +1,7 @@
 package com.bootdo.oa.service.impl;
 
+import com.bootdo.common.utils.DateUtils;
+import com.bootdo.common.utils.ShiroUtils;
 import com.bootdo.common.utils.UUIDUtils;
 import com.bootdo.oa.domain.JcxxDO;
 import com.bootdo.oa.service.JcxxService;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -43,11 +46,15 @@ public class GzjlServiceImpl implements GzjlService {
 	@Override
 	public int save(GzjlDO gzjl){
 		gzjl.setId(UUIDUtils.randomUUID());
+		gzjl.setCreateBy(ShiroUtils.getUserId());
+		gzjl.setCreateTime(DateUtils.format(new Date(),DateUtils.DATE_TIME_PATTERN));
 		return gzjlDao.save(gzjl);
 	}
 	
 	@Override
 	public int update(GzjlDO gzjl){
+		gzjl.setUpdateBy(ShiroUtils.getUserId());
+		gzjl.setUpdateTime(DateUtils.format(new Date(),DateUtils.DATE_TIME_PATTERN));
 		return gzjlDao.update(gzjl);
 	}
 	

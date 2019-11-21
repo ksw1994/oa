@@ -4,11 +4,11 @@
 <mapper namespace="com.bootdo.oa.dao.JcxxDao">
 
 	<select id="get" resultType="com.bootdo.oa.domain.JcxxDO">
-		select `id`,`name`,`sex`,`card_type`,`card_id`,`address`,`phone`,`email`,`company_name`,`site`,`desc`,`pact_sdate`,`pact_edate`,`birthday`,`status`,`update_time`,`is_fj` from jl_jcxx where id = #{value}
+		select `id`,`name`,`sex`,`card_type`,`card_id`,`address`,`phone`,`email`,`company_name`,`site`,`desc`,`pact_sdate`,`pact_edate`,`birthday`,`status`,`is_fj`,`create_by`,`create_time`,`update_by`,`update_time` from jl_jcxx where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.bootdo.oa.domain.JcxxDO">
-		select `id`,`name`,`sex`,`card_type`,`card_id`,`address`,`phone`,`email`,`company_name`,`site`,`desc`,`pact_sdate`,`pact_edate`,`birthday`,`status`,`update_time`,`is_fj` from jl_jcxx
+		select `id`,`name`,`sex`,`card_type`,`card_id`,`address`,`phone`,`email`,`company_name`,`site`,`desc`,`pact_sdate`,`pact_edate`,`birthday`,`status`,`update_time`,`is_fj`,`create_by` from jl_jcxx
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="name != null and name != ''"> and name like CONCAT(CONCAT('%',#{name},'%')) </if>
@@ -25,8 +25,11 @@
 		  		  <if test="pactEdate != null and pactEdate != ''"> and pact_edate = #{pactEdate} </if>
 		  		  <if test="birthday != null and birthday != ''"> and birthday = #{birthday} </if>
 		  		  <if test="status != null and status != ''"> and status = #{status} </if>
-		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
 			      <if test="isFj != null and isFj != ''"> and is_fj = #{isFj} </if>
+			      <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+			      <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+			      <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+			      <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -59,8 +62,11 @@
 		  		  <if test="pactEdate != null and pactEdate != ''"> and pact_edate = #{pactEdate} </if>
 		  		  <if test="birthday != null and birthday != ''"> and birthday = #{birthday} </if>
 		  		  <if test="status != null and status != ''"> and status = #{status} </if>
-		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
 				  <if test="isFj != null and isFj != ''"> and is_fj = #{isFj} </if>
+			      <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+			      <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+			      <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+			      <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
 		  		</where>
 	</select>
 	 
@@ -81,9 +87,10 @@
 			`pact_sdate`, 
 			`pact_edate`, 
 			`birthday`, 
-			`status`, 
-			`update_time`,
-			`is_fj`
+			`status`,
+			`is_fj`,
+			`create_by`,
+			`create_time`
 		)
 		values
 		(
@@ -101,9 +108,10 @@
 			#{pactSdate}, 
 			#{pactEdate}, 
 			#{birthday}, 
-			#{status}, 
-			#{updateTime},
-			#{isFj}
+			#{status},
+			#{isFj},
+			#{createBy},
+			#{createTime}
 		)
 	</insert>
 	 
@@ -125,7 +133,8 @@
 			<if test="birthday != null">`birthday` = #{birthday}, </if>
 			<if test="status != null">`status` = #{status}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime},</if>
-			<if test="isFj != null">`is_fj` = #{isFj}</if>
+			<if test="isFj != null">`is_fj` = #{isFj},</if>
+			<if test="updateBy != null">`update_by` = #{updateBy}</if>
 		</set>
 		where id = #{id}
 	</update>
@@ -142,7 +151,7 @@
 	</delete>
 
 	<select id="getByCardId" resultType="com.bootdo.oa.domain.JcxxDO">
-		select `id`,`name`,`sex`,`card_type`,`card_id`,`address`,`phone`,`email`,`company_name`,`site`,`desc`,`pact_sdate`,`pact_edate`,`birthday`,`status`,`update_time`,`is_fj` from jl_jcxx where card_id = #{value}
+		select `id`,`name`,`sex`,`card_type`,`card_id`,`address`,`phone`,`email`,`company_name`,`site`,`desc`,`pact_sdate`,`pact_edate`,`birthday`,`status`,`is_fj`,`create_by`,`create_time`,`update_by`,`update_time` from jl_jcxx where card_id = #{value}
 	</select>
 
 </mapper>

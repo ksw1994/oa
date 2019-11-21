@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
+import com.bootdo.common.utils.FileUtil;
 import com.bootdo.oa.domain.JcxxDO;
 import com.bootdo.oa.service.JcxxService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -152,7 +153,8 @@ public class JcxxController {
 				}
 				outputStream.flush();
 				outputStream.close();
-				return "success";
+				//删除被下载的本地文件
+				FileUtil.deleteFile(file.getPath());
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
@@ -172,7 +174,7 @@ public class JcxxController {
 				}
 			}
 		}
-		return "file doesn't found!";
+		return null;
 	}
 
 }

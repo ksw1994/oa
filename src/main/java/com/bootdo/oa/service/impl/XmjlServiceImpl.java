@@ -1,5 +1,7 @@
 package com.bootdo.oa.service.impl;
 
+import com.bootdo.common.utils.DateUtils;
+import com.bootdo.common.utils.ShiroUtils;
 import com.bootdo.common.utils.UUIDUtils;
 import com.bootdo.oa.domain.JcxxDO;
 import com.bootdo.oa.service.JcxxService;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -43,11 +46,15 @@ public class XmjlServiceImpl implements XmjlService {
 	@Override
 	public int save(XmjlDO xmjl){
 		xmjl.setId(UUIDUtils.randomUUID());
+		xmjl.setCreateBy(ShiroUtils.getUserId());
+		xmjl.setCreateTime(DateUtils.format(new Date(),DateUtils.DATE_TIME_PATTERN));
 		return xmjlDao.save(xmjl);
 	}
 	
 	@Override
 	public int update(XmjlDO xmjl){
+		xmjl.setUpdateBy(ShiroUtils.getUserId());
+		xmjl.setUpdateTime(DateUtils.format(new Date(),DateUtils.DATE_TIME_PATTERN));
 		return xmjlDao.update(xmjl);
 	}
 	

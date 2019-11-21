@@ -1,6 +1,8 @@
 package com.bootdo.oa.service.impl;
 
+import com.bootdo.common.utils.DateUtils;
 import com.bootdo.common.utils.FileUtil;
+import com.bootdo.common.utils.ShiroUtils;
 import com.bootdo.common.utils.UUIDUtils;
 import com.bootdo.oa.dao.FjDao;
 import com.bootdo.oa.domain.FjDO;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -47,18 +50,21 @@ public class FjServiceImpl implements FjService {
 	@Override
 	public int save(FjDO fj){
 		fj.setId(UUIDUtils.randomUUID());
+		fj.setCreateBy(ShiroUtils.getUserId());//创建者用户id
+		fj.setCreateTime(DateUtils.format(new Date(),DateUtils.DATE_TIME_PATTERN));//创建时间
 		return fjDao.save(fj);
 	}
 	
 	@Override
 	public int update(FjDO fj){
+		fj.setUpdateBy(ShiroUtils.getUserId());
+		fj.setUpdateTime(DateUtils.format(new Date(),DateUtils.DATE_TIME_PATTERN));
 		if (!StringUtil.isNullOrEmpty(fj.getStudyImg()) ||!StringUtil.isNullOrEmpty(fj.getDegreeImg()) ||
 		!StringUtil.isNullOrEmpty(fj.getCardImgF()) || !StringUtil.isNullOrEmpty(fj.getCardImgR())){
 			JcxxDO jcxx = jcxxService.get(fj.getJcxxId());
 			jcxx.setIsFj("1");//已上传附件
 			jcxxService.update(jcxx);
 		}
-
 		return fjDao.update(fj);
 	}
 	

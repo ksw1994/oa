@@ -12,7 +12,7 @@ import java.util.Date;
  * @email 1992lcg@163.com
  * @date 2019-11-11 10:29:06
  */
-public class JcxxDO implements Serializable {
+public class JcxxDO extends BaseDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//
@@ -45,8 +45,6 @@ public class JcxxDO implements Serializable {
 	private String birthday;
 	//0：作废，1:新增，2：更新，3：导出
 	private String status;
-	//
-	private String updateTime;
 	//是否上传了附件 0：否 1：是
 	private String isFj;
 
@@ -230,18 +228,6 @@ public class JcxxDO implements Serializable {
 	public String getStatus() {
 		return status;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setUpdateTime(String updateTime) {
-		this.updateTime = updateTime;
-	}
-	/**
-	 * 获取：
-	 */
-	public String getUpdateTime() {
-		return updateTime;
-	}
 
 	public String getIsFj() {
 		return isFj;
@@ -250,4 +236,5 @@ public class JcxxDO implements Serializable {
 	public void setIsFj(String isFj) {
 		this.isFj = isFj;
 	}
+
 }

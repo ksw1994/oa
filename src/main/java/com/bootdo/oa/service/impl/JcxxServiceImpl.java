@@ -6,6 +6,7 @@ import com.bootdo.common.word.WordExportUtil;
 import com.bootdo.oa.dao.JcxxDao;
 import com.bootdo.oa.domain.*;
 import com.bootdo.oa.service.*;
+import com.bootdo.system.domain.UserDO;
 import freemarker.template.utility.DateUtil;
 import io.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,8 @@ public class JcxxServiceImpl implements JcxxService {
 	@Override
 	public int save(JcxxDO jcxx){
 		jcxx.setId(UUIDUtils.randomUUID());
-		jcxx.setUpdateTime(DateUtils.format(new Date(),DateUtils.DATE_TIME_PATTERN));
+		jcxx.setCreateBy(ShiroUtils.getUserId());//创建人用户id
+		jcxx.setCreateTime(DateUtils.format(new Date(),DateUtils.DATE_TIME_PATTERN));//创建时间
 		if (StringUtil.isNullOrEmpty(jcxx.getBirthday())){
 			jcxx.setBirthday(IDCardUtils.getBirth(jcxx.getCardId()));
 		}
@@ -74,6 +76,7 @@ public class JcxxServiceImpl implements JcxxService {
 	
 	@Override
 	public int update(JcxxDO jcxx){
+		jcxx.setUpdateBy(ShiroUtils.getUserId());
 		jcxx.setUpdateTime(DateUtils.format(new Date(),DateUtils.DATE_TIME_PATTERN));
 		jcxx.setStatus("2");//修改
 		return jcxxDao.update(jcxx);
