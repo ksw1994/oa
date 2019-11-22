@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.oa.dao.ProjectDao">
+
+	<select id="get" resultType="com.bootdo.oa.domain.ProjectDO">
+		select `id`,`item_name`,`is_jh_item`,`frame`,`is_zngj_item`,`is_nozngj_item`,`item_type`,`sdate`,`edate`,`witness`,`telephone`,`desc`,`company_name`,`in_sdate`,`out_sdate`,`work_num`,`c_work_num`,`z_work_num`,`g_work_num`,`demand`,`proceed_id`,`pact_id`,`help_name`,`pact_num`,`spot_num`,`in_num`,`change_staff`,`fail_staff`,`status` from jl_project where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.oa.domain.ProjectDO">
+		select `id`,`item_name`,`is_jh_item`,`frame`,`is_zngj_item`,`is_nozngj_item`,`item_type`,`sdate`,`edate`,`witness`,`telephone`,`desc`,`company_name`,`in_sdate`,`out_sdate`,`work_num`,`c_work_num`,`z_work_num`,`g_work_num`,`demand`,`proceed_id`,`pact_id`,`help_name`,`pact_num`,`spot_num`,`in_num`,`change_staff`,`fail_staff`,`status` from jl_project
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="itemName != null and itemName != ''"> and item_name = #{itemName} </if>
+		  		  <if test="isJhItem != null and isJhItem != ''"> and is_jh_item = #{isJhItem} </if>
+		  		  <if test="frame != null and frame != ''"> and frame = #{frame} </if>
+		  		  <if test="isZngjItem != null and isZngjItem != ''"> and is_zngj_item = #{isZngjItem} </if>
+		  		  <if test="isNozngjItem != null and isNozngjItem != ''"> and is_nozngj_item = #{isNozngjItem} </if>
+		  		  <if test="itemType != null and itemType != ''"> and item_type = #{itemType} </if>
+		  		  <if test="sdate != null and sdate != ''"> and sdate = #{sdate} </if>
+		  		  <if test="edate != null and edate != ''"> and edate = #{edate} </if>
+		  		  <if test="witness != null and witness != ''"> and witness = #{witness} </if>
+		  		  <if test="telephone != null and telephone != ''"> and telephone = #{telephone} </if>
+		  		  <if test="desc != null and desc != ''"> and desc = #{desc} </if>
+		  		  <if test="companyName != null and companyName != ''"> and company_name = #{companyName} </if>
+		  		  <if test="inSdate != null and inSdate != ''"> and in_sdate = #{inSdate} </if>
+		  		  <if test="outSdate != null and outSdate != ''"> and out_sdate = #{outSdate} </if>
+		  		  <if test="workNum != null and workNum != ''"> and work_num = #{workNum} </if>
+		  		  <if test="cWorkNum != null and cWorkNum != ''"> and c_work_num = #{cWorkNum} </if>
+		  		  <if test="zWorkNum != null and zWorkNum != ''"> and z_work_num = #{zWorkNum} </if>
+		  		  <if test="gWorkNum != null and gWorkNum != ''"> and g_work_num = #{gWorkNum} </if>
+		  		  <if test="demand != null and demand != ''"> and demand = #{demand} </if>
+		  		  <if test="proceedId != null and proceedId != ''"> and proceed_id = #{proceedId} </if>
+		  		  <if test="pactId != null and pactId != ''"> and pact_id = #{pactId} </if>
+		  		  <if test="helpName != null and helpName != ''"> and help_name = #{helpName} </if>
+		  		  <if test="pactNum != null and pactNum != ''"> and pact_num = #{pactNum} </if>
+		  		  <if test="spotNum != null and spotNum != ''"> and spot_num = #{spotNum} </if>
+		  		  <if test="inNum != null and inNum != ''"> and in_num = #{inNum} </if>
+		  		  <if test="changeStaff != null and changeStaff != ''"> and change_staff = #{changeStaff} </if>
+		  		  <if test="failStaff != null and failStaff != ''"> and fail_staff = #{failStaff} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from jl_project
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="itemName != null and itemName != ''"> and item_name = #{itemName} </if>
+		  		  <if test="isJhItem != null and isJhItem != ''"> and is_jh_item = #{isJhItem} </if>
+		  		  <if test="frame != null and frame != ''"> and frame = #{frame} </if>
+		  		  <if test="isZngjItem != null and isZngjItem != ''"> and is_zngj_item = #{isZngjItem} </if>
+		  		  <if test="isNozngjItem != null and isNozngjItem != ''"> and is_nozngj_item = #{isNozngjItem} </if>
+		  		  <if test="itemType != null and itemType != ''"> and item_type = #{itemType} </if>
+		  		  <if test="sdate != null and sdate != ''"> and sdate = #{sdate} </if>
+		  		  <if test="edate != null and edate != ''"> and edate = #{edate} </if>
+		  		  <if test="witness != null and witness != ''"> and witness = #{witness} </if>
+		  		  <if test="telephone != null and telephone != ''"> and telephone = #{telephone} </if>
+		  		  <if test="desc != null and desc != ''"> and desc = #{desc} </if>
+		  		  <if test="companyName != null and companyName != ''"> and company_name = #{companyName} </if>
+		  		  <if test="inSdate != null and inSdate != ''"> and in_sdate = #{inSdate} </if>
+		  		  <if test="outSdate != null and outSdate != ''"> and out_sdate = #{outSdate} </if>
+		  		  <if test="workNum != null and workNum != ''"> and work_num = #{workNum} </if>
+		  		  <if test="cWorkNum != null and cWorkNum != ''"> and c_work_num = #{cWorkNum} </if>
+		  		  <if test="zWorkNum != null and zWorkNum != ''"> and z_work_num = #{zWorkNum} </if>
+		  		  <if test="gWorkNum != null and gWorkNum != ''"> and g_work_num = #{gWorkNum} </if>
+		  		  <if test="demand != null and demand != ''"> and demand = #{demand} </if>
+		  		  <if test="proceedId != null and proceedId != ''"> and proceed_id = #{proceedId} </if>
+		  		  <if test="pactId != null and pactId != ''"> and pact_id = #{pactId} </if>
+		  		  <if test="helpName != null and helpName != ''"> and help_name = #{helpName} </if>
+		  		  <if test="pactNum != null and pactNum != ''"> and pact_num = #{pactNum} </if>
+		  		  <if test="spotNum != null and spotNum != ''"> and spot_num = #{spotNum} </if>
+		  		  <if test="inNum != null and inNum != ''"> and in_num = #{inNum} </if>
+		  		  <if test="changeStaff != null and changeStaff != ''"> and change_staff = #{changeStaff} </if>
+		  		  <if test="failStaff != null and failStaff != ''"> and fail_staff = #{failStaff} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.oa.domain.ProjectDO">
+		insert into jl_project
+		(
+			`item_name`, 
+			`is_jh_item`, 
+			`frame`, 
+			`is_zngj_item`, 
+			`is_nozngj_item`, 
+			`item_type`, 
+			`sdate`, 
+			`edate`, 
+			`witness`, 
+			`telephone`, 
+			`desc`, 
+			`company_name`, 
+			`in_sdate`, 
+			`out_sdate`, 
+			`work_num`, 
+			`c_work_num`, 
+			`z_work_num`, 
+			`g_work_num`, 
+			`demand`, 
+			`proceed_id`, 
+			`pact_id`, 
+			`help_name`, 
+			`pact_num`, 
+			`spot_num`, 
+			`in_num`, 
+			`change_staff`, 
+			`fail_staff`, 
+			`status`
+		)
+		values
+		(
+			#{itemName}, 
+			#{isJhItem}, 
+			#{frame}, 
+			#{isZngjItem}, 
+			#{isNozngjItem}, 
+			#{itemType}, 
+			#{sdate}, 
+			#{edate}, 
+			#{witness}, 
+			#{telephone}, 
+			#{desc}, 
+			#{companyName}, 
+			#{inSdate}, 
+			#{outSdate}, 
+			#{workNum}, 
+			#{cWorkNum}, 
+			#{zWorkNum}, 
+			#{gWorkNum}, 
+			#{demand}, 
+			#{proceedId}, 
+			#{pactId}, 
+			#{helpName}, 
+			#{pactNum}, 
+			#{spotNum}, 
+			#{inNum}, 
+			#{changeStaff}, 
+			#{failStaff}, 
+			#{status}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.oa.domain.ProjectDO">
+		update jl_project 
+		<set>
+			<if test="itemName != null">`item_name` = #{itemName}, </if>
+			<if test="isJhItem != null">`is_jh_item` = #{isJhItem}, </if>
+			<if test="frame != null">`frame` = #{frame}, </if>
+			<if test="isZngjItem != null">`is_zngj_item` = #{isZngjItem}, </if>
+			<if test="isNozngjItem != null">`is_nozngj_item` = #{isNozngjItem}, </if>
+			<if test="itemType != null">`item_type` = #{itemType}, </if>
+			<if test="sdate != null">`sdate` = #{sdate}, </if>
+			<if test="edate != null">`edate` = #{edate}, </if>
+			<if test="witness != null">`witness` = #{witness}, </if>
+			<if test="telephone != null">`telephone` = #{telephone}, </if>
+			<if test="desc != null">`desc` = #{desc}, </if>
+			<if test="companyName != null">`company_name` = #{companyName}, </if>
+			<if test="inSdate != null">`in_sdate` = #{inSdate}, </if>
+			<if test="outSdate != null">`out_sdate` = #{outSdate}, </if>
+			<if test="workNum != null">`work_num` = #{workNum}, </if>
+			<if test="cWorkNum != null">`c_work_num` = #{cWorkNum}, </if>
+			<if test="zWorkNum != null">`z_work_num` = #{zWorkNum}, </if>
+			<if test="gWorkNum != null">`g_work_num` = #{gWorkNum}, </if>
+			<if test="demand != null">`demand` = #{demand}, </if>
+			<if test="proceedId != null">`proceed_id` = #{proceedId}, </if>
+			<if test="pactId != null">`pact_id` = #{pactId}, </if>
+			<if test="helpName != null">`help_name` = #{helpName}, </if>
+			<if test="pactNum != null">`pact_num` = #{pactNum}, </if>
+			<if test="spotNum != null">`spot_num` = #{spotNum}, </if>
+			<if test="inNum != null">`in_num` = #{inNum}, </if>
+			<if test="changeStaff != null">`change_staff` = #{changeStaff}, </if>
+			<if test="failStaff != null">`fail_staff` = #{failStaff}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from jl_project where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jl_project where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

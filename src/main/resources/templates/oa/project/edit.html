@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${project.id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">项目名称：</label>
+								<div class="col-sm-8">
+									<input id="itemName" name="itemName" th:value="${project.itemName}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">是否建行项目：</label>
+								<div class="col-sm-8">
+								    <label class="radio-inline"> 
+								        <input th:field="*{project.isJhItem}" type="radio" name="isJhItem" value="是" />是
+								    </label> 
+								    <label class="radio-inline"> 
+								        <input th:field="*{project.isJhItem}" type="radio" name="isJhItem" value="否" />否
+                                    </label>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">使用建行新一代框架：</label>
+								<div class="col-sm-8">
+								    <label class="radio-inline"> 
+                                        <input th:field="*{project.frame}" type="radio" name="frame" value="是" />是
+                                    </label> 
+                                    <label class="radio-inline"> 
+                                        <input th:field="*{project.frame}" type="radio" name="frame" value="否" />否
+                                    </label>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">是否中农工交银行项目：</label>
+								<div class="col-sm-8">
+								    <label class="radio-inline"> 
+                                        <input th:field="*{project.isZngjItem}" type="radio" name="isZngjItem" value="是" />是
+                                    </label> 
+                                    <label class="radio-inline"> 
+                                        <input th:field="*{project.isZngjItem}" type="radio" name="isZngjItem" value="否" />否
+                                    </label>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">是否中农工交以外其他银行：</label>
+								<div class="col-sm-8">
+								    <label class="radio-inline"> 
+                                        <input th:field="*{project.isNozngjItem}" type="radio" name="isNozngjItem" value="是" />是
+                                    </label> 
+                                    <label class="radio-inline"> 
+                                        <input th:field="*{project.isNozngjItem}" type="radio" name="isNozngjItem" value="否" />否
+                                    </label>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">项目业务类别：</label>
+								<div class="col-sm-8">
+									<input id="itemType" name="itemType" th:value="${project.itemType}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">开始日期：</label>
+								<div class="col-sm-8">
+								    <input type="text" class="laydate-icon layer-date form-control" id="sdate"
+                                       name="sdate" th:value="${project.sdate}==''?null:${#dates.format(project.sdate, 'yyyy-MM-dd')}"
+                                       placeholder="请选择日期"
+                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                                       style="background-color: #fff;" readonly="readonly"/>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">结束日期：</label>
+								<div class="col-sm-8">
+								    <input type="text" class="laydate-icon layer-date form-control" id="edate"
+                                       name="edate" th:value="${project.edate}==''?null:${#dates.format(project.edate, 'yyyy-MM-dd')}"
+                                       placeholder="请选择日期"
+                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                                       style="background-color: #fff;" readonly="readonly"/>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">证明人：</label>
+								<div class="col-sm-8">
+									<input id="witness" name="witness" th:value="${project.witness}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">证明人电话：</label>
+								<div class="col-sm-8">
+									<input id="telephone" name="telephone" th:value="${project.telephone}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">项目简述：</label>
+								<div class="col-sm-8">
+									<textarea rows="3" cols="3" id="desc" name="desc" th:value="${project.desc}" class="form-control" type="text">
+								    </textarea>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">公司名称：</label>
+								<div class="col-sm-8">
+									<input id="companyName" name="companyName" th:value="${project.companyName}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">进场日期：</label>
+								<div class="col-sm-8">
+								    <input type="text" class="laydate-icon layer-date form-control" id="inSdate"
+                                       name="inSdate" th:value="${project.inSdate}==''?null:${#dates.format(project.inSdate, 'yyyy-MM-dd')}"
+                                       placeholder="请选择日期"
+                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                                       style="background-color: #fff;" readonly="readonly"/>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">退场日期：</label>
+								<div class="col-sm-8">
+								    <input type="text" class="laydate-icon layer-date form-control" id="outSdate"
+                                       name="outSdate" th:value="${project.outSdate}==''?null:${#dates.format(project.outSdate, 'yyyy-MM-dd')}"
+                                        placeholder="请选择日期"
+                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                                       style="background-color: #fff;" readonly="readonly"/>
+         
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">需求总工作量：</label>
+								<div class="col-sm-8">
+									<input id="workNum" name="workNum" th:value="${project.workNum}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">初级需求工作量：</label>
+								<div class="col-sm-8">
+									<input id="cWorkNum" name="cWorkNum" th:value="${project.cWorkNum}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">中级需求工作量：</label>
+								<div class="col-sm-8">
+									<input id="zWorkNum" name="zWorkNum" th:value="${project.zWorkNum}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">高级需求工作量：</label>
+								<div class="col-sm-8">
+									<input id="gWorkNum" name="gWorkNum" th:value="${project.gWorkNum}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">维护要求：</label>
+								<div class="col-sm-8">
+									<input id="demand" name="demand" th:value="${project.demand}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">事项编号：</label>
+								<div class="col-sm-8">
+									<input id="proceedId" name="proceedId" th:value="${project.proceedId}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">合同编号：</label>
+								<div class="col-sm-8">
+									<input id="pactId" name="pactId" th:value="${project.pactId}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">协管员：</label>
+								<div class="col-sm-8">
+									<input id="helpName" name="helpName" th:value="${project.helpName}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">合同人数：</label>
+								<div class="col-sm-8">
+									<input id="pactNum" name="pactNum" th:value="${project.pactNum}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">在场人数：</label>
+								<div class="col-sm-8">
+									<input id="spotNum" name="spotNum" th:value="${project.spotNum}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">按合同入场人数：</label>
+								<div class="col-sm-8">
+									<input id="inNum" name="inNum" th:value="${project.inNum}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">变更人员：</label>
+								<div class="col-sm-8">
+									<input id="changeStaff" name="changeStaff" th:value="${project.changeStaff}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">不符合资质人员：</label>
+								<div class="col-sm-8">
+									<input id="failStaff" name="failStaff" th:value="${project.failStaff}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">项目状态：</label>
+								<input id="Tstatus" name="Tstatus" th:value="${project.status}" type="hidden">
+								<div class="col-sm-8">
+								    <select data-placeholder="--选择项目状态--" name="status" id="status"
+                                        class="form-control chosen-select" tabindex="2">
+                                        <option value="">-- 选择类别 --</option>
+                                        
+                                        <option th:each="statusType : ${projectStatus}" th:value="${statusType.value}" th:text="${statusType.name}" th:if="${statusType.remarks ==checked}" th:selected="selected"></option>
+                                    </select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/plugins/layer/laydate/laydate.js"></script>
+	<script type="text/javascript" src="/js/appjs/oa/project/edit.js">
+	</script>
+</body>
+</html>

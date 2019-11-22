@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.oa.dao.AttendanceDao">
+
+	<select id="get" resultType="com.bootdo.oa.domain.AttendanceDO">
+		select `id`,`user_name`,`id_card`,`project_id`,`company_name`,`item_role`,`period`,`effective_days`,`man_mouth`,`mouth`,`onday`,`week_day`,`mouth_day` from jl_attendance where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.oa.domain.AttendanceDO">
+		select `id`,`user_name`,`id_card`,`project_id`,`company_name`,`item_role`,`period`,`effective_days`,`man_mouth`,`mouth`,`onday`,`week_day`,`mouth_day` from jl_attendance
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="userName != null and userName != ''"> and user_name = #{userName} </if>
+		  		  <if test="idCard != null and idCard != ''"> and id_card = #{idCard} </if>
+		  		  <if test="projectId != null and projectId != ''"> and project_id = #{projectId} </if>
+		  		  <if test="companyName != null and companyName != ''"> and company_name = #{companyName} </if>
+		  		  <if test="itemRole != null and itemRole != ''"> and item_role = #{itemRole} </if>
+		  		  <if test="period != null and period != ''"> and period = #{period} </if>
+		  		  <if test="effectiveDays != null and effectiveDays != ''"> and effective_days = #{effectiveDays} </if>
+		  		  <if test="manMouth != null and manMouth != ''"> and man_mouth = #{manMouth} </if>
+		  		  <if test="mouth != null and mouth != ''"> and mouth = #{mouth} </if>
+		  		  <if test="onday != null and onday != ''"> and onday = #{onday} </if>
+		  		  <if test="weekDay != null and weekDay != ''"> and week_day = #{weekDay} </if>
+		  		  <if test="mouthDay != null and mouthDay != ''"> and mouth_day = #{mouthDay} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from jl_attendance
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="userName != null and userName != ''"> and user_name = #{userName} </if>
+		  		  <if test="idCard != null and idCard != ''"> and id_card = #{idCard} </if>
+		  		  <if test="projectId != null and projectId != ''"> and project_id = #{projectId} </if>
+		  		  <if test="companyName != null and companyName != ''"> and company_name = #{companyName} </if>
+		  		  <if test="itemRole != null and itemRole != ''"> and item_role = #{itemRole} </if>
+		  		  <if test="period != null and period != ''"> and period = #{period} </if>
+		  		  <if test="effectiveDays != null and effectiveDays != ''"> and effective_days = #{effectiveDays} </if>
+		  		  <if test="manMouth != null and manMouth != ''"> and man_mouth = #{manMouth} </if>
+		  		  <if test="mouth != null and mouth != ''"> and mouth = #{mouth} </if>
+		  		  <if test="onday != null and onday != ''"> and onday = #{onday} </if>
+		  		  <if test="weekDay != null and weekDay != ''"> and week_day = #{weekDay} </if>
+		  		  <if test="mouthDay != null and mouthDay != ''"> and mouth_day = #{mouthDay} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.oa.domain.AttendanceDO" useGeneratedKeys="true" keyProperty="id">
+		insert into jl_attendance
+		(
+			`user_name`, 
+			`id_card`, 
+			`project_id`, 
+			`company_name`, 
+			`item_role`, 
+			`period`, 
+			`effective_days`, 
+			`man_mouth`, 
+			`mouth`, 
+			`onday`, 
+			`week_day`, 
+			`mouth_day`
+		)
+		values
+		(
+			#{userName}, 
+			#{idCard}, 
+			#{projectId}, 
+			#{companyName}, 
+			#{itemRole}, 
+			#{period}, 
+			#{effectiveDays}, 
+			#{manMouth}, 
+			#{mouth}, 
+			#{onday}, 
+			#{weekDay}, 
+			#{mouthDay}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.oa.domain.AttendanceDO">
+		update jl_attendance 
+		<set>
+			<if test="userName != null">`user_name` = #{userName}, </if>
+			<if test="idCard != null">`id_card` = #{idCard}, </if>
+			<if test="projectId != null">`project_id` = #{projectId}, </if>
+			<if test="companyName != null">`company_name` = #{companyName}, </if>
+			<if test="itemRole != null">`item_role` = #{itemRole}, </if>
+			<if test="period != null">`period` = #{period}, </if>
+			<if test="effectiveDays != null">`effective_days` = #{effectiveDays}, </if>
+			<if test="manMouth != null">`man_mouth` = #{manMouth}, </if>
+			<if test="mouth != null">`mouth` = #{mouth}, </if>
+			<if test="onday != null">`onday` = #{onday}, </if>
+			<if test="weekDay != null">`week_day` = #{weekDay}, </if>
+			<if test="mouthDay != null">`mouth_day` = #{mouthDay}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from jl_attendance where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jl_attendance where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
