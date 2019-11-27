@@ -113,25 +113,25 @@ public class FjServiceImpl implements FjService {
 						if (!StringUtil.isNullOrEmpty(fj.getStudyImg())){
 							FileUtil.deleteFile(fj.getStudyImg());
 						}
-						String studyImg = FileUtil.uploadFile(file.getBytes(), uploadPath, UUIDUtils.randomUUID());
+						String studyImg = FileUtil.uploadFile(file.getBytes(), uploadPath, FileUtil.renameToUUID(originalFilename));
 						fj.setStudyImg(studyImg);
 					} else if (fileName.equals("学位证")) {
 						if (!StringUtil.isNullOrEmpty(fj.getDegreeImg())){
 							FileUtil.deleteFile(fj.getDegreeImg());
 						}
-						String degreeImg = FileUtil.uploadFile(file.getBytes(), uploadPath, UUIDUtils.randomUUID());
+						String degreeImg = FileUtil.uploadFile(file.getBytes(), uploadPath, FileUtil.renameToUUID(originalFilename));
 						fj.setDegreeImg(degreeImg);
 					} else if (fileName.equals("身份证前面")) {
 						if (!StringUtil.isNullOrEmpty(fj.getCardImgF())){
 							FileUtil.deleteFile(fj.getCardImgF());
 						}
-						String cardImgF = FileUtil.uploadFile(file.getBytes(), uploadPath, UUIDUtils.randomUUID());
+						String cardImgF = FileUtil.uploadFile(file.getBytes(), uploadPath, FileUtil.renameToUUID(originalFilename));
 						fj.setCardImgF(cardImgF);
 					} else if (fileName.equals("身份证反面")) {
 						if (!StringUtil.isNullOrEmpty(fj.getCardImgR())){
 							FileUtil.deleteFile(fj.getCardImgR());
 						}
-						String cardImgR = FileUtil.uploadFile(file.getBytes(), uploadPath, UUIDUtils.randomUUID());
+						String cardImgR = FileUtil.uploadFile(file.getBytes(), uploadPath, FileUtil.renameToUUID(originalFilename));
 						fj.setCardImgR(cardImgR);
 					}
 				} catch (Exception e) {
