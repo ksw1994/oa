@@ -211,7 +211,7 @@ public class JcxxServiceImpl implements JcxxService {
 		dataMap.put("image2", image2  == null ? "" : new Base64Utils().getImageStr(image2));
 		dataMap.put("image3", image3  == null ? "" : new Base64Utils().getImageStr(image3));
 		dataMap.put("image4", image4  == null ? "" : new Base64Utils().getImageStr(image4));
-		String exportFilePath = exportPath+ DateUtils.format(new Date(),DateUtils.DATE_TIME_PATTERN)+jcxx.getName()+"简历.doc";//导出路径
+		String exportFilePath = exportPath+jcxx.getName()+"简历.doc";//导出路径
 		int loadType = 1;
 		File file = null;
 		try {
