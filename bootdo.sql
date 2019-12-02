@@ -3722,3 +3722,47 @@ INSERT INTO `sys_user_role` VALUES ('133', '1', '61');
 INSERT INTO `sys_user_role` VALUES ('134', '1', '60');
 INSERT INTO `sys_user_role` VALUES ('135', '1', '1');
 INSERT INTO `sys_user_role` VALUES ('137', '3', '62');
+
+-- ----------------------------
+-- Table structure for jl_attendance
+-- ----------------------------
+DROP TABLE IF EXISTS `jl_attendance`;
+CREATE TABLE `jl_attendance` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(64) NOT NULL COMMENT '人员名',
+  `id_card` varchar(20) DEFAULT NULL COMMENT '身份证号',
+  `project_id` int(11) NOT NULL COMMENT '项目编号',
+  `company_name` varchar(200) DEFAULT NULL COMMENT '公司名称',
+  `item_role` varchar(200) DEFAULT NULL COMMENT '人员资质',
+  `period` varchar(2000) DEFAULT NULL COMMENT '参与项目周期',
+  `effective_days` varchar(10) DEFAULT NULL COMMENT '有效天数',
+  `man_mouth` varchar(20) DEFAULT NULL COMMENT '人月',
+  `mouth` varchar(10) DEFAULT NULL COMMENT '月份',
+  `onday` varchar(10) DEFAULT NULL COMMENT '在岗天数',
+  `week_day` varchar(10) DEFAULT NULL COMMENT '周末加班天数',
+  `mouth_day` varchar(10) DEFAULT NULL COMMENT '当月工作日',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8 COMMENT='考勤明细表';
+
+-- ----------------------------
+-- Table structure for jl_attendance
+-- ----------------------------
+DROP TABLE IF EXISTS `jl_attendance`;
+CREATE TABLE `jl_attendance` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(64) NOT NULL COMMENT '人员名',
+  `id_card` varchar(20) DEFAULT NULL COMMENT '身份证号',
+  `project_id` int(11) NOT NULL COMMENT '项目编号',
+  `company_name` varchar(200) DEFAULT NULL COMMENT '公司名称',
+  `item_role` varchar(200) DEFAULT NULL COMMENT '人员资质',
+  `period` varchar(2000) DEFAULT NULL COMMENT '参与项目周期',
+  `effective_days` varchar(10) DEFAULT NULL COMMENT '有效天数',
+  `man_mouth` varchar(20) DEFAULT NULL COMMENT '人月',
+  `mouth` varchar(10) DEFAULT NULL COMMENT '月份',
+  `onday` varchar(10) DEFAULT NULL COMMENT '在岗天数',
+  `week_day` varchar(10) DEFAULT NULL COMMENT '周末加班天数',
+  `mouth_day` varchar(10) DEFAULT NULL COMMENT '当月工作日',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8 COMMENT='考勤明细表';
+
+
