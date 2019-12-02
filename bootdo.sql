@@ -3765,4 +3765,14 @@ CREATE TABLE `jl_attendance` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8 COMMENT='考勤明细表';
 
+-- ----------------------------
+-- 增加项目管理模块（项目信息管理和考勤信息管理）菜单
+-- ----------------------------
+
+INSERT INTO `bootdo`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`, `gmt_create`, `gmt_modified`) VALUES ('109', '0', '项目管理', '', '', '0', 'fa fa-server', NULL, NULL, NULL);
+INSERT INTO `bootdo`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`, `gmt_create`, `gmt_modified`) VALUES ('110', '109', '项目信息管理', '/oa/project', 'oa:project:project', '1', '', NULL, NULL, NULL);
+INSERT INTO `bootdo`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`, `gmt_create`, `gmt_modified`) VALUES ('111', '110', '新增', '', 'oa:project:add', '2', '', NULL, NULL, NULL);
+INSERT INTO `bootdo`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`, `gmt_create`, `gmt_modified`) VALUES ('112', '110', '修改', '', 'oa:project:edit', '2', '', NULL, NULL, NULL);
+INSERT INTO `bootdo`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`, `gmt_create`, `gmt_modified`) VALUES ('113', '110', '删除', '', 'oa:project:remove', '2', '', NULL, NULL, NULL);
+INSERT INTO `bootdo`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`, `gmt_create`, `gmt_modified`) VALUES ('114', '109', '考勤信息管理', '/oa/attendance', 'oa:attendance:attendance', '1', '', NULL, NULL, NULL);
 
