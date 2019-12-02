@@ -3724,25 +3724,41 @@ INSERT INTO `sys_user_role` VALUES ('135', '1', '1');
 INSERT INTO `sys_user_role` VALUES ('137', '3', '62');
 
 -- ----------------------------
--- Table structure for jl_attendance
+-- Table structure for jl_project
 -- ----------------------------
-DROP TABLE IF EXISTS `jl_attendance`;
-CREATE TABLE `jl_attendance` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(64) NOT NULL COMMENT '人员名',
-  `id_card` varchar(20) DEFAULT NULL COMMENT '身份证号',
-  `project_id` int(11) NOT NULL COMMENT '项目编号',
+DROP TABLE IF EXISTS `jl_project`;
+CREATE TABLE `jl_project` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `item_name` varchar(200) NOT NULL COMMENT '项目名称',
+  `is_jh_item` varchar(10) NOT NULL COMMENT '是否建行项目',
+  `frame` varchar(200) DEFAULT NULL COMMENT '使用建行新一代框架',
+  `is_zngj_item` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '是否中农工交银行项目',
+  `is_nozngj_item` varchar(10) NOT NULL COMMENT '是否中农工交以外其他银行',
+  `item_type` varchar(200) NOT NULL COMMENT '项目业务类别',
+  `sdate` varchar(50) NOT NULL COMMENT '开始日期',
+  `edate` varchar(50) DEFAULT NULL COMMENT '结束日期',
+  `witness` varchar(20) NOT NULL COMMENT '证明人',
+  `telephone` varchar(20) NOT NULL COMMENT '证明人电话',
+  `desc` varchar(2000) DEFAULT NULL COMMENT '项目简述',
   `company_name` varchar(200) DEFAULT NULL COMMENT '公司名称',
-  `item_role` varchar(200) DEFAULT NULL COMMENT '人员资质',
-  `period` varchar(2000) DEFAULT NULL COMMENT '参与项目周期',
-  `effective_days` varchar(10) DEFAULT NULL COMMENT '有效天数',
-  `man_mouth` varchar(20) DEFAULT NULL COMMENT '人月',
-  `mouth` varchar(10) DEFAULT NULL COMMENT '月份',
-  `onday` varchar(10) DEFAULT NULL COMMENT '在岗天数',
-  `week_day` varchar(10) DEFAULT NULL COMMENT '周末加班天数',
-  `mouth_day` varchar(10) DEFAULT NULL COMMENT '当月工作日',
+  `in_sdate` varchar(50) DEFAULT NULL COMMENT '进场日期',
+  `out_sdate` varchar(50) DEFAULT NULL COMMENT '退场日期',
+  `work_num` varchar(10) DEFAULT NULL COMMENT '需求总工作量',
+  `c_work_num` varchar(10) DEFAULT NULL COMMENT '初级需求工作量',
+  `z_work_num` varchar(10) DEFAULT NULL COMMENT '中级需求工作量',
+  `g_work_num` varchar(10) DEFAULT NULL COMMENT '高级需求工作量',
+  `demand` varchar(2000) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '维护要求',
+  `proceed_id` varchar(200) DEFAULT NULL COMMENT '事项编号',
+  `pact_id` varchar(200) DEFAULT NULL COMMENT '合同编号',
+  `help_name` varchar(200) DEFAULT NULL COMMENT '协管员',
+  `pact_num` varchar(10) DEFAULT NULL COMMENT '合同人数',
+  `spot_num` varchar(10) DEFAULT NULL COMMENT '在场人数',
+  `in_num` varchar(10) DEFAULT NULL COMMENT '按合同入场人数',
+  `change_staff` varchar(500) DEFAULT NULL COMMENT '变更人员',
+  `fail_staff` varchar(500) DEFAULT NULL COMMENT '不符合资质人员',
+  `status` varchar(10) DEFAULT NULL COMMENT '项目状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8 COMMENT='考勤明细表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='项目信息表';
 
 -- ----------------------------
 -- Table structure for jl_attendance
