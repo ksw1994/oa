@@ -1,5 +1,8 @@
 package com.bootdo.oa.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bootdo.oa.domain.AttendanceDO;
 import com.bootdo.oa.domain.ProjectDO;
+import com.bootdo.oa.service.AttendanceService;
 import com.bootdo.oa.service.ProjectService;
+import com.google.common.collect.Iterators;
 import com.bootdo.common.domain.DictDO;
 import com.bootdo.common.service.DictService;
 import com.bootdo.common.utils.PageUtils;
@@ -39,6 +45,9 @@ public class ProjectController {
 	private ProjectService projectService;
 	@Autowired
     private DictService dictService;
+	@Autowired
+	private AttendanceService attendanceService;
+	
 	
 	@GetMapping()
 	@RequiresPermissions("oa:project:project")
@@ -132,4 +141,64 @@ public class ProjectController {
 		return R.ok();
 	}
 	
+	/**
+     * 获取项目有效工作量 和 实际工作量
+     */
+	@GetMapping("/getWorkInfo/{projectId}")
+    public String getWorkInfo(@PathVariable("projectId") String projectId,Model model){
+        
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        ProjectDO projectDO = projectService.get(projectId);
+        returnMap.put("cWorkNum", projectDO.getCWorkNum());
+        returnMap.put("zWorkNum", projectDO.getZWorkNum());
+        returnMap.put("gWorkNum", projectDO.getGWorkNum());
+        returnMap.put("workNum", projectDO.getWorkNum());
+        
+        returnMap.put("cWorkLoad", 0.00);
+        returnMap.put("zWorkLoad", 0.00);
+        returnMap.put("gWorkLoad", 0.00);
+        returnMap.put("workLoad", 0.00);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("projectId", projectId);
+        List<AttendanceDO> attendanceDOList = attendanceService.list(map);
+        attendanceDOList.stream().forEach(attendanceDO ->{
+            Double manMouth = Double.parseDouble(attendanceDO.getManMouth());
+            if("初级工程师".equals(attendanceDO.getItemRole())) {
+                returnMap.put("cWorkLoad", (Double)returnMap.get("cWorkLoad")+manMouth);
+            }else if("工程师".equals(attendanceDO.getItemRole())||"中级工程师".equals(attendanceDO.getItemRole())) {
+                returnMap.put("zWorkLoad",(Double)returnMap.get("zWorkLoad")+manMouth);            
+            }else if("高级工程师".equals(attendanceDO.getItemRole())) {
+                returnMap.put("gWorkLoad", (Double)returnMap.get("gWorkLoad")+manMouth); 
+            }
+        });
+        returnMap.put("workLoad", (Double)returnMap.get("cWorkLoad")+(Double)returnMap.get("zWorkLoad")+(Double)returnMap.get("gWorkLoad")); 
+        model.addAttribute("work", returnMap);
+        return "oa/project/project_work";
+    }
+	
+	
+	/**
+     * 获取有效考勤信息
+     */
+    @GetMapping("/getAttendanceInfo/{projectId}")
+    public String getAttendanceInfo(@PathVariable("projectId") String projectId,Model model){
+        
+        List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
+        
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        
+        ProjectDO projectDO = projectService.get(projectId);
+        returnMap.put("cWorkNum", projectDO.getCWorkNum());
+        returnMap.put("zWorkNum", projectDO.getZWorkNum());
+        returnMap.put("gWorkNum", projectDO.getGWorkNum());
+        returnMap.put("workNum", projectDO.getWorkNum());
+        
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("projectId", projectId);
+        List<AttendanceDO> attendanceDOList = attendanceService.list(map);
+        
+        model.addAttribute("work", returnMap);
+        return "oa/project/project_attendance";
+    }
+    
 }

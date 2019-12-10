@@ -118,5 +118,14 @@
 			#{id}
 		</foreach>
 	</delete>
+	<delete id="deleteByCondition">
+        delete from jl_attendance
+        <where>  
+            <if test="id != null and id != ''"> and id = #{id} </if>
+            <if test="userName != null and userName != ''"> and user_name = #{userName} </if>
+            <if test="projectId != null and projectId != ''"> and project_id = #{projectId} </if>
+            <if test="period != null and period != ''"> and period = #{period} </if>
+          </where>
+    </delete>
 
 </mapper>
