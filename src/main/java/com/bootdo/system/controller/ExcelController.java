@@ -25,9 +25,9 @@ class ExcelController {
     //导入excel
     @RequestMapping(value = "/import", method= RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> importExcel(@RequestParam(value="files",required = false) MultipartFile[] files, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public Map<String, Object> importExcel(@RequestParam(value="file",required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
-        List<String> result = excelService.readExcelFile(files);
+        List<String> result = excelService.readExcelFile(file);
         map.put("url",result);
         return map;
     }

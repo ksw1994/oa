@@ -47,6 +47,25 @@ public class JcxxDO extends BaseDO implements Serializable {
 	private String status;
 	//是否上传了附件 0：否 1：是
 	private String isFj;
+	//最新项目id
+	private String itemId;
+	//最新项目名称
+	private String itemName;
+	//入场时间
+	private String entranceTime;
+	//退场时间
+	private String exitTime;
+	//预计退场时间
+	private Date predictExitTime;
+	//0:入场 1：退场
+	private String isEntrance;
+
+	//预计退场时间(开始)
+	private Date start;
+	//预计退场时间（结束）
+	private Date end;
+	//毕业年限
+	private Integer graduateYear;
 
 	/**
 	 * 设置：
@@ -237,4 +256,75 @@ public class JcxxDO extends BaseDO implements Serializable {
 		this.isFj = isFj;
 	}
 
+	public String getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(String itemId) {
+		this.itemId = itemId;
+	}
+
+	public String getEntranceTime() {
+		return entranceTime;
+	}
+
+	public void setEntranceTime(String entranceTime) {
+		this.entranceTime = entranceTime;
+	}
+
+	public String getExitTime() {
+		return exitTime;
+	}
+
+	public void setExitTime(String exitTime) {
+		this.exitTime = exitTime;
+	}
+
+	public Date getPredictExitTime() {
+		return predictExitTime;
+	}
+
+	public void setPredictExitTime(Date predictExitTime) {
+		this.predictExitTime = predictExitTime;
+	}
+
+	public String getIsEntrance() {
+		return isEntrance;
+	}
+
+	public void setIsEntrance(String isEntrance) {
+		this.isEntrance = isEntrance;
+	}
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
+	public Date getStart() {
+		return start;
+	}
+
+	public void setStart(Date start) {
+		this.start = start;
+	}
+
+	public Date getEnd() {
+		return end;
+	}
+
+	public void setEnd(Date end) {
+		this.end = end;
+	}
+
+	public Integer getGraduateYear() {
+		return graduateYear;
+	}
+
+	public void setGraduateYear(Integer graduateYear) {
+		this.graduateYear = graduateYear;
+	}
 }

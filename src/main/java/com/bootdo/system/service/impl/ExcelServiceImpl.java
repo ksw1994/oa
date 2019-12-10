@@ -21,12 +21,10 @@ public class ExcelServiceImpl implements ExcelService {
     private String uploadPath;
 
     @Override
-    public List<String> readExcelFile(MultipartFile[] files) throws Exception {
+    public List<String> readExcelFile(MultipartFile file) throws Exception {
         List<String> result = new ArrayList<>();
-        for (MultipartFile file : files) {
-            String path = FileUtil.uploadFile(file.getBytes(), uploadPath, FileUtil.renameToUUID(file.getOriginalFilename()));
-            result.add(path);
-        }
+        List<List<String>> list1 = ExcelUtil.readExcel(file, 0);
+        List<List<String>> list2 = ExcelUtil.readExcel(file, 3);
         return result;
     }
 }

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.oa.dao.OvertimeDao">
+
+	<select id="get" resultType="com.bootdo.oa.domain.OvertimeDO">
+		select `id`,`name`,`dept_name`,`start_time`,`end_time`,`overtime`,`date`,`status`,`create_by`,`create_time`,`update_by`,`update_time` from oa_overtime where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.oa.domain.OvertimeDO">
+		select `id`,`name`,`dept_name`,`start_time`,`end_time`,`overtime`,`date`,`status`,`create_by`,`create_time`,`update_by`,`update_time` from oa_overtime
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="deptName != null and deptName != ''"> and dept_name = #{deptName} </if>
+		  		  <if test="startTime != null and startTime != ''"> and start_time = #{startTime} </if>
+		  		  <if test="endTime != null and endTime != ''"> and end_time = #{endTime} </if>
+		  		  <if test="overtime != null and overtime != ''"> and overtime = #{overtime} </if>
+		  		  <if test="date != null and date != ''"> and date = #{date} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by date desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from oa_overtime
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="deptName != null and deptName != ''"> and dept_name = #{deptName} </if>
+		  		  <if test="startTime != null and startTime != ''"> and start_time = #{startTime} </if>
+		  		  <if test="endTime != null and endTime != ''"> and end_time = #{endTime} </if>
+		  		  <if test="overtime != null and overtime != ''"> and overtime = #{overtime} </if>
+		  		  <if test="date != null and date != ''"> and date = #{date} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.oa.domain.OvertimeDO">
+		insert into oa_overtime
+		(
+			`id`, 
+			`name`, 
+			`dept_name`, 
+			`start_time`, 
+			`end_time`, 
+			`overtime`, 
+			`date`, 
+			`status`, 
+			`create_by`, 
+			`create_time`, 
+			`update_by`, 
+			`update_time`
+		)
+		values
+		(
+			#{id}, 
+			#{name}, 
+			#{deptName}, 
+			#{startTime}, 
+			#{endTime}, 
+			#{overtime}, 
+			#{date}, 
+			#{status}, 
+			#{createBy}, 
+			#{createTime}, 
+			#{updateBy}, 
+			#{updateTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.oa.domain.OvertimeDO">
+		update oa_overtime 
+		<set>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="deptName != null">`dept_name` = #{deptName}, </if>
+			<if test="startTime != null">`start_time` = #{startTime}, </if>
+			<if test="endTime != null">`end_time` = #{endTime}, </if>
+			<if test="overtime != null">`overtime` = #{overtime}, </if>
+			<if test="date != null">`date` = #{date}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from oa_overtime where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from oa_overtime where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<select id="getListByDate"  parameterType="string" resultType="com.bootdo.oa.domain.OvertimeDO">
+		SELECT
+			*
+		FROM
+			oa_overtime
+		WHERE
+			date_format(date, '%Y %m') = date_format(DATE_SUB(#{date}, INTERVAL 0 MONTH),'%Y %m')
+		ORDER BY
+			name,date ASC
+	</select>
+
+	<select id="getNameListByDate"  parameterType="string" resultType="string">
+		SELECT
+			DISTINCT name
+		FROM
+			oa_overtime
+		WHERE
+			date_format(date, '%Y %m') = date_format(DATE_SUB(#{date}, INTERVAL 0 MONTH),'%Y %m')
+	</select>
+
+</mapper>

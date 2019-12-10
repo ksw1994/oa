@@ -48,14 +48,38 @@ public class XmjlServiceImpl implements XmjlService {
 		xmjl.setId(UUIDUtils.randomUUID());
 		xmjl.setCreateBy(ShiroUtils.getUserId());
 		xmjl.setCreateTime(DateUtils.format(new Date(),DateUtils.DATE_TIME_PATTERN));
-		return xmjlDao.save(xmjl);
+		xmjlDao.save(xmjl);
+		//同时更新基础表的最新项目id
+		//先找出最新的项目
+		XmjlDO newOne = xmjlDao.getNewOne(xmjl.getJcxxId());
+		JcxxDO jcxxDO = jcxxService.get(xmjl.getJcxxId());
+		jcxxDO.setItemId(newOne.getId());
+		jcxxDO.setEntranceTime(newOne.getSdate());//入场时间
+		if (!newOne.getEdate().equals("至今")){//已退场
+			jcxxDO.setIsEntrance("1");
+		}
+		jcxxDO.setExitTime(newOne.getEdate());//退场时间
+		jcxxService.update(jcxxDO);
+		return 1;
 	}
 	
 	@Override
 	public int update(XmjlDO xmjl){
 		xmjl.setUpdateBy(ShiroUtils.getUserId());
 		xmjl.setUpdateTime(DateUtils.format(new Date(),DateUtils.DATE_TIME_PATTERN));
-		return xmjlDao.update(xmjl);
+		xmjlDao.update(xmjl);
+		//同时更新基础表的最新项目id
+		//先找出最新的项目
+		XmjlDO newOne = xmjlDao.getNewOne(xmjl.getJcxxId());
+		JcxxDO jcxxDO = jcxxService.get(xmjl.getJcxxId());
+		jcxxDO.setItemId(newOne.getId());
+		jcxxDO.setEntranceTime(newOne.getSdate());//入场时间
+		if (!newOne.getEdate().equals("至今")){//已退场
+			jcxxDO.setIsEntrance("1");
+		}
+		jcxxDO.setExitTime(newOne.getEdate());//退场时间
+		jcxxService.update(jcxxDO);
+		return 1;
 	}
 	
 	@Override

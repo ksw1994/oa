@@ -1,4 +1,4 @@
-var prefix = "/oa/jcxx"
+var prefix = "/oa/leaveTime"
 $(function () {
     load();
 });
@@ -8,7 +8,7 @@ function load() {
         .bootstrapTable(
             {
                 method: 'get', // 服务器数据的请求方式 get or post
-                url: prefix + "/list",// 服务器数据的加载地址
+                url: prefix + "/list", // 服务器数据的加载地址
                 //	showRefresh : true,
                 //	showToggle : true,
                 //	showColumns : true,
@@ -25,15 +25,15 @@ function load() {
                 pageSize: 10, // 如果设置了分页，每页数据条数
                 pageNumber: 1, // 如果设置了分布，首页页码
                 //search : true, // 是否显示搜索框
-                showColumns: true, // 是否显示内容下拉框（选择显示的列）
+                showColumns: false, // 是否显示内容下拉框（选择显示的列）
                 sidePagination: "server", // 设置在哪里进行分页，可选值为"client" 或者 "server"
                 queryParams: function (params) {
                     return {
                         //说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
                         limit: params.limit,
                         offset: params.offset,
-                        name: $('#searchName').val()
-                        // username:$('#searchName').val()
+                        name:$('#searchName').val(),
+                        yearMonth:$('#yearMonth').val()
                     };
                 },
                 // //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
@@ -46,63 +46,55 @@ function load() {
                     {
                         checkbox: true
                     },
-                    /*						{
-                field : 'id',
-                title : 'id',
-                align : "center",
-                //visible :	false
-
-            },*/
                     {
                         field: 'name',
                         title: '姓名',
-                        align: "center"
+						align: "center"
                     },
                     {
-                        field: 'cardId',
-                        title: '身份证号',
-                        align: "center"
+                        field: 'deptName',
+                        title: '部门',
+						align: "center"
                     },
                     {
-                        field: 'graduateYear',
-                        title: '毕业年限',
-                        align: "center"
+                        field: 'yearMonth',
+                        title: '年月',
+						align: "center"
                     },
                     {
-                        field: 'itemName',
-                        title: '最新项目',
-                        align: "center"
+                        field: 'funeralLeave',
+                        title: '丧假(小时)',
+						align: "center"
                     },
                     {
-                        field: 'entranceTime',
-                        title: '最后进场时间',
-                        align: "center"
+                        field: 'casualLeave',
+                        title: '事假(小时)',
+						align: "center"
                     },
                     {
-                        field: 'exitTime',
-                        title: '退场时间',
-                        align: "center"
+                        field: 'maritalLeave',
+                        title: '婚假(小时)',
+						align: "center"
                     },
                     {
-                        field: 'predictExitTime',
-                        title: '预计退场时间',
-                        align: "center"
+                        field: 'annualLeave',
+                        title: '年假(小时)',
+						align: "center"
                     },
                     {
-                        field: 'isEntrance',
-                        title: '是否入场',
-                        align: "center",
-                        formatter: function (value) {
-                            return value == '0' ? '是' : '否';
-                        }
+                        field: 'sickLeave',
+                        title: '病假(小时)',
+						align: "center"
                     },
                     {
-                        field: 'isFj',
-                        title: '是否上传附件',
-                        align: "center",
-                        formatter: function (value) {
-                            return value == '0' ? '否' : '是';
-                        }
+                        field: 'restCan',
+                        title: '调休(小时)',
+						align: "center"
+                    },
+                    {
+                        field: 'paternityLeave',
+                        title: '陪产假(小时)',
+						align: "center"
                     },
                     {
                         title: '操作',
@@ -115,12 +107,10 @@ function load() {
                             var d = '<a class="btn btn-warning btn-sm ' + s_remove_h + '" href="#" title="删除"  mce_href="#" onclick="remove(\''
                                 + row.id
                                 + '\')"><i class="fa fa-remove"></i></a> ';
-                            var f = '<a class="btn btn-success btn-sm ' + s_exportJcxx_h + '" href = "/oa/jcxx/exportJcxx/'+row.id +'" title="导出简历"  mce_href="#" ><i class="fa  fa-cloud-download"></i></a> ';
-                            var g = '<div style="position: relative;" class="btn btn-success btn-sm ' + s_filesUpload_h + '" title="上传附件">' +
-                                ' <input type="file" name="files"  style="width:30px;height:30px;display: block;opacity: 0;position: absolute;\n' +
-                                '    top: 0;\n' +
-                                '    left: 0;" id="uploadFiles" onchange="filesUpload(this.files,\''+row.id+'\')" multiple> <i class="fa  fa-cloud-upload"></i></div> ';
-                            return e + d + f + g;
+                            var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
+                                + row.id
+                                + '\')"><i class="fa fa-key"></i></a> ';
+                            return e + d;
                         }
                     }]
             });
@@ -174,35 +164,8 @@ function remove(id) {
     })
 }
 
-function filesUpload(files,id) {
-    //初始化FormData对象
-    var fd = new FormData();
-    var fileList = files;
-    //console.log(fileList);
-    var jcxxId = id;
-    fd.append("jcxxId",jcxxId);
-    for(var i=0;i<fileList.length;i++){
-        fd.append("files",fileList[i]);
-    }
-    //console.log("fd:"+fd);
-    $.ajax({
-        url : "/oa/fj/filesUpload",
-        type : "POST",
-        data :fd,
-        dataType : "json",
-        success : function(result) {
-            alert("上传成功");
-        },
-
-        error : function(result) {
-            alert("上传失败");
-        },
-        cache : false,
-        contentType : false,
-        processData : false
-    });
-};
-
+function resetPwd(id) {
+}
 
 function batchRemove() {
     var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
@@ -238,4 +201,3 @@ function batchRemove() {
 
     });
 }
-

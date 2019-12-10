@@ -34,7 +34,7 @@ public interface JcxxService {
 	 * 导入excle
 	 * @param file
 	 */
-    void importExcelExcelFile(MultipartFile file);
+    void importExcelFile(MultipartFile file);
 
 	/**
 	 * 根据身份证号查询

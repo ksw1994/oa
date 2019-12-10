@@ -4,32 +4,36 @@
 <mapper namespace="com.bootdo.oa.dao.JcxxDao">
 
 	<select id="get" resultType="com.bootdo.oa.domain.JcxxDO">
-		select `id`,`name`,`sex`,`card_type`,`card_id`,`address`,`phone`,`email`,`company_name`,`site`,`desc`,`pact_sdate`,`pact_edate`,`birthday`,`status`,`is_fj`,`create_by`,`create_time`,`update_by`,`update_time` from jl_jcxx where id = #{value}
+		select * from jl_jcxx where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.bootdo.oa.domain.JcxxDO">
-		select `id`,`name`,`sex`,`card_type`,`card_id`,`address`,`phone`,`email`,`company_name`,`site`,`desc`,`pact_sdate`,`pact_edate`,`birthday`,`status`,`update_time`,`is_fj`,`create_by` from jl_jcxx
+		select t1.*,t2.item_name from jl_jcxx t1 left join jl_xmjl t2 on t1.item_id = t2.id
         <where>  
-		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="name != null and name != ''"> and name like CONCAT(CONCAT('%',#{name},'%')) </if>
-		  		  <if test="sex != null and sex != ''"> and sex = #{sex} </if>
-		  		  <if test="cardType != null and cardType != ''"> and card_type = #{cardType} </if>
-		  		  <if test="cardId != null and cardId != ''"> and card_id = #{cardId} </if>
-		  		  <if test="address != null and address != ''"> and address = #{address} </if>
-		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
-		  		  <if test="email != null and email != ''"> and email = #{email} </if>
-		  		  <if test="companyName != null and companyName != ''"> and company_name = #{companyName} </if>
-		  		  <if test="site != null and site != ''"> and site = #{site} </if>
-		  		  <if test="desc != null and desc != ''"> and desc = #{desc} </if>
-		  		  <if test="pactSdate != null and pactSdate != ''"> and pact_sdate = #{pactSdate} </if>
-		  		  <if test="pactEdate != null and pactEdate != ''"> and pact_edate = #{pactEdate} </if>
-		  		  <if test="birthday != null and birthday != ''"> and birthday = #{birthday} </if>
-		  		  <if test="status != null and status != ''"> and status = #{status} </if>
-			      <if test="isFj != null and isFj != ''"> and is_fj = #{isFj} </if>
-			      <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
-			      <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
-			      <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
-			      <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="id != null and id != ''"> and t1.id = #{id} </if>
+		  		  <if test="name != null and name != ''"> and t1.name like CONCAT(CONCAT('%',#{name},'%')) </if>
+		  		  <if test="sex != null and sex != ''"> and t1.sex = #{sex} </if>
+		  		  <if test="cardType != null and cardType != ''"> and t1.card_type = #{cardType} </if>
+		  		  <if test="cardId != null and cardId != ''"> and t1.card_id = #{cardId} </if>
+		  		  <if test="address != null and address != ''"> and t1.address = #{address} </if>
+		  		  <if test="phone != null and phone != ''"> and t1.phone = #{phone} </if>
+		  		  <if test="email != null and email != ''"> and t1.email = #{email} </if>
+		  		  <if test="companyName != null and companyName != ''"> and t1.company_name = #{companyName} </if>
+		  		  <if test="site != null and site != ''"> and t1.site = #{site} </if>
+		  		  <if test="desc != null and desc != ''"> and t1.desc = #{desc} </if>
+		  		  <if test="pactSdate != null and pactSdate != ''"> and t1.pact_sdate = #{pactSdate} </if>
+		  		  <if test="pactEdate != null and pactEdate != ''"> and t1.pact_edate = #{pactEdate} </if>
+		  		  <if test="birthday != null and birthday != ''"> and t1.birthday = #{birthday} </if>
+		  		  <if test="status != null and status != ''"> and t1.status = #{status} </if>
+			      <if test="isFj != null and isFj != ''"> and t1.is_fj = #{isFj} </if>
+			      <if test="createBy != null and createBy != ''"> and t1.create_by = #{createBy} </if>
+			      <if test="createTime != null and createTime != ''"> and t1.create_time = #{createTime} </if>
+			      <if test="updateBy != null and updateBy != ''"> and t1.update_by = #{updateBy} </if>
+			      <if test="updateTime != null and updateTime != ''"> and t1.update_time = #{updateTime} </if>
+			      <if test="itemId != null and itemId != ''"> and t1.item_id = #{itemId} </if>
+			      <if test="isEntrance != null and isEntrance != ''"> and t1.is_entrance = #{isEntrance} </if>
+			      <if test="start != null and end != null"> and t1.predict_exit_time between #{start} and #{end} </if>
+			      <if test="graduateYear != null and graduateYear != ''"> and t1.graduate_year = #{graduateYear} </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -67,6 +71,10 @@
 			      <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
 			      <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
 			      <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+			      <if test="itemId != null and itemId != ''"> and t1.item_id = #{itemId} </if>
+			      <if test="isEntrance != null and isEntrance != ''"> and t1.is_entrance = #{isEntrance} </if>
+			      <if test="start != null and end != null"> and t1.predict_exit_time between #{start} and #{end} </if>
+			      <if test="graduateYear != null and graduateYear != ''"> and t1.graduate_year = #{graduateYear} </if>
 		  		</where>
 	</select>
 	 
@@ -90,7 +98,13 @@
 			`status`,
 			`is_fj`,
 			`create_by`,
-			`create_time`
+			`create_time`,
+			`item_id`,
+			`entrance_time`,
+			`exit_time`,
+			`predict_exit_time`,
+			`is_entrance`,
+			`graduate_year`
 		)
 		values
 		(
@@ -111,7 +125,13 @@
 			#{status},
 			#{isFj},
 			#{createBy},
-			#{createTime}
+			#{createTime},
+			#{itemId},
+			#{entranceTime},
+			#{exitTime},
+			#{predictExitTime},
+			#{isEntrance},
+			#{graduateYear}
 		)
 	</insert>
 	 
@@ -134,7 +154,13 @@
 			<if test="status != null">`status` = #{status}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime},</if>
 			<if test="isFj != null">`is_fj` = #{isFj},</if>
-			<if test="updateBy != null">`update_by` = #{updateBy}</if>
+			<if test="updateBy != null">`update_by` = #{updateBy},</if>
+			<if test="itemId != null">`item_id` = #{itemId},</if>
+			<if test="entranceTime != null">`entrance_time` = #{entranceTime},</if>
+			<if test="exitTime != null">`exit_time` = #{exitTime},</if>
+			<if test="predictExitTime != null">`predict_exit_time` = #{predictExitTime},</if>
+			<if test="isEntrance != null">`is_entrance` = #{isEntrance},</if>
+			<if test="graduateYear != null">`graduate_year` = #{graduateYear}</if>
 		</set>
 		where id = #{id}
 	</update>
@@ -151,7 +177,7 @@
 	</delete>
 
 	<select id="getByCardId" resultType="com.bootdo.oa.domain.JcxxDO">
-		select `id`,`name`,`sex`,`card_type`,`card_id`,`address`,`phone`,`email`,`company_name`,`site`,`desc`,`pact_sdate`,`pact_edate`,`birthday`,`status`,`is_fj`,`create_by`,`create_time`,`update_by`,`update_time` from jl_jcxx where card_id = #{value}
+		select * from jl_jcxx where card_id = #{value}
 	</select>
 
 </mapper>

@@ -7,5 +7,5 @@ public interface ExcelService {
     /**
      * 读取excel中的数据,生成list
      */
-    List<String> readExcelFile(MultipartFile[] files) throws Exception;
+    List<String> readExcelFile(MultipartFile file) throws Exception;
 }

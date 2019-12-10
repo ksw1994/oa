@@ -98,7 +98,7 @@ public class JcxxServiceImpl implements JcxxService {
 	}
 
 	@Override
-	public void importExcelExcelFile(MultipartFile file) {
+	public void importExcelFile(MultipartFile file) {
 		List<List<String>> list0 = ExcelUtil.readExcel(file,0);//基础信息
 		list0.remove(list0.get(0));
 		List<JcxxDO> jcxxList = getExcel(list0);

@@ -170,4 +170,13 @@
 			sdate asc
 	</select>
 
+	<select id="getNewOne" resultType="com.bootdo.oa.domain.XmjlDO">
+		select *
+		from jl_xmjl
+		where jcxx_id = #{value}
+		order by
+			sdate desc
+		limit 1
+	</select>
+
 </mapper>

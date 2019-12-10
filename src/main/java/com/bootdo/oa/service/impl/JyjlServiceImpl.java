@@ -9,6 +9,7 @@ import io.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,14 +49,32 @@ public class JyjlServiceImpl implements JyjlService {
 		jyjl.setId(UUIDUtils.randomUUID());
 		jyjl.setCreateBy(ShiroUtils.getUserId());
 		jyjl.setCreateTime(DateUtils.format(new Date(),DateUtils.DATE_TIME_PATTERN));
-		return jyjlDao.save(jyjl);
+		jyjlDao.save(jyjl);
+		//修改基础表的毕业年限
+		JcxxDO jcxxDO = jcxxService.get(jyjl.getJcxxId());
+		try {
+			jcxxDO.setGraduateYear(DateUtils.getYears(jyjl.getEdate()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		jcxxService.update(jcxxDO);
+		return 1;
 	}
 	
 	@Override
 	public int update(JyjlDO jyjl){
 		jyjl.setUpdateBy(ShiroUtils.getUserId());
 		jyjl.setUpdateTime(DateUtils.format(new Date(),DateUtils.DATE_TIME_PATTERN));
-		return jyjlDao.update(jyjl);
+		jyjlDao.update(jyjl);
+		//修改基础表的毕业年限
+		JcxxDO jcxxDO = jcxxService.get(jyjl.getJcxxId());
+		try {
+			jcxxDO.setGraduateYear(DateUtils.getYears(jyjl.getEdate()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		jcxxService.update(jcxxDO);
+		return 1;
 	}
 	
 	@Override

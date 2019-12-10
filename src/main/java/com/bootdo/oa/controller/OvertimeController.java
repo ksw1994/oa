@@ -1,20 +1,19 @@
 package com.bootdo.oa.controller;
 
-
 import java.io.*;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
 import com.bootdo.common.utils.FileUtil;
-import com.bootdo.oa.domain.JcxxDO;
-import com.bootdo.oa.service.JcxxService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import com.bootdo.oa.domain.OvertimeDO;
+import com.bootdo.oa.service.OvertimeService;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
@@ -24,52 +23,50 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
- * 简历基础信息表 
+ * 打卡时间表
  * 
  * @author chglee
  * @email 1992lcg@163.com
- * @date 2019-11-11 10:29:06
+ * @date 2019-12-03 10:34:37
  */
  
 @Controller
-@RequestMapping("/oa/jcxx")
-public class JcxxController {
+@RequestMapping("/oa/overtime")
+public class OvertimeController {
 	@Autowired
-	private JcxxService jcxxService;
+	private OvertimeService overtimeService;
 	
 	@GetMapping()
-	@RequiresPermissions("oa:jcxx:jcxx")
-	String Jcxx(){
-	    return "oa/jcxx/jcxx";
+	@RequiresPermissions("oa:overtime:overtime")
+	String Overtime(){
+	    return "oa/overtime/overtime";
 	}
 	
 	@ResponseBody
 	@GetMapping("/list")
-	@RequiresPermissions("oa:jcxx:jcxx")
+	@RequiresPermissions("oa:overtime:overtime")
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
-		List<JcxxDO> jcxxList = jcxxService.list(query);
-		// int total = jcxxService.count(query);
-		int total = jcxxList.size();
-		PageUtils pageUtils = new PageUtils(jcxxList, total);
+		List<OvertimeDO> overtimeList = overtimeService.list(query);
+		int total = overtimeService.count(query);
+		PageUtils pageUtils = new PageUtils(overtimeList, total);
 		return pageUtils;
 	}
 	
 	@GetMapping("/add")
-	@RequiresPermissions("oa:jcxx:add")
+	@RequiresPermissions("oa:overtime:add")
 	String add(){
-	    return "oa/jcxx/add";
+	    return "oa/overtime/add";
 	}
 
 	@GetMapping("/edit/{id}")
-	@RequiresPermissions("oa:jcxx:edit")
+	@RequiresPermissions("oa:overtime:edit")
 	String edit(@PathVariable("id") String id,Model model){
-		JcxxDO jcxx = jcxxService.get(id);
-		model.addAttribute("jcxx", jcxx);
-	    return "oa/jcxx/edit";
+		OvertimeDO overtime = overtimeService.get(id);
+		model.addAttribute("overtime", overtime);
+	    return "oa/overtime/edit";
 	}
 	
 	/**
@@ -77,9 +74,9 @@ public class JcxxController {
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	@RequiresPermissions("oa:jcxx:add")
-	public R save( JcxxDO jcxx){
-		if(jcxxService.save(jcxx)>0){
+	@RequiresPermissions("oa:overtime:add")
+	public R save( OvertimeDO overtime){
+		if(overtimeService.save(overtime)>0){
 			return R.ok();
 		}
 		return R.error();
@@ -89,9 +86,9 @@ public class JcxxController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	@RequiresPermissions("oa:jcxx:edit")
-	public R update( JcxxDO jcxx){
-		jcxxService.update(jcxx);
+	@RequiresPermissions("oa:overtime:edit")
+	public R update( OvertimeDO overtime){
+		overtimeService.update(overtime);
 		return R.ok();
 	}
 	
@@ -100,9 +97,9 @@ public class JcxxController {
 	 */
 	@PostMapping( "/remove")
 	@ResponseBody
-	@RequiresPermissions("oa:jcxx:remove")
+	@RequiresPermissions("oa:overtime:remove")
 	public R remove( String id){
-		if(jcxxService.remove(id)>0){
+		if(overtimeService.remove(id)>0){
 		return R.ok();
 		}
 		return R.error();
@@ -113,30 +110,30 @@ public class JcxxController {
 	 */
 	@PostMapping( "/batchRemove")
 	@ResponseBody
-	@RequiresPermissions("oa:jcxx:batchRemove")
+	@RequiresPermissions("oa:overtime:batchRemove")
 	public R remove(@RequestParam("ids[]") String[] ids){
-		jcxxService.batchRemove(ids);
+		overtimeService.batchRemove(ids);
 		return R.ok();
 	}
 
 	//导入excel
 	@RequestMapping(value = "/importExcel", method= RequestMethod.POST)
 	@ResponseBody
-	@RequiresPermissions("oa:jcxx:importExcel")
-	public R importExcel(@RequestParam("file")MultipartFile file, HttpServletRequest request){
-		jcxxService.importExcelFile(file);
+	@RequiresPermissions("oa:overtime:importExcel")
+	public R importExcel(@RequestParam("file") MultipartFile file, HttpServletRequest request){
+		overtimeService.importExcelFile(file);
 		return R.ok();
 	}
 
-	//单文件导出简历
-	@GetMapping("/exportJcxx/{jcxxId}")
-	@RequiresPermissions("oa:jcxx:exportJcxx")
-	public String download(@PathVariable(value = "jcxxId",required = false)String jcxxId,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	//单文件导出加班数据
+	@GetMapping("/exportOvertime")
+	//@RequiresPermissions("oa:overtime:exportOvertime")
+	public String download(String date,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//jcxxId : 要导出的简历id
-		File file = jcxxService.exportJcxx(jcxxId);
+		File file = overtimeService.exportOvertime(date);
 		if (file.exists()) {
 			// 设置强制下载不打开
-			response.setContentType("application/force-download");
+			response.setContentType("application/msdownload");
 			response.addHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(file.getName(),"utf-8"));
 			byte[] buffer = new byte[1024];
 			FileInputStream fis = null;
@@ -176,5 +173,4 @@ public class JcxxController {
 		file.delete();
 		return null;
 	}
-
 }

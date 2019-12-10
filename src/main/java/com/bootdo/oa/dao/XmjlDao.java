@@ -38,4 +38,11 @@ public interface XmjlDao {
 	int deleteByJcxxId(String jcxxId);
 
     List<XmjlDO> getByJcxxId(String jcxxId);
+
+	/**
+	 * 获取最新的一条
+	 * @param jcxxId
+	 * @return
+	 */
+	XmjlDO getNewOne(String jcxxId);
 }

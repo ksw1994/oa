@@ -1,7 +1,9 @@
 bootdo:
-  uploadPath: /var/uploaded_files/
-  username: test
+  uploadPath: d:/work/uploaded_files/
+  username: admin
   password: 111111
+  templatePath: d:/work/template_files/
+  exportPath: d:/work/export_files/
 logging:
   level:
     root: error
@@ -12,7 +14,7 @@ spring:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/bootdo?useUnicode=true&characterEncoding=utf8
     username: root
-    password: 123
+    password: 123456
     initialSize: 1
     minIdle: 3
     maxActive: 20
@@ -51,3 +53,5 @@ spring:
           max-active: 100
           # 连接池最大阻塞等待时间（使用负值表示没有限制）
           max-wait: -1
+server:
+  port: 8088

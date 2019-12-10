@@ -3,6 +3,8 @@ package com.bootdo.common.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -109,8 +111,96 @@ public class DateUtils {
     }
 
     public static void main(String[] args) throws ParseException {
-        int years = getYears("2012/06/18");
-        System.out.println(years);
+        /*int years = getYears("2012/06/18");
+        System.out.println(years);*/
+       /* String t1 = "21:43";
+        String t2 = "23:59";
+        //Boolean result = DateUtils.largerTime(t1, t2);
+        BigDecimal result = DateUtils.timeDifference(t1, t2);
+        System.out.println(result);*/
+       /* String[] weekDays = {"日", "一", "二", "三", "四", "五", "六"};
+        Date date = getDate("2019-12-01");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int w = calendar.get(Calendar.DAY_OF_WEEK)-1;
+        if (w < 0){
+            w = 0;
+        }
+        System.out.println(weekDays[w]);*/
+       String date = "2019-2-1";
+        System.out.println(getMaxDate(date));
+    }
+
+    /**
+     * t1是否晚于t2（小时数跟分钟数比较）
+     * @param t1
+     * @param t2
+     * @return
+     */
+    public static Boolean largerTime(String t1,String t2) {
+        boolean flag = false;
+        Date date1, date2;
+        DateFormat formart = new SimpleDateFormat("hh:mm");
+        try {
+            date1 = formart.parse(t1);
+            date2 = formart.parse(t2);
+            if (date1.compareTo(date2) < 0) {//date1早于date2
+                return flag;
+            } else {//date1晚于或等于date2
+                flag = true;
+                return flag;
+            }
+        } catch (ParseException e) {
+            System.out.println("date init fail!");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * t1与t2相差(小时数，保留一位小数)
+     * @param t1
+     * @param t2
+     * @return
+     */
+    public static BigDecimal timeDifference(String t1, String t2) {
+        Date date1, date2;
+        DateFormat formart = new SimpleDateFormat("hh:mm");
+        try {
+            date1 = formart.parse(t1);
+            date2 = formart.parse(t2);
+            long m = (date2.getHours()*60 + date2.getMinutes()) - (date1.getHours()*60 + date1.getMinutes());
+            return new BigDecimal(m/60.0).setScale(1,BigDecimal.ROUND_HALF_UP);
+        } catch (ParseException e) {
+            System.out.println("date init fail!");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Date getDate(String dateString) throws ParseException {
+        DateFormat formart = new SimpleDateFormat(DATE_PATTERN);
+        Date date = formart.parse(dateString);
+        return date;
+    }
+
+    public static String getWeekDay(String dateString) throws ParseException {
+        String[] weekDays = {"日", "一", "二", "三", "四", "五", "六"};
+        Date date = getDate(dateString);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int w = calendar.get(Calendar.DAY_OF_WEEK)-1;
+        if (w < 0){
+            w = 0;
+        }
+        return weekDays[w];
+    }
+
+    public static int getMaxDate(String dateString) throws ParseException {
+        Date date = getDate(dateString);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
 }
