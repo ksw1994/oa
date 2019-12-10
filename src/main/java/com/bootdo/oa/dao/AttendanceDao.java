@@ -29,4 +29,6 @@ public interface AttendanceDao {
 	int remove(Integer id);
 	
 	int batchRemove(Integer[] ids);
+
+    int deleteByCondition(Map<String, Object> map);
 }
