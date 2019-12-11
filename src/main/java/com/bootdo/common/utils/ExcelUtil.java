@@ -105,8 +105,10 @@ public class ExcelUtil {
         try {
             list = ExcelImportUtil.importExcel(file.getInputStream(), pojoClass, params);
         }catch (NoSuchElementException e){
+        	e.printStackTrace();
             throw new BusinessException(BizExceptionEnum.API_EXCEL_NOT_NULL_ERROR);
         } catch (Exception e) {
+        	e.printStackTrace();
             throw new BusinessException(BizExceptionEnum.API_EXCEL_ERROR,e.getMessage());
         }
         return list;

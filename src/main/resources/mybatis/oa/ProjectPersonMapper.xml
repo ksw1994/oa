@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.oa.dao.ProjectPersonDao">
+
+	<select id="get" resultType="com.bootdo.oa.domain.ProjectPersonDO">
+		select `id`,`user_id`,`project_id`,`einlass`,`exam_time`,`exit_time`,`remarks` from jl_project_person where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.oa.domain.ProjectPersonDO">
+		select `id`,`user_id`,`project_id`,`einlass`,`exam_time`,`exit_time`,`remarks` from jl_project_person
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="projectId != null and projectId != ''"> and project_id = #{projectId} </if>
+		  		  <if test="einlass != null and einlass != ''"> and einlass = #{einlass} </if>
+		  		  <if test="examTime != null and examTime != ''"> and exam_time = #{examTime} </if>
+		  		  <if test="exitTime != null and exitTime != ''"> and exit_time = #{exitTime} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from jl_project_person
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="projectId != null and projectId != ''"> and project_id = #{projectId} </if>
+		  		  <if test="einlass != null and einlass != ''"> and einlass = #{einlass} </if>
+		  		  <if test="examTime != null and examTime != ''"> and exam_time = #{examTime} </if>
+		  		  <if test="exitTime != null and exitTime != ''"> and exit_time = #{exitTime} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.oa.domain.ProjectPersonDO" useGeneratedKeys="true" keyProperty="id">
+		insert into jl_project_person
+		(
+			`user_id`, 
+			`project_id`, 
+			`einlass`, 
+			`exam_time`, 
+			`exit_time`, 
+			`remarks`
+		)
+		values
+		(
+			#{userId}, 
+			#{projectId}, 
+			#{einlass}, 
+			#{examTime}, 
+			#{exitTime}, 
+			#{remarks}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.oa.domain.ProjectPersonDO">
+		update jl_project_person 
+		<set>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="projectId != null">`project_id` = #{projectId}, </if>
+			<if test="einlass != null">`einlass` = #{einlass}, </if>
+			<if test="examTime != null">`exam_time` = #{examTime}, </if>
+			<if test="exitTime != null">`exit_time` = #{exitTime}, </if>
+			<if test="remarks != null">`remarks` = #{remarks}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from jl_project_person where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jl_project_person where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
