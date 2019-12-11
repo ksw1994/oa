@@ -32,6 +32,7 @@
 
                     <div class="columns pull-right">
                         <button class="btn btn-success" onclick="reLoad()">查询</button>
+                        <button class="btn btn-success" onclick="exportExcle()">导出</button>
                     </div>
                     <div class="columns pull-right col-md-2 nopadding">
                         <input id="searchName" type="text" class="form-control"
@@ -39,16 +40,20 @@
                     </div>
                     <div class="columns pull-right" style="width: 150px;">
                         <label for="status" style="display: inline-block;padding: 2px 10px;">状态:</label>
-                        <select id="status">
+                        <select id="status" style="height: 30px;">
                             <option></option>
                             <option value="0">加班</option>
                             <option value="1">外勤</option>
                             <option value="2">正常</option>
                         </select>
                     </div>
-                    <div class="columns pull-right" style="width: 250px;">
+                    <div class="columns pull-right" style="width: 220px;">
                         <label for="status" style="display: inline-block;padding: 2px 10px;">打卡时间:</label>
                         <input id="date" type="date" style="height: 30px;">
+                    </div>
+                    <div class="columns pull-right" style="width: 200px;">
+                        <label for="dept" style="display: inline-block;padding: 2px 10px;">部门:</label>
+                        <select id="dept" runat="server" style="height: 30px;"></select>
                     </div>
                 </div>
                 <table id="exampleTable" data-mobile-responsive="true">
@@ -129,11 +134,100 @@
             });
         };
     };
+   function getAllDept() {
+        $.ajax({
+            url: prefix + "/getAllDept",
+            dataType: "json",
+            success: function (result) {
+                var select = $("#dept");
+                select.append("<option value=''>请选择</option>");
+                for (var i = 0; i < result.length; i++) {
+                    AppendNode(result[i]);   //将value和text添加到下拉框中
+                }
+            }
+    })
+   }
+   function AppendNode(value) {
+       $("#dept").append("<option value='" + value + "'>" + value + "</option>");
+   }
+
     var user;
     $(function () {
         user = new User();
         user.init();
+        getAllDept();
     });
+
+    function exportExcle() {
+        var date = $('#date').val();
+        console.log("date:"+date);
+        var	deptName =  $('#dept').val();
+        console.log("deptName:"+deptName);
+        if(date == null || date == '' || deptName == null || deptName == ''){
+            //alert("请选择时间和部门");
+            layer.msg("请选择时间和部门");
+            return;
+        }
+       // var xhr = new XMLHttpRequest();
+        //设置响应类型为blob类型
+        //xhr.responseType = "blob";
+        /*$.ajax({
+            url: prefix + '/exportOvertime',
+            type: 'GET',
+            data: {
+                date:date,
+                deptName:deptName,
+            },
+            dataType:"json",
+            success: function(result){
+                console("result:"+result)
+                if (this.status == 200) {
+                    // 返回200
+                    var blob = this.response;
+                    var reader = new FileReader();
+                    reader.readAsDataURL(blob);// 转换为base64，可以直接放入a表情href
+                    console.log("blob:"+reader)
+                    reader.onload = function (e) {
+                        // 转换完成，创建一个a标签用于下载
+                        var a = document.createElement('a');
+                        a.download = '加班考勤.xlsx';
+                        a.href = e.target.result;
+                        $("body").append(a);  // 修复firefox中无法触发click
+                        a.click();
+                        $(a).remove();
+                    }
+                } else {
+                    layer.msg(result.msg);
+                }
+            },
+        })*/
+
+        var url = prefix + '/exportOvertime?date='+date+'&deptName='+deptName;
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);    // 也可以使用POST方式，根据接口
+        xhr.responseType = "blob";  // 返回类型blob
+        // 定义请求完成的处理函数，请求前也可以增加加载框/禁用下载按钮逻辑
+        xhr.onload = function () {
+            // 请求完成
+            if (this.status === 200) {
+                // 返回200
+                var blob = this.response;
+                var reader = new FileReader();
+                reader.readAsDataURL(blob);  // 转换为base64，可以直接放入a表情href
+                reader.onload = function (e) {
+                    // 转换完成，创建一个a标签用于下载
+                    var a = document.createElement('a');
+                    a.download = '加班考勤数据.xlsx';
+                    a.href = e.target.result;
+                    $("body").append(a);  // 修复firefox中无法触发click
+                    a.click();
+                    $(a).remove();
+                }
+            }
+        };
+        // 发送ajax请求
+        xhr.send()
+    }
 </script>
 </body>
 </html>

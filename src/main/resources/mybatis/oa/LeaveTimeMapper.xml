@@ -4,23 +4,21 @@
 <mapper namespace="com.bootdo.oa.dao.LeaveTimeDao">
 
 	<select id="get" resultType="com.bootdo.oa.domain.LeaveTimeDO">
-		select `id`,`name`,`dept_name`,`funeral_leave`,`casual_leave`,`marital_leave`,`annual_leave`,`sick_leave`,`rest_can`,`paternity_leave`,`year_month`,`create_by`,`create_time`,`update_by`,`update_time` from oa_leave_time where id = #{value}
+		select `id`,`name`,`dept_name`,`leave_type`,`leave_date`,`start`,`end`,`duration`,`reason`,`create_by`,`create_time`,`update_by`,`update_time` from oa_leave_time where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.bootdo.oa.domain.LeaveTimeDO">
-		select `id`,`name`,`dept_name`,`funeral_leave`,`casual_leave`,`marital_leave`,`annual_leave`,`sick_leave`,`rest_can`,`paternity_leave`,`year_month`,`create_by`,`create_time`,`update_by`,`update_time` from oa_leave_time
+		select `id`,`name`,`dept_name`,`leave_type`,`leave_date`,`start`,`end`,`duration`,`reason`,`create_by`,`create_time`,`update_by`,`update_time` from oa_leave_time
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="name != null and name != ''"> and name = #{name} </if>
 		  		  <if test="deptName != null and deptName != ''"> and dept_name = #{deptName} </if>
-		  		  <if test="funeralLeave != null and funeralLeave != ''"> and funeral_leave = #{funeralLeave} </if>
-		  		  <if test="casualLeave != null and casualLeave != ''"> and casual_leave = #{casualLeave} </if>
-		  		  <if test="maritalLeave != null and maritalLeave != ''"> and marital_leave = #{maritalLeave} </if>
-		  		  <if test="annualLeave != null and annualLeave != ''"> and annual_leave = #{annualLeave} </if>
-		  		  <if test="sickLeave != null and sickLeave != ''"> and sick_leave = #{sickLeave} </if>
-		  		  <if test="restCan != null and restCan != ''"> and rest_can = #{restCan} </if>
-		  		  <if test="paternityLeave != null and paternityLeave != ''"> and paternity_leave = #{paternityLeave} </if>
-		  		  <if test="yearMonth != null and yearMonth != ''"> and `year_month` = #{yearMonth} </if>
+		  		  <if test="leaveType != null and leaveType != ''"> and leave_type = #{leaveType} </if>
+		  		  <if test="leaveDate != null and leaveDate != ''"> and leave_date = #{leaveDate} </if>
+		  		  <if test="start != null and start != ''"> and start = #{start} </if>
+		  		  <if test="end != null and end != ''"> and end = #{end} </if>
+		  		  <if test="duration != null and duration != ''"> and duration = #{duration} </if>
+		  		  <if test="reason != null and reason != ''"> and reason = #{reason} </if>
 		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
 		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
 		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
@@ -45,14 +43,12 @@
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="name != null and name != ''"> and name = #{name} </if>
 		  		  <if test="deptName != null and deptName != ''"> and dept_name = #{deptName} </if>
-		  		  <if test="funeralLeave != null and funeralLeave != ''"> and funeral_leave = #{funeralLeave} </if>
-		  		  <if test="casualLeave != null and casualLeave != ''"> and casual_leave = #{casualLeave} </if>
-		  		  <if test="maritalLeave != null and maritalLeave != ''"> and marital_leave = #{maritalLeave} </if>
-		  		  <if test="annualLeave != null and annualLeave != ''"> and annual_leave = #{annualLeave} </if>
-		  		  <if test="sickLeave != null and sickLeave != ''"> and sick_leave = #{sickLeave} </if>
-		  		  <if test="restCan != null and restCan != ''"> and rest_can = #{restCan} </if>
-		  		  <if test="paternityLeave != null and paternityLeave != ''"> and paternity_leave = #{paternityLeave} </if>
-		  		  <if test="yearMonth != null and yearMonth != ''"> and `year_month` = #{yearMonth} </if>
+		  		  <if test="leaveType != null and leaveType != ''"> and leave_type = #{leaveType} </if>
+		  		  <if test="leaveDate != null and leaveDate != ''"> and leave_date = #{leaveDate} </if>
+		  		  <if test="start != null and start != ''"> and start = #{start} </if>
+		  		  <if test="end != null and end != ''"> and end = #{end} </if>
+		  		  <if test="duration != null and duration != ''"> and duration = #{duration} </if>
+		  		  <if test="reason != null and reason != ''"> and reason = #{reason} </if>
 		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
 		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
 		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
@@ -66,14 +62,12 @@
 			`id`, 
 			`name`, 
 			`dept_name`, 
-			`funeral_leave`, 
-			`casual_leave`, 
-			`marital_leave`, 
-			`annual_leave`, 
-			`sick_leave`, 
-			`rest_can`, 
-			`paternity_leave`, 
-			`year_month`, 
+			`leave_type`, 
+			`leave_date`, 
+			`start`, 
+			`end`, 
+			`duration`, 
+			`reason`, 
 			`create_by`, 
 			`create_time`, 
 			`update_by`, 
@@ -84,14 +78,12 @@
 			#{id}, 
 			#{name}, 
 			#{deptName}, 
-			#{funeralLeave}, 
-			#{casualLeave}, 
-			#{maritalLeave}, 
-			#{annualLeave}, 
-			#{sickLeave}, 
-			#{restCan}, 
-			#{paternityLeave}, 
-			#{yearMonth}, 
+			#{leaveType}, 
+			#{leaveDate}, 
+			#{start}, 
+			#{end}, 
+			#{duration}, 
+			#{reason}, 
 			#{createBy}, 
 			#{createTime}, 
 			#{updateBy}, 
@@ -104,14 +96,12 @@
 		<set>
 			<if test="name != null">`name` = #{name}, </if>
 			<if test="deptName != null">`dept_name` = #{deptName}, </if>
-			<if test="funeralLeave != null">`funeral_leave` = #{funeralLeave}, </if>
-			<if test="casualLeave != null">`casual_leave` = #{casualLeave}, </if>
-			<if test="maritalLeave != null">`marital_leave` = #{maritalLeave}, </if>
-			<if test="annualLeave != null">`annual_leave` = #{annualLeave}, </if>
-			<if test="sickLeave != null">`sick_leave` = #{sickLeave}, </if>
-			<if test="restCan != null">`rest_can` = #{restCan}, </if>
-			<if test="paternityLeave != null">`paternity_leave` = #{paternityLeave}, </if>
-			<if test="yearMonth != null">`year_month` = #{yearMonth}, </if>
+			<if test="leaveType != null">`leave_type` = #{leaveType}, </if>
+			<if test="leaveDate != null">`leave_date` = #{leaveDate}, </if>
+			<if test="start != null">`start` = #{start}, </if>
+			<if test="end != null">`end` = #{end}, </if>
+			<if test="duration != null">`duration` = #{duration}, </if>
+			<if test="reason != null">`reason` = #{reason}, </if>
 			<if test="createBy != null">`create_by` = #{createBy}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
 			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
@@ -130,5 +120,17 @@
 			#{id}
 		</foreach>
 	</delete>
+
+	<select id="getListByDate"  parameterType="string" resultType="com.bootdo.oa.domain.LeaveTimeDO">
+		SELECT
+			*
+		FROM
+			oa_leave_time
+		WHERE
+			date_format(leave_date, '%Y %m') = date_format(DATE_SUB(#{date}, INTERVAL 0 MONTH),'%Y %m')
+			and dept_name = #{deptName}
+		ORDER BY
+			name,leave_date ASC
+	</select>
 
 </mapper>

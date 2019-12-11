@@ -11,7 +11,7 @@ import java.util.Map;
  * 
  * @author ksw
  * @email 18819123386@163.com
- * @date 2019-12-05 10:30:30
+ * @date 2019-12-10 10:35:12
  */
 public interface LeaveTimeService {
 	
@@ -29,5 +29,7 @@ public interface LeaveTimeService {
 	
 	int batchRemove(String[] ids);
 
-	void importExcelFile(MultipartFile file);
+    void importExcelFile(MultipartFile file);
+
+	List<LeaveTimeDO> getListByDate(String date,String deptName);
 }

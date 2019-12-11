@@ -3,16 +3,18 @@ package com.bootdo.oa.service.impl;
 import cn.afterturn.easypoi.cache.manager.IFileLoader;
 import com.bootdo.common.excel.ExcelUtil;
 import com.bootdo.common.excel.WriteExcle;
-import com.bootdo.common.utils.DateUtils;
-import com.bootdo.common.utils.ShiroUtils;
-import com.bootdo.common.utils.UUIDUtils;
+import com.bootdo.common.exception.BusinessException;
+import com.bootdo.common.utils.*;
+import com.bootdo.oa.domain.LeaveTimeDO;
 import com.bootdo.oa.domain.WeekScopeDO;
+import com.bootdo.oa.service.LeaveTimeService;
 import com.bootdo.oa.service.WeekScopeService;
 import io.netty.util.internal.StringUtil;
 import jxl.Workbook;
 import jxl.format.Alignment;
 import jxl.format.Border;
 import jxl.write.WritableWorkbook;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.*;
@@ -47,6 +49,9 @@ public class OvertimeServiceImpl implements OvertimeService {
 
 	@Autowired
 	private WeekScopeService weekScopeService;
+
+	@Autowired
+	private LeaveTimeService leaveTimeService;
 
 	@Value("${bootdo.templatePath}")
 	private String templatePath;
@@ -190,9 +195,10 @@ public class OvertimeServiceImpl implements OvertimeService {
 	}
 
 	@Override
-	public File exportOvertime(String date) {
+	public File exportOvertime(String date,String deptName) {
 		long start = System.currentTimeMillis();
-		date = "2019-11-01";
+		//date = "2019-11-01";
+		//deptName = "BU2广州开发中心";
 		StringBuffer tempPath = new StringBuffer();//模板地址
 		tempPath.append(templatePath);
 		String newPath = exportPath+"加班数据.xlsx";
@@ -213,10 +219,15 @@ public class OvertimeServiceImpl implements OvertimeService {
 			tempPath.append("加班考勤模板-31.xlsx");
 		}
 
-		List<OvertimeDO> overtimeList = overtimeDao.getListByDate(date);
-		List<String> nameList = overtimeDao.getNameListByDate(date);
-		//加班数据
-		List<List<Object>> dataList = getData(overtimeList, nameList,date,maxDate);
+		List<OvertimeDO> overtimeList = overtimeDao.getListByDate(date,deptName);
+		if (CollectionUtils.isEmpty(overtimeList)){
+			return null;
+		}
+		List<String> nameList = overtimeDao.getNameListByDate(date,deptName);
+		//该月所有的请假数据
+		List<LeaveTimeDO> leaveTimeList = leaveTimeService.getListByDate(date,deptName);
+		//加班请假数据数据
+		List<List<Object>> dataList = getData(overtimeList, nameList,leaveTimeList,date,maxDate);
 
 		//新建一份excle
 		File newFile = WriteExcle.createNewFile(tempPath.toString(), newPath);
@@ -297,7 +308,21 @@ public class OvertimeServiceImpl implements OvertimeService {
 			}
 			for (int i = 0; i < 21 ; i++) {
 				XSSFCell cell = row.createCell(maxDate+2+i);
+				if (i == 8 || i == 10 || i == 12 || i==14 || i== 16){//调休、事假、病假、年假、其他假期日期
+					String d = (String) l.get(maxDate + i - 6);
+					if (!StringUtil.isNullOrEmpty(d)){
+						cell.setCellValue(d);
+					}
+				}
+				if (i == 9 || i == 11 || i== 13 || i== 15 || i== 17){//调休时间
+					BigDecimal times = (BigDecimal) l.get(maxDate + i-6);
+					if (times.doubleValue() > 0){
+						cell.setCellValue(times.doubleValue());
+					}
+				}
 				cell.setCellStyle(style0);
+				//自适应列宽
+				sheet.autoSizeColumn(maxDate+2+i,true);
 			}
 			lastRowNum++;
 		}
@@ -313,6 +338,11 @@ public class OvertimeServiceImpl implements OvertimeService {
 
 		System.out.println((System.currentTimeMillis()-start)/1000 +"秒");
 		return newFile;
+	}
+
+	@Override
+	public List<String> getAllDept() {
+		return overtimeDao.getAllDept();
 	}
 
 	/**
@@ -370,7 +400,7 @@ public class OvertimeServiceImpl implements OvertimeService {
 		RegionUtil.setBottomBorderColor(IndexedColors.BLACK.getIndex(), region, sheet);
 	}
 
-	public List<List<Object>> getData(List<OvertimeDO> overtimeList, List<String> nameList, String date, int maxDate){
+	public List<List<Object>> getData(List<OvertimeDO> overtimeList, List<String> nameList, List<LeaveTimeDO> leaveTimeList, String date, int maxDate){
 		List<List<Object>> resultList = new ArrayList<>();
 		String yearMonth = date.substring(0,8);
 		int count = 1;
@@ -386,6 +416,86 @@ public class OvertimeServiceImpl implements OvertimeService {
 					e.printStackTrace();
 				}
 			}
+			//这个月的总的调休日期
+			StringBuffer restCan = new StringBuffer();
+			//这个月的总的事假日期
+			StringBuffer casualLeave = new StringBuffer();
+			//这个月的总的病假日期
+			StringBuffer sickLeave = new StringBuffer();
+			//这个月的总的年假日期
+			StringBuffer yearLeave = new StringBuffer();
+			//这个月的总的其他假期日期
+			StringBuffer otherLeave = new StringBuffer();
+			for (int i = 1; i < maxDate+1 ; i++) {
+				if (isLeaveInThisDate(leaveTimeList,name,"调休",yearMonth+i)){
+					restCan.append(yearMonth+i);
+					restCan.append(",");
+				}else if (isLeaveInThisDate(leaveTimeList,name,"事假",yearMonth+i)){
+					casualLeave.append(yearMonth+i);
+					casualLeave.append(",");
+				}else if (isLeaveInThisDate(leaveTimeList,name,"病假",yearMonth+i)){
+					sickLeave.append(yearMonth+i);
+					sickLeave.append(",");
+				}else if (isLeaveInThisDate(leaveTimeList,name,"年假",yearMonth+i)){
+					yearLeave.append(yearMonth+i);
+					yearLeave.append(",");
+				}else if (isLeaveInThisDate(leaveTimeList,name,"婚假",yearMonth+i)){
+					otherLeave.append(yearMonth+i);
+					otherLeave.append(",");
+				}else if (isLeaveInThisDate(leaveTimeList,name,"陪产假",yearMonth+i)){
+					otherLeave.append(yearMonth+i);
+					otherLeave.append(",");
+				}
+			}
+			//这个月总的调休时间 小时数
+			BigDecimal restCanHours = new BigDecimal(0);
+			//这个月总的事假时间 小时
+			BigDecimal casualLeaveHours = new BigDecimal(0);
+			//这个月总的病假时间 小时
+			BigDecimal sickLeaveHours = new BigDecimal(0);
+			//这个月总的年假时间 天数
+			BigDecimal yearLeaveHours = new BigDecimal(0);
+			//这个月总的其他假期时间 天数
+			BigDecimal otherLeaveHours = new BigDecimal(0);
+			try {
+				restCanHours = getLeavetime(leaveTimeList,name,yearMonth,"调休");
+				casualLeaveHours = getLeavetime(leaveTimeList,name,yearMonth,"事假");
+				sickLeaveHours = getLeavetime(leaveTimeList,name,yearMonth,"病假");
+				yearLeaveHours = getLeavetime(leaveTimeList,name,yearMonth,"年假");
+				BigDecimal marriageLeaveHours = getLeavetime(leaveTimeList, name, yearMonth, "婚假");
+				BigDecimal paternityLeaveHours = getLeavetime(leaveTimeList, name, yearMonth, "陪产假");
+				otherLeaveHours = marriageLeaveHours.add(paternityLeaveHours);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			if (!StringUtil.isNullOrEmpty(restCan.toString())){
+				deleteCharAtLast(restCan);
+			}
+			list.add(restCan.toString());
+			list.add(restCanHours);
+			if (!StringUtil.isNullOrEmpty(casualLeave.toString())){
+				deleteCharAtLast(casualLeave);
+			}
+			list.add(casualLeave.toString());
+			//保留一位小数
+			list.add(casualLeaveHours.divide(new BigDecimal(8),1,BigDecimal.ROUND_HALF_UP));
+			if (!StringUtil.isNullOrEmpty(sickLeave.toString())){
+				deleteCharAtLast(sickLeave);
+			}
+			list.add(sickLeave.toString());
+			list.add(sickLeaveHours.divide(new BigDecimal(8),1,BigDecimal.ROUND_HALF_UP));
+
+			if (!StringUtil.isNullOrEmpty(yearLeave.toString())){
+				deleteCharAtLast(yearLeave);
+			}
+			list.add(yearLeave.toString());
+			list.add(yearLeaveHours);
+
+			if (!StringUtil.isNullOrEmpty(otherLeave.toString())){
+				deleteCharAtLast(otherLeave);
+			}
+			list.add(otherLeave.toString());
+			list.add(otherLeaveHours);
 			resultList.add(list);
 			count++;
 		}
@@ -400,5 +510,31 @@ public class OvertimeServiceImpl implements OvertimeService {
 			}
 		}
 		return new BigDecimal(0);
+	}
+
+	public BigDecimal getLeavetime(List<LeaveTimeDO> leaveTimeList,String name,String date,String leaveType) throws ParseException {
+		double result = 0;
+		for (LeaveTimeDO leaveTimeDO : leaveTimeList) {
+			if (leaveTimeDO.getName().equals(name) && leaveTimeDO.getLeaveType().equals(leaveType)
+			&& DateUtils.format(leaveTimeDO.getLeaveDate(),DateUtils.DATE_PATTERN).substring(0,7).equals(date.substring(0,7))){
+				BigDecimal d = leaveTimeDO.getDuration();
+				result += d.doubleValue();
+			}
+		}
+		return new BigDecimal(result);
+	}
+
+	public boolean isLeaveInThisDate(List<LeaveTimeDO> leaveTimeList,String name,String leaveType,String date){
+		for (LeaveTimeDO leaveTimeDO : leaveTimeList) {
+			if (leaveTimeDO.getName().equals(name) && leaveTimeDO.getLeaveType().equals(leaveType)
+					&& DateUtils.format(leaveTimeDO.getLeaveDate(),DateUtils.DATE_PATTERN).equals(date)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void deleteCharAtLast(StringBuffer s){
+		s.deleteCharAt(s.length()-1);
 	}
 }

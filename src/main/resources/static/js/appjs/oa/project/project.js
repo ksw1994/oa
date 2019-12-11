@@ -78,6 +78,14 @@ function load() {
 									field : 'edate', 
 									title : '结束日期' 
 								},
+								{
+									field : 'workNum', 
+									title : '需求总工作量' ,formatter:function(value,row,index){
+						            	var  html =  "<a id='workNum"+row.id+"' onmouseover='getWorkInfo("+row.id+")' onmouseout = 'closeWorkInfo("+row.id+")'>"+value+"</a>";
+						                return html;
+					            	}
+									
+								},
 																{
 									field : 'witness', 
 									title : '证明人' 
@@ -102,10 +110,7 @@ function load() {
 									field : 'outSdate', 
 									title : '退场日期' 
 								},
-															{
-									field : 'workNum', 
-									title : '需求总工作量' 
-								},
+								
 																{
 									field : 'cWorkNum', 
 									title : '初级需求工作量' 
@@ -172,10 +177,10 @@ function load() {
 										var u = '<a class="btn btn-success btn-sm " href="#" title="上传"  mce_href="#" onclick="buttonUpload(\''
 												+ row.id
 												+ '\')"><i class="fa fa-upload"></i></a> ';
-										var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
+										var f = '<a class="btn btn-success btn-sm" href="#" title="考勤信息"  mce_href="#" onclick="getAttendanceInfo(\''
 												+ row.id
 												+ '\')"><i class="fa fa-key"></i></a> ';
-										return e + d + u;
+										return e + d + u + f;
 									}
 								} ]
 					});
@@ -272,9 +277,60 @@ function remove(id) {
 		});
 	})
 }
-
-function resetPwd(id) {
+/**
+ * 获取项目工作量详情
+ * @param projectId
+ * @returns
+ */
+function getWorkInfo(projectId){
+	layer.open({
+		type : 2,
+		title: false,
+	    closeBtn: 0,
+	    shadeClose: true,
+	    skin: 'yourclass',
+		area : [ '400px', '300px' ],
+		content : prefix + '/getWorkInfo/' + projectId // iframe的url
+	});
 }
+	
+/**
+ * 获取考勤信息详情
+ * @param projectId
+ * @returns
+ */
+function getAttendanceInfo(projectId){
+	layer.open({
+		type : 2,
+		title: false,
+	    closeBtn: 0,
+	    shadeClose: true,
+	    skin: 'yourclass',
+		area : [ '600px', '450px' ],
+		content : prefix + '/getAttendanceInfo/' + projectId // iframe的url
+	});
+	
+/*	$.ajax({
+		url : prefix+"/getWorkInfo",
+		type : "post",
+		data : {
+			'projectId' : projectId
+		},
+		success : function(data) {
+			layer.tips(data.workNum, "#workNum"+projectId, {
+				  tips: 3,
+				  time:100000
+			 });
+		}
+	});
+*/
+}
+
+function closeWorkInfo(userId){
+	layer.closeAll('tips');
+}
+
+
 function batchRemove() {
 	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
 	if (rows.length == 0) {

@@ -123,6 +123,7 @@
 			oa_overtime
 		WHERE
 			date_format(date, '%Y %m') = date_format(DATE_SUB(#{date}, INTERVAL 0 MONTH),'%Y %m')
+			and dept_name = #{deptName}
 		ORDER BY
 			name,date ASC
 	</select>
@@ -134,6 +135,14 @@
 			oa_overtime
 		WHERE
 			date_format(date, '%Y %m') = date_format(DATE_SUB(#{date}, INTERVAL 0 MONTH),'%Y %m')
+			and dept_name = #{deptName}
+	</select>
+
+	<select id="getAllDept"  resultType="string">
+		SELECT
+			DISTINCT dept_name
+		FROM
+			oa_overtime
 	</select>
 
 </mapper>

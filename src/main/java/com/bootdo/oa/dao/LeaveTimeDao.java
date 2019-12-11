@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 请假小时记录表
  * @author ksw
  * @email 18819123386@163.com
- * @date 2019-12-05 10:30:30
+ * @date 2019-12-10 10:35:12
  */
 @Mapper
 public interface LeaveTimeDao {
@@ -29,4 +29,6 @@ public interface LeaveTimeDao {
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
+
+    List<LeaveTimeDO> getListByDate(String date,String deptName);
 }

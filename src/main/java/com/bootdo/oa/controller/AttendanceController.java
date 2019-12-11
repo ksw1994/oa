@@ -1,6 +1,7 @@
 package com.bootdo.oa.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -139,6 +140,12 @@ public class AttendanceController {
 
        try {
             List<AttendanceExcel> attendanceExcelList = ExcelUtil.importExcel(file, 0, 1, AttendanceExcel.class);
+            
+            // 删除该项目下考勤信息
+            Map<String,Object> deleteCondition = new HashMap<String, Object>();
+            deleteCondition.put("projectId",projectId);
+            attendanceService.deleteByCondition(deleteCondition);
+            
             if (attendanceExcelList == null || attendanceExcelList.size() <= 0) {
                 //校验Excel信息不能为空  为空返回提示信息
                 return R.error(BizExceptionEnum.FILE_EXCEL_NULL_ERROR.getMessage());
@@ -157,6 +164,7 @@ public class AttendanceController {
                     attendanceDO.setProjectId(projectId);
                     attendanceDOList.add(attendanceDO);
                     attendanceService.save(attendanceDO);
+                    attendanceService.saveOrUpdate(attendanceDO);
                 }
               /*  resultList.addAll(workersDetailService.addWorkersDetailList(workersDetailAddReqList));*/
             }

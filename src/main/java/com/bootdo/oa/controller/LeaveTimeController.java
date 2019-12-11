@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  * 
  * @author ksw
  * @email 18819123386@163.com
- * @date 2019-12-05 10:30:30
+ * @date 2019-12-10 10:35:12
  */
  
 @Controller
@@ -114,10 +114,9 @@ public class LeaveTimeController {
 	//导入excel
 	@RequestMapping(value = "/importExcel", method= RequestMethod.POST)
 	@ResponseBody
-	@RequiresPermissions("oa:leaveTime:importExcel")
+	@RequiresPermissions("oa:overtime:importExcel")
 	public R importExcel(@RequestParam("file") MultipartFile file, HttpServletRequest request){
 		leaveTimeService.importExcelFile(file);
 		return R.ok();
 	}
-	
 }
