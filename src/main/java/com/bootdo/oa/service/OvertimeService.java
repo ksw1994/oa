@@ -37,5 +37,11 @@ public interface OvertimeService {
 	 * @param date
 	 * @return
 	 */
-	File exportOvertime(String date);
+	File exportOvertime(String date,String deptName);
+
+	/**
+	 * 获取所有的部门
+	 * @return
+	 */
+	List<String> getAllDept();
 }

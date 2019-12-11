@@ -4,11 +4,12 @@ import com.bootdo.common.excel.ExcelUtil;
 import com.bootdo.common.utils.DateUtils;
 import com.bootdo.common.utils.ShiroUtils;
 import com.bootdo.common.utils.UUIDUtils;
-import io.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,14 +47,14 @@ public class LeaveTimeServiceImpl implements LeaveTimeService {
 	public int save(LeaveTimeDO leaveTime){
 		leaveTime.setId(UUIDUtils.randomUUID());
 		leaveTime.setCreateBy(ShiroUtils.getUserId());//创建人用户id
-		leaveTime.setCreateTime(DateUtils.format(new Date(),DateUtils.DATE_TIME_PATTERN));//创建时间
+		leaveTime.setCreateTime(DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));//创建时间
 		return leaveTimeDao.save(leaveTime);
 	}
 	
 	@Override
 	public int update(LeaveTimeDO leaveTime){
-		leaveTime.setUpdateBy(ShiroUtils.getUserId());//修改人用户id
-		leaveTime.setUpdateTime(DateUtils.format(new Date(),DateUtils.DATE_TIME_PATTERN));//修改时间
+		leaveTime.setUpdateBy(ShiroUtils.getUserId());
+		leaveTime.setUpdateTime(DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
 		return leaveTimeDao.update(leaveTime);
 	}
 	
@@ -69,97 +70,65 @@ public class LeaveTimeServiceImpl implements LeaveTimeService {
 
 	@Override
 	public void importExcelFile(MultipartFile file) {
+
 		List<List<String>> list = ExcelUtil.readExcel(file, 0);
-		String[] dates = list.get(0).get(0).split("报表生成时间：");
-		String yearMonth = dates[1].substring(0,7);//该打卡记录的年月
-		list.remove(list.get(0));
-		list.remove(list.get(0));
-		list.remove(list.get(0));
-		List<LeaveTimeDO> resultList = getExcel(list, yearMonth);
+		List<LeaveTimeDO> resultList = getExcel(list);
+		System.out.println(resultList);
 		for (LeaveTimeDO leaveTimeDO : resultList) {
 			save(leaveTimeDO);
 		}
 	}
 
-	public List<LeaveTimeDO> getExcel(List<List<String>> list,String yearMonth){
+	@Override
+	public List<LeaveTimeDO> getListByDate(String date,String deptName) {
+		return leaveTimeDao.getListByDate(date,deptName);
+	}
+
+	public List<LeaveTimeDO> getExcel(List<List<String>> list){
 		List<LeaveTimeDO> resultList = new ArrayList<>();
 		for (List<String> strings : list) {
-			if (!isLeave(strings)){//这个月没有请假
-				continue;
+			if (strings.get(2).equals("完成") && strings.get(3).equals("同意")){
+				LeaveTimeDO leaveTimeDO = new LeaveTimeDO();
+				leaveTimeDO.setName(strings.get(9));
+				leaveTimeDO.setDeptName(strings.get(10));
+				leaveTimeDO.setLeaveType(strings.get(14));
+				leaveTimeDO.setStart(strings.get(15));
+				leaveTimeDO.setEnd(strings.get(16));
+				leaveTimeDO.setDuration(getNum(strings.get(17)));
+				leaveTimeDO.setReason(strings.get(18));
+				try {
+					leaveTimeDO.setLeaveDate(DateUtils.getDate(leaveTimeDO.getStart().substring(0,10)));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				resultList.add(leaveTimeDO);
 			}
-			LeaveTimeDO leaveTimeDO = new LeaveTimeDO();
-			leaveTimeDO.setName(strings.get(0));
-			leaveTimeDO.setDeptName(strings.get(1));
-			leaveTimeDO.setYearMonth(yearMonth);
-			if (isNumeric(strings.get(8))){//丧假
-				Double funeralLeave = Double.valueOf(strings.get(8));
-				leaveTimeDO.setFuneralLeave(new BigDecimal(funeralLeave*8));
-			}
-			if (isNumeric(strings.get(9))){//事假
-				leaveTimeDO.setCasualLeave(new BigDecimal(Double.valueOf(strings.get(9))));
-			}
-			if (isNumeric(strings.get(10))){//婚假
-				Double maritalLeave = Double.valueOf(strings.get(10));
-				leaveTimeDO.setMaritalLeave(new BigDecimal(maritalLeave*8));
-			}
-			if (isNumeric(strings.get(11))){//年假
-				Double annualLeave = Double.valueOf(strings.get(11));
-				leaveTimeDO.setAnnualLeave(new BigDecimal(annualLeave*8));
-			}
-			if (isNumeric(strings.get(12))){//病假
-				leaveTimeDO.setSickLeave(new BigDecimal(Double.valueOf(strings.get(12))));
-			}
-			if (isNumeric(strings.get(13))){//病假
-				leaveTimeDO.setRestCan(new BigDecimal(Double.valueOf(strings.get(13))));
-			}
-			if (isNumeric(strings.get(14))){//陪产假
-				Double paternityLeave = Double.valueOf(strings.get(14));
-				leaveTimeDO.setPaternityLeave(new BigDecimal(paternityLeave*8));
-			}
-			resultList.add(leaveTimeDO);
 		}
 		return resultList;
 	}
 
-	public boolean isLeave(List<String> list){
-		if (isNumeric(list.get(8))){
-			return true;
+	public  BigDecimal getNum(String s) {
+		Pattern p = Pattern.compile("(\\d+\\.\\d+)");
+		//Matcher类的构造方法也是私有的,不能随意创建,只能通过Pattern.matcher(CharSequence input)方法得到该类的实例.
+		Matcher m = p.matcher(s);
+		//m.find用来判断该字符串中是否含有与"(\\d+\\.\\d+)"相匹配的子串
+		if (m.find()) {
+			//如果有相匹配的,则判断是否为null操作
+			//group()中的参数：0表示匹配整个正则，1表示匹配第一个括号的正则,2表示匹配第二个正则,在这只有一个括号,即1和0是一样的
+			s = m.group(1) == null ? "" : m.group(1);
+		} else {
+			//如果匹配不到小数，就进行整数匹配
+			p = Pattern.compile("(\\d+)");
+			m = p.matcher(s);
+			if (m.find()) {
+				//如果有整数相匹配
+				s = m.group(1) == null ? "" : m.group(1);
+			} else {
+				//如果没有小数和整数相匹配,即字符串中没有整数和小数，就设为空
+				s = "";
+			}
 		}
-		if (isNumeric(list.get(9))){
-			return true;
-		}
-		if (isNumeric(list.get(10))){
-			return true;
-		}
-		if (isNumeric(list.get(11))){
-			return true;
-		}
-		if (isNumeric(list.get(12))){
-			return true;
-		}
-		if (isNumeric(list.get(13))){
-			return true;
-		}
-		if (isNumeric(list.get(14))){
-			return true;
-		}
-		return false;
+		return new BigDecimal(Double.valueOf(s));
 	}
 
-	/**
-	 * 利用正则表达式判断字符串是否是数字
-	 * @param str
-	 * @return
-	 */
-	public boolean isNumeric(String str){
-		if (StringUtil.isNullOrEmpty(str)){
-			return false;
-		}
-		Pattern pattern = Pattern.compile("[0-9]*");
-		Matcher isNum = pattern.matcher(str);
-		if( !isNum.matches() ){
-			return false;
-		}
-		return true;
-	}
 }

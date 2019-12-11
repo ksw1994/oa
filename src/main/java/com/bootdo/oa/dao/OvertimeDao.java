@@ -36,12 +36,18 @@ public interface OvertimeDao {
 	 * @param date
 	 * @return
 	 */
-	List<OvertimeDO> getListByDate(String date);
+	List<OvertimeDO> getListByDate(String date,String deptName);
 
 	/**
 	 * 根据年月获取
 	 * @param date
 	 * @return
 	 */
-	List<String> getNameListByDate(String date);
+	List<String> getNameListByDate(String date,String deptName);
+
+	/**
+	 * 获取所有的部门
+	 * @return
+	 */
+	List<String> getAllDept();
 }

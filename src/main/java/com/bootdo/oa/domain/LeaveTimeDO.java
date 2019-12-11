@@ -1,5 +1,7 @@
 package com.bootdo.oa.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -11,33 +13,31 @@ import java.util.Date;
  * 
  * @author ksw
  * @email 18819123386@163.com
- * @date 2019-12-05 10:30:30
+ * @date 2019-12-10 10:35:12
  */
 public class LeaveTimeDO extends BaseDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//
 	private String id;
-	//
+	//姓名
 	private String name;
-	//
+	//部门
 	private String deptName;
-	//丧假 小时
-	private BigDecimal funeralLeave;
-	//事假
-	private BigDecimal casualLeave;
-	//
-	private BigDecimal maritalLeave;
-	//年假
-	private BigDecimal annualLeave;
-	//病假
-	private BigDecimal sickLeave;
-	//调休
-	private BigDecimal restCan;
-	//陪产假
-	private BigDecimal paternityLeave;
-	//年月
-	private String yearMonth;
+	//请假类型
+	private String leaveType;
+	//请假日期
+	@JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+	private Date leaveDate;
+	//开始时间
+	private String start;
+	//结束时间
+	private String end;
+	//时长
+	private BigDecimal duration;
+	//请假事由
+	private String reason;
+
 
 	/**
 	 * 设置：
@@ -52,124 +52,100 @@ public class LeaveTimeDO extends BaseDO implements Serializable {
 		return id;
 	}
 	/**
-	 * 设置：
+	 * 设置：姓名
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	/**
-	 * 获取：
+	 * 获取：姓名
 	 */
 	public String getName() {
 		return name;
 	}
 	/**
-	 * 设置：
+	 * 设置：部门
 	 */
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
 	/**
-	 * 获取：
+	 * 获取：部门
 	 */
 	public String getDeptName() {
 		return deptName;
 	}
 	/**
-	 * 设置：丧假 小时
+	 * 设置：请假类型
 	 */
-	public void setFuneralLeave(BigDecimal funeralLeave) {
-		this.funeralLeave = funeralLeave;
+	public void setLeaveType(String leaveType) {
+		this.leaveType = leaveType;
 	}
 	/**
-	 * 获取：丧假 小时
+	 * 获取：请假类型
 	 */
-	public BigDecimal getFuneralLeave() {
-		return funeralLeave;
+	public String getLeaveType() {
+		return leaveType;
 	}
 	/**
-	 * 设置：事假
+	 * 设置：请假日期
 	 */
-	public void setCasualLeave(BigDecimal casualLeave) {
-		this.casualLeave = casualLeave;
+	public void setLeaveDate(Date leaveDate) {
+		this.leaveDate = leaveDate;
 	}
 	/**
-	 * 获取：事假
+	 * 获取：请假日期
 	 */
-	public BigDecimal getCasualLeave() {
-		return casualLeave;
+	public Date getLeaveDate() {
+		return leaveDate;
 	}
 	/**
-	 * 设置：
+	 * 设置：开始时间
 	 */
-	public void setMaritalLeave(BigDecimal maritalLeave) {
-		this.maritalLeave = maritalLeave;
+	public void setStart(String start) {
+		this.start = start;
 	}
 	/**
-	 * 获取：
+	 * 获取：开始时间
 	 */
-	public BigDecimal getMaritalLeave() {
-		return maritalLeave;
+	public String getStart() {
+		return start;
 	}
 	/**
-	 * 设置：年假
+	 * 设置：结束时间
 	 */
-	public void setAnnualLeave(BigDecimal annualLeave) {
-		this.annualLeave = annualLeave;
+	public void setEnd(String end) {
+		this.end = end;
 	}
 	/**
-	 * 获取：年假
+	 * 获取：结束时间
 	 */
-	public BigDecimal getAnnualLeave() {
-		return annualLeave;
+	public String getEnd() {
+		return end;
 	}
 	/**
-	 * 设置：病假
+	 * 设置：时长
 	 */
-	public void setSickLeave(BigDecimal sickLeave) {
-		this.sickLeave = sickLeave;
+	public void setDuration(BigDecimal duration) {
+		this.duration = duration;
 	}
 	/**
-	 * 获取：病假
+	 * 获取：时长
 	 */
-	public BigDecimal getSickLeave() {
-		return sickLeave;
+	public BigDecimal getDuration() {
+		return duration;
 	}
 	/**
-	 * 设置：调休
+	 * 设置：请假事由
 	 */
-	public void setRestCan(BigDecimal restCan) {
-		this.restCan = restCan;
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 	/**
-	 * 获取：调休
+	 * 获取：请假事由
 	 */
-	public BigDecimal getRestCan() {
-		return restCan;
-	}
-	/**
-	 * 设置：陪产假
-	 */
-	public void setPaternityLeave(BigDecimal paternityLeave) {
-		this.paternityLeave = paternityLeave;
-	}
-	/**
-	 * 获取：陪产假
-	 */
-	public BigDecimal getPaternityLeave() {
-		return paternityLeave;
-	}
-	/**
-	 * 设置：年月
-	 */
-	public void setYearMonth(String yearMonth) {
-		this.yearMonth = yearMonth;
-	}
-	/**
-	 * 获取：年月
-	 */
-	public String getYearMonth() {
-		return yearMonth;
+	public String getReason() {
+		return reason;
 	}
 
 }

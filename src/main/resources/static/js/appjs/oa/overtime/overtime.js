@@ -35,7 +35,8 @@ function load() {
 								offset:params.offset,
 					            name:$('#searchName').val(),
 								status:$('#status').val(),
-								date:$('#date').val()
+								date:$('#date').val(),
+								deptName:$('#dept').val()
 					           // username:$('#searchName').val()
 							};
 						},

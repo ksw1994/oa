@@ -31,9 +31,9 @@ function load() {
                     return {
                         //说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
                         limit: params.limit,
-                        offset: params.offset,
-                        name:$('#searchName').val(),
-                        yearMonth:$('#yearMonth').val()
+                        offset: params.offset
+                        // name:$('#searchName').val(),
+                        // username:$('#searchName').val()
                     };
                 },
                 // //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
@@ -57,44 +57,36 @@ function load() {
 						align: "center"
                     },
                     {
-                        field: 'yearMonth',
-                        title: '年月',
+                        field: 'leaveType',
+                        title: '请假类型',
 						align: "center"
                     },
                     {
-                        field: 'funeralLeave',
-                        title: '丧假(小时)',
+                        field: 'leaveDate',
+                        title: '请假日期',
 						align: "center"
                     },
                     {
-                        field: 'casualLeave',
-                        title: '事假(小时)',
+                        field: 'start',
+                        title: '开始时间',
 						align: "center"
                     },
                     {
-                        field: 'maritalLeave',
-                        title: '婚假(小时)',
+                        field: 'end',
+                        title: '结束时间',
 						align: "center"
                     },
                     {
-                        field: 'annualLeave',
-                        title: '年假(小时)',
-						align: "center"
-                    },
-                    {
-                        field: 'sickLeave',
-                        title: '病假(小时)',
-						align: "center"
-                    },
-                    {
-                        field: 'restCan',
-                        title: '调休(小时)',
-						align: "center"
-                    },
-                    {
-                        field: 'paternityLeave',
-                        title: '陪产假(小时)',
-						align: "center"
+                        field: 'duration',
+                        title: '时长',
+						align: "center",
+                        formatter:function (value,row) {
+                            if (row.leaveType == "事假" || row.leaveType == "调休" || row.leaveType == "病假") {
+                                return value + "小时";
+                            }else{
+                                return value+"天";
+                            }
+                        }
                     },
                     {
                         title: '操作',

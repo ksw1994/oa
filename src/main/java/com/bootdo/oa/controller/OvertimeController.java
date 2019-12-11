@@ -126,14 +126,20 @@ public class OvertimeController {
 	}
 
 	//单文件导出加班数据
-	@GetMapping("/exportOvertime")
+	@GetMapping(value = "/exportOvertime",produces="application/json")
+	@ResponseBody
 	//@RequiresPermissions("oa:overtime:exportOvertime")
-	public String download(String date,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public R download(@RequestParam("date")String date,@RequestParam("deptName")String deptName,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//jcxxId : 要导出的简历id
-		File file = overtimeService.exportOvertime(date);
+		File file = overtimeService.exportOvertime(date,deptName);
+		if (file == null){
+			return R.error("没有加班数据");
+		}
 		if (file.exists()) {
 			// 设置强制下载不打开
-			response.setContentType("application/msdownload");
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/x-download charset=UTF-8");
+			//response.setContentType("application/vnd.ms-excel;charset=utf-8");
 			response.addHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(file.getName(),"utf-8"));
 			byte[] buffer = new byte[1024];
 			FileInputStream fis = null;
@@ -171,6 +177,16 @@ public class OvertimeController {
 		}
 		//删除被下载的本地文件
 		file.delete();
-		return null;
+		return R.ok();
+	}
+
+	/**
+	 * 获取所有部门
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/getAllDept")
+	public List<String> getAllDept(){
+		return overtimeService.getAllDept();
 	}
 }
