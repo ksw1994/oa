@@ -42,7 +42,7 @@ public class AttendanceExcel implements Serializable {
 	@Excel(name="人月",width=15,numFormat="0.00")
 	private String manMouth;
 	//月份
-	@Excel(name="width",width=15)
+	@Excel(name="月份",width=15)
 	private String mouth;
 	//在岗天数
 	@Excel(name="在岗天数",width=15)
