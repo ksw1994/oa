@@ -58,6 +58,12 @@ public class ProjectPersonController {
 	String add(){
 	    return "oa/projectPerson/add";
 	}
+	
+	@GetMapping("/addUserId")
+	@RequiresPermissions("oa:projectPerson:add")
+	String addUserId(){
+	    return "oa/projectPerson/addUserId";
+	}
 
 	@GetMapping("/edit/{id}")
 	@RequiresPermissions("oa:projectPerson:edit")

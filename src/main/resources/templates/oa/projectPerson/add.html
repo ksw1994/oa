@@ -11,20 +11,53 @@
 						<form class="form-horizontal m-t" id="signupForm">
 							<div class="form-group">	
 								<label class="col-sm-3 control-label">基础信息表Id：</label>
-								<div class="col-sm-8">
-									<input id="userId" name="userId" class="form-control" type="text">
+								<div class="col-sm-8" >
+									<!-- <input id="userId" name="userId" class="form-control" 
+									  autocomplete="off" placeholder="点击添加人员"> -->
+									<input id="input1" onfocus="f()" readonly="readonly" placeholder="点击添加人员" style="width:470px">
+									 <div id="div1" onmouseleave="l()">
+									<input type="checkbox" value="1" name="item" onclick="c()"><label>选项1</label>
+									<input type="checkbox" value="2" name="item" onclick="c()"><label>选项2</label>
+									<input type="checkbox" value="3" name="item" onclick="c()"><label>选项3</label>
+									<input type="checkbox" value="1" name="item" onclick="c()"><label>选项1</label>
+									<input type="checkbox" value="2" name="item" onclick="c()"><label>选项2</label>
+									<input type="checkbox" value="3" name="item" onclick="c()"><label>选项3</label>
+									<input type="checkbox" value="1" name="item" onclick="c()"><label>选项1</label>
+									<input type="checkbox" value="2" name="item" onclick="c()"><label>选项2</label>
+									<input type="checkbox" value="3" name="item" onclick="c()"><label>选项3</label>
+									<input type="checkbox" value="1" name="item" onclick="c()"><label>选项1</label>
+									<input type="checkbox" value="2" name="item" onclick="c()"><label>选项2</label>
+									<input type="checkbox" value="3" name="item" onclick="c()"><label>选项3</label>
+									<input type="checkbox" value="1" name="item" onclick="c()"><label>选项1</label>
+									<input type="checkbox" value="2" name="item" onclick="c()"><label>选项2</label>
+									<input type="checkbox" value="3" name="item" onclick="c()"><label>选项3</label>
+									<input type="checkbox" value="1" name="item" onclick="c()"><label>选项1</label>
+									<input type="checkbox" value="2" name="item" onclick="c()"><label>选项2</label>
+									<input type="checkbox" value="3" name="item" onclick="c()"><label>选项3</label>
+									<input type="checkbox" value="1" name="item" onclick="c()"><label>选项1</label>
+									<input type="checkbox" value="2" name="item" onclick="c()"><label>选项2</label>
+									<input type="checkbox" value="3" name="item" onclick="c()"><label>选项3</label>
+									<input type="checkbox" value="1" name="item" onclick="c()"><label>选项1</label>
+									<input type="checkbox" value="2" name="item" onclick="c()"><label>选项2</label>
+									<input type="checkbox" value="3" name="item" onclick="c()"><label>选项3</label>
+									</div>
 								</div>
 							</div>
 														<div class="form-group">	
 								<label class="col-sm-3 control-label">项目Id：</label>
 								<div class="col-sm-8">
-									<input id="projectId" name="projectId" class="form-control" type="text">
+									<input id="projectId" name="projectId" class="form-control" type="text" 
+									autocomplete="off" list="projectIdList" placeholder="选择项目"> 
+									<dataList id="projectIdList"></dataList>
+									
+									
 								</div>
 							</div>
 														<div class="form-group">	
 								<label class="col-sm-3 control-label">实际入场时间：</label>
 								<div class="col-sm-8">
-									<input id="einlass" name="einlass" class="form-control" type="text">
+									 <input id="einlass" name="einlass" class="form-control" type="date"> 
+									
 								</div>
 							</div>
 														<div class="form-group">	
@@ -36,7 +69,7 @@
 														<div class="form-group">	
 								<label class="col-sm-3 control-label">退场时间：</label>
 								<div class="col-sm-8">
-									<input id="exitTime" name="exitTime" class="form-control" type="text">
+									<input id="exitTime" name="exitTime" class="form-control" type="date" >
 								</div>
 							</div>
 														<div class="form-group">	
