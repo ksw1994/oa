@@ -55,16 +55,18 @@ function update() {
 			alert("Connection error");
 		},
 		success : function(r) {
+			var tl = top.location;
 			if (r.code == 0) {
 				parent.layer.msg(r.msg);
 				parent.reLoad();
+				parent.layer.confirm("是否刷新菜单内容",{ btn : [ '确定', '取消' ]},function () {
+					tl.reload();
+				})
 				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
 				parent.layer.close(index);
-
 			} else {
 				parent.layer.msg(r.msg);
 			}
-
 		}
 	});
 }

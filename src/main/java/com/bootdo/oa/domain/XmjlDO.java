@@ -19,35 +19,35 @@ public class XmjlDO extends BaseDO implements Serializable {
 	private String id;
 	//基础信息编号
 	private String jcxxId;
-	//项目序号
+	//项目序号 必填
 	private String itemSeq;
-	//项目名称
+	//项目名称 必填
 	private String itemName;
-	//是否建行项目
+	//是否建行项目  必填
 	private String isJhItem;
-	//使用建行新一代框架
+	//使用建行新一代框架 非必填，填写P1-P12，多项之间用英文逗号分隔，没有则不填写；
 	private String frame;
-	//是否中农工交银行项目
+	//是否中农工交银行项目 必填
 	private String isZngjItem;
-	//是否中农工交以外其银行
+	//是否中农工交以外其银行 必填
 	private String isNozngjItem;
-	//项目业务类型
+	//项目业务类型 必填
 	private String itemType;
-	//开始日期
+	//开始日期 填写前设置单元格格式为文本(必填)格式为yyyy/mm/dd；开始时间小于结束时间
 	private String sdate;
-	//结束日期
+	//结束日期 填写前设置单元格格式为文本(必填)格式为yyyy/mm/dd或至今
 	private String edate;
-	//项目角色
+	//项目角色 (必填)最多允许30汉字，不能为空
 	private String itemRole;
-	//证明人
+	//证明人 (必填)，不能为空；
 	private String witness;
-	//证明人电话
+	//证明人电话 必填数字，无则填写为“1”；
 	private String witnessPhone;
-	//项目简述
+	//项目简述 (必填)最多允许300汉字，不能为空；
 	private String desc;
-	//项目职责
+	//项目职责 (必填)最多允许300汉字，不能为空；
 	private String duty;
-	//使用工具/技能
+	//使用工具/技能 必填，不超过300汉字，无则填写无，不能为空；
 	private String skill;
 	//姓名
 	private String name;
