@@ -140,8 +140,8 @@ public class OvertimeServiceImpl implements OvertimeService {
 				String[] times = strings.get(i).split("\n");
 				overtimeDO.setName(name);//名称
 				overtimeDO.setDeptName(deptName);//部门
-				overtimeDO.setStartTime(times[0].trim().substring(0, 5));//只取有效值
-				overtimeDO.setEndTime(times[times.length - 1].trim().substring(0, 5));//只取有效值
+				overtimeDO.setStartTime(times[0].trim());//只取有效值
+				overtimeDO.setEndTime(times[times.length - 1].trim());//只取有效值
 				overtimeDO.setDate(DateUtils.getDate(date.toString()));
 				if (isOk(strings.get(i), scopeList, date.toString()).equals(OvertimeDO.OVERTIME_STATUS)) {//加班打卡且有效
 					overtimeDO.setStatus(OvertimeDO.OVERTIME_STATUS);

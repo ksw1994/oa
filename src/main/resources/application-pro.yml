@@ -1,9 +1,9 @@
 bootdo:
-  uploadPath: d:/work/uploaded_files/
+  uploadPath: /oa/uploaded_files/
   username: admin
   password: 111111
-  templatePath: d:/work/template_files/
-  exportPath: d:/work/export_files/
+  templatePath: /oa/template_files/
+  exportPath: /oa/export_files/
 logging:
   level:
     root: error
