@@ -39,6 +39,7 @@ function getMenuTreeData() {
 		url : "/sys/menu/tree/" + roleId,
 		success : function(data) {
 			loadMenuTree(data);
+			console.log(data); 
 		}
 	});
 }

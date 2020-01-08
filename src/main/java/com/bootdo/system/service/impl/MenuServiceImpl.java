@@ -90,6 +90,8 @@ public class MenuServiceImpl implements MenuService {
 			tree.setText(sysMenuDO.getName());
 			trees.add(tree);
 		}
+		System.out.println("aaaaaa"+trees);
+		
 		// 默认顶级菜单为０，根据数据库实际情况调整
 		Tree<MenuDO> t = BuildTree.build(trees);
 		return t;
