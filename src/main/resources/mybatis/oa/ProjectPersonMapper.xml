@@ -3,6 +3,27 @@
 
 <mapper namespace="com.bootdo.oa.dao.ProjectPersonDao">
 
+<!-- SELECT
+COUNT(user_id) aa ,project_id , jl_project.item_name,jl_project.sdate,jl_project.edate
+from jl_project_person JOIN jl_project ON
+jl_project.id=jl_project_person.project_id
+GROUP BY jl_project.item_name -->
+
+	<select id="projectList" resultType="com.bootdo.oa.domain.ProjectPersonDO">
+		select count(user_id) countUserId, project_id,jl_project.item_name,jl_project.sdate,jl_project.edate
+		from jl_project_person JOIN jl_project ON
+		jl_project.id=jl_project_person.project_id
+		GROUP BY jl_project.item_name ORDER BY jl_project.item_name DESC
+	</select>
+	<select id="projectcount" resultType="int">
+	SELECT COUNT(*) count FROM
+	(SELECT
+	COUNT(user_id) countUserId ,project_id , jl_project.item_name,jl_project.sdate,jl_project.edate
+	from jl_project_person JOIN jl_project ON
+	jl_project.id=jl_project_person.project_id
+	GROUP BY jl_project.item_name ) a
+	</select>
+	
 	<select id="get" resultType="com.bootdo.oa.domain.ProjectPersonDO">
 		select `id`,`user_id`,`project_id`,`einlass`,`exam_time`,`exit_time`,`remarks` from jl_project_person where id = #{value}
 	</select>
@@ -87,6 +108,20 @@
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
+	</delete>
+	
+	<delete id="removeByUserId">
+		delete from jl_project_person where user_id = #{userId}
+	</delete>
+	
+	<delete id="batchRemoveByProjectId">
+		delete from jl_project_person where project_id in 
+		<foreach item="projectId" collection="array" open="(" separator="," close=")">
+			#{projectId}
+		</foreach>
+	</delete>
+	<delete id="removeByProjectId">
+		delete from jl_project_person where project_id = #{projectId}
 	</delete>
 
 </mapper>

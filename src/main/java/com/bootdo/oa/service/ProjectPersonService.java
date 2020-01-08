@@ -1,6 +1,10 @@
 package com.bootdo.oa.service;
 
+import com.bootdo.common.domain.Tree;
+import com.bootdo.common.utils.Query;
+import com.bootdo.oa.domain.JcxxDO;
 import com.bootdo.oa.domain.ProjectPersonDO;
+import com.bootdo.system.domain.MenuDO;
 
 import java.util.List;
 import java.util.Map;
@@ -14,10 +18,13 @@ import java.util.Map;
  */
 public interface ProjectPersonService {
 	
+	
 	ProjectPersonDO get(Integer id);
+	//new
+	List<ProjectPersonDO >projectList();
+	int projectcount();
 	
 	List<ProjectPersonDO> list(Map<String, Object> map);
-	
 	int count(Map<String, Object> map);
 	
 	int save(ProjectPersonDO projectPerson);
@@ -27,4 +34,8 @@ public interface ProjectPersonService {
 	int remove(Integer id);
 	
 	int batchRemove(Integer[] ids);
+	Tree<MenuDO> getTree(Map<String, Object> map,List<JcxxDO> jcxxDOs);
+	int removeByUserId(String userId);
+	int batchRemoveByProjectId(Integer[] ids);
+	int removeByProjectId(Integer projectId);
 }

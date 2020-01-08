@@ -26,7 +26,7 @@ function load() {
 						pageSize : 10, // 如果设置了分页，每页数据条数
 						pageNumber : 1, // 如果设置了分布，首页页码
 						//search : true, // 是否显示搜索框
-						showColumns : true, // 是否显示内容下拉框（选择显示的列）
+						showColumns : false, // 是否显示内容下拉框（选择显示的列）
 						sidePagination : "server", // 设置在哪里进行分页，可选值为"client" 或者 "server"
 						queryParams : function(params) {
 							return {
@@ -47,47 +47,47 @@ function load() {
 								{
 									checkbox : true
 								},
-//																{
-//									field : 'id', 
-//									title : '管理基础信息表' 
-//								},
+																{
+									field : 'id', 
+									title : '管理基础信息表' 
+								},
+																{
+									field : 'userId', 
+									title : '基础信息表Id' 
+								},
 																{
 									field : 'projectId', 
 									title : '项目Id' 
 								},
 																{
-									field : 'itemName', 
-									title : '项目名称' 
+									field : 'einlass', 
+									title : '实际入场时间' 
 								},
 																{
-									field : 'countUserId', 
-									title : '项目人数' 
+									field : 'examTime', 
+									title : '铁律考试通过实践' 
 								},
 																{
-									field : 'sdate', 
-									title : '开始时间' 
+									field : 'exitTime', 
+									title : '退场时间' 
 								},
 																{
-									field : 'edate', 
-									title : '结束时间' 
+									field : 'remarks', 
+									title : '备注' 
 								},
-//																{
-//									field : 'remarks', 
-//									title : '备注' 
-//								},
 																{
 									title : '操作',
-									field : 'projectId',
+									field : 'id',
 									align : 'center',
 									formatter : function(value, row, index) {
 										var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="edit(\''
-												+ row.projectId
+												+ row.id
 												+ '\')"><i class="fa fa-edit"></i></a> ';
 										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
-												+ row.projectId
+												+ row.id
 												+ '\')"><i class="fa fa-remove"></i></a> ';
 										var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
-												+ row.projectId
+												+ row.id
 												+ '\')"><i class="fa fa-key"></i></a> ';
 										return e + d ;
 									}
@@ -117,7 +117,7 @@ function edit(id) {
 		content : prefix + '/edit/' + id // iframe的url
 	});
 }
-function remove(projectId) {
+function remove(id) {
 	layer.confirm('确定要删除选中的记录？', {
 		btn : [ '确定', '取消' ]
 	}, function() {
@@ -125,7 +125,7 @@ function remove(projectId) {
 			url : prefix+"/remove",
 			type : "post",
 			data : {
-				'projectId' : projectId
+				'id' : id
 			},
 			success : function(r) {
 				if (r.code==0) {
@@ -154,7 +154,7 @@ function batchRemove() {
 		var ids = new Array();
 		// 遍历所有选择的行数据，取每条数据对应的ID
 		$.each(rows, function(i, row) {
-			ids[i] = row['projectId'];
+			ids[i] = row['id'];
 		});
 		$.ajax({
 			type : 'POST',

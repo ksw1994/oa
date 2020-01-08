@@ -17,6 +17,9 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ProjectPersonDao {
 
 	ProjectPersonDO get(Integer id);
+	//new
+	List<ProjectPersonDO >projectList();
+	int projectcount();
 	
 	List<ProjectPersonDO> list(Map<String,Object> map);
 	
@@ -29,4 +32,7 @@ public interface ProjectPersonDao {
 	int remove(Integer id);
 	
 	int batchRemove(Integer[] ids);
+	int removeByUserId(String userId );
+	int batchRemoveByProjectId(Integer[] ids);
+	int removeByProjectId(Integer projectId);
 }

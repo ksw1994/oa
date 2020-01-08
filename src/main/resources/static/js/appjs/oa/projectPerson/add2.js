@@ -1,50 +1,64 @@
 $().ready(function() {
-	getUserTreeData();
+	dataMin();
 	projectidselect();
 	validateRule();
 });
 
 $.validator.setDefaults({
 	submitHandler : function() {
-		getAllSelectNodes();
 		save();
 	}
 });
-//userTree 
-var userIds;
-function loadUserTree(userTree) {
-	$('#userTree').jstree({
-		"plugins" : [ "wholerow", "checkbox" ],
-		'core' : {
-			'data' : userTree
-		},
-		"checkbox" : {
-			//"keep_selected_style" : false,
-			//"undetermined" : true
-			//"three_state" : false,
-			//"cascade" : ' up'
-		}
-	});
-	$('#userTree').jstree().close_all();
-}
-function getAllSelectNodes() {
-	console.log("getallselect");
-	var ref = $('#userTree').jstree(true); // 获得整个树
-	userIds = ref.get_selected(); // 获得所有选中节点的，返回值为数组
-	$("#userTree").find(".jstree-undetermined").each(function(i, element) {
-		userIds.push($(element).closest('.jstree-node').attr("id"));
-	});
-	console.log(userIds); 
+//退场时间设定不能小于进场
+function dataMin(){
+	var einlassTime = $("#einlass").val();
+	
+		
+		$("#exitTime").attr("min",einlassTime);
+	
 }
 
-function getUserTreeData() {
-	$.ajax({
-		type : "GET",
-		url : "/oa/projectPerson/tree/",
-		success : function(data) {
-			loadUserTree(data);
-			console.log(data); 
+//userid下拉
+
+//点击事件
+function c(){
+	var strList="";
+	$('input[type="checkbox"][name="item"]:checked').each(function(){
+		if(strList==""){ 
+		    strList = strList+$(this).val();
+		}else{ 
+		    strList = strList+","+$(this).val();
 		}
+	});
+	//alert(strList);
+	$('#input1').val(strList);
+}
+//显示div
+function f(){
+	$("#input1").click(function(){
+
+	var input=$("#input1");
+	var offset =input.offset();
+	$("#div1").css("left",offset.left + "px")
+	          .css("top",offset.top + input.height()+4+"px")
+	          .css("width",input.width() - 10+"px")
+	          .fadeIn();
+	});
+}
+//鼠标离开
+function l(){
+	$("#div1").hide("slow")
+}
+
+//
+function addUserId() {
+	layer.open({
+		type : 2,
+		title : '增加',
+		maxmin : true,
+		shadeClose : false, // 点击遮罩关闭层
+		area : [ '500px', '320px' ],
+		content : '/oa/projectPerson/addUserId' // iframe的url
 	});
 }
 
@@ -81,7 +95,6 @@ function projectidselect(){
 }
 
 function save() {
-	$('#userIds').val(userIds);
 	$.ajax({
 		cache : true,
 		type : "POST",
@@ -107,31 +120,20 @@ function save() {
 
 }
 $(function(){
+	
 });
 
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			projectId : {
-				required : true
-			},
-			einlass : {
-				required : true
-			},
-			exitTime : {
+			name : {
 				required : true
 			}
 		},
 		messages : {
-			projectId : {
-				required : icon + "请选择项目"
-			},
-			einlass : {
-				required : icon + "请选择入场时间"
-			},
-			exitTime : {
-				required : icon + "请选择退场时间"
+			name : {
+				required : icon + "请输入姓名"
 			}
 		}
 	})

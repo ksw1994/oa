@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bootdo.oa.domain.JcxxDO;
 import com.bootdo.oa.domain.ProjectPersonDO;
+import com.bootdo.oa.service.JcxxService;
 import com.bootdo.oa.service.ProjectPersonService;
+import com.bootdo.system.domain.MenuDO;
+import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
@@ -24,7 +28,7 @@ import com.bootdo.common.utils.R;
 /**
  * 项目人员信息表
  * 
- * @author ksw
+ * @author hwg
  * @email 18819123386@163.com
  * @date 2019-12-11 10:02:11
  */
@@ -35,24 +39,61 @@ public class ProjectPersonController {
 	@Autowired
 	private ProjectPersonService projectPersonService;
 	
+	@Autowired
+	private JcxxService jcxxService;
+	
 	@GetMapping()
 	@RequiresPermissions("oa:projectPerson:projectPerson")
 	String ProjectPerson(){
 	    return "oa/projectPerson/projectPerson";
 	}
 	
+
+//	@ResponseBody
+//	@GetMapping("/list")
+//	@RequiresPermissions("oa:projectPerson:projectPerson")
+//	public PageUtils list(@RequestParam Map<String, Object> params){
+//		//查询列表数据
+//        Query query = new Query(params);
+//		List<ProjectPersonDO> projectPersonList = projectPersonService.list(query);
+//		int total = projectPersonService.count(query);
+//		PageUtils pageUtils = new PageUtils(projectPersonList, total);
+//		return pageUtils;
+//	}
+	
+	/**
+	 * 改动
+	 * 添加项目页-再到人员list
+	 * 
+	 * 
+	 * @return
+	 */
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("oa:projectPerson:projectPerson")
-	public PageUtils list(@RequestParam Map<String, Object> params){
-		//查询列表数据
-        Query query = new Query(params);
-		List<ProjectPersonDO> projectPersonList = projectPersonService.list(query);
-		int total = projectPersonService.count(query);
+	public PageUtils list(){
+		//查询项目统计人员列表数据
+        //Query query = new Query(params);
+		List<ProjectPersonDO> projectPersonList = projectPersonService.projectList();
+		int total = projectPersonService.projectcount();
 		PageUtils pageUtils = new PageUtils(projectPersonList, total);
 		return pageUtils;
 	}
 	
+	//userTree
+	
+	@GetMapping("/tree")
+	@ResponseBody
+	public Tree<MenuDO> tree(@RequestParam Map<String, Object> params) {
+		Query query = new Query(params);
+		List<JcxxDO> jcxxList = jcxxService.list(query);
+		Tree<MenuDO>  tree = projectPersonService.getTree(query,jcxxList);
+		return tree;
+	}
+	
+	
+	
+	//--
 	@GetMapping("/add")
 	@RequiresPermissions("oa:projectPerson:add")
 	String add(){
@@ -75,12 +116,14 @@ public class ProjectPersonController {
 	
 	/**
 	 * 保存
+	 * 同时删除选取trees的最高节点id：“-1”
 	 */
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("oa:projectPerson:add")
 	public R save( ProjectPersonDO projectPerson){
 		if(projectPersonService.save(projectPerson)>0){
+			projectPersonService.removeByUserId("-1");
 			return R.ok();
 		}
 		return R.error();
@@ -102,8 +145,8 @@ public class ProjectPersonController {
 	@PostMapping( "/remove")
 	@ResponseBody
 	@RequiresPermissions("oa:projectPerson:remove")
-	public R remove( Integer id){
-		if(projectPersonService.remove(id)>0){
+	public R remove(Integer projectId){
+		if(projectPersonService.removeByProjectId(projectId)>0){
 		return R.ok();
 		}
 		return R.error();
@@ -111,13 +154,16 @@ public class ProjectPersonController {
 	
 	/**
 	 * 删除
+	 * 批量删除byProjectId
 	 */
 	@PostMapping( "/batchRemove")
 	@ResponseBody
 	@RequiresPermissions("oa:projectPerson:batchRemove")
 	public R remove(@RequestParam("ids[]") Integer[] ids){
-		projectPersonService.batchRemove(ids);
-		return R.ok();
+			if(projectPersonService.batchRemoveByProjectId(ids)>0){
+			return R.ok();
+			}
+			return R.error();
 	}
 	
 }

@@ -2,6 +2,7 @@ package com.bootdo.oa.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 
@@ -14,6 +15,7 @@ import java.util.Date;
  */
 public class ProjectPersonDO implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
 	
 	//管理基础信息表
 	private Integer id;
@@ -29,7 +31,59 @@ public class ProjectPersonDO implements Serializable {
 	private String exitTime;
 	//备注
 	private String remarks;
-
+	//
+	//新增
+	//统计项目人员总数
+	private Integer countUserId;
+	//项目名称
+	private String itemName;
+	//进场时间sdate
+	private String sdate;
+	//退场时间edate
+	private String edate;
+	//基础信息表Ids
+	private List<String> userIds;
+	
+	
+	
+	@Override
+	public String toString() {
+		return "ProjectPersonDO [id=" + id + ", userId=" + userId + ", projectId=" + projectId + ", einlass=" + einlass
+				+ ", examTime=" + examTime + ", exitTime=" + exitTime + ", remarks=" + remarks + ", countUserId="
+				+ countUserId + ", itemName=" + itemName + ", sdate=" + sdate + ", edate=" + edate + ", userIds="
+				+ userIds + "]";
+	}
+	public List<String> getUserIds() {
+		return userIds;
+	}
+	public void setUserIds(List<String> userIds) {
+		this.userIds = userIds;
+	}
+	
+	public Integer getCountUserId() {
+		return countUserId;
+	}
+	public void setCountUserId(Integer countUserId) {
+		this.countUserId = countUserId;
+	}
+	public String getItemName() {
+		return itemName;
+	}
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+	public String getSdate() {
+		return sdate;
+	}
+	public void setSdate(String sdate) {
+		this.sdate = sdate;
+	}
+	public String getEdate() {
+		return edate;
+	}
+	public void setEdate(String edate) {
+		this.edate = edate;
+	}
 	/**
 	 * 设置：管理基础信息表
 	 */
