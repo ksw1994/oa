@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.oa.dao.XmzDao">
+
+	<select id="get" resultType="com.bootdo.oa.domain.XmzDO">
+		select `id`,`parent_id`,`level`,`is_third`,`team` from wb_xmz where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.oa.domain.XmzDO">
+		select `id`,`parent_id`,`level`,`is_third`,`team` from wb_xmz
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
+		  		  <if test="level != null and level != ''"> and level = #{level} </if>
+		  		  <if test="isThird != null and isThird != ''"> and is_third = #{isThird} </if>
+		  		  <if test="team != null and team != ''"> and team = #{team} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from wb_xmz
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
+		  		  <if test="level != null and level != ''"> and level = #{level} </if>
+		  		  <if test="isThird != null and isThird != ''"> and is_third = #{isThird} </if>
+		  		  <if test="team != null and team != ''"> and team = #{team} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.oa.domain.XmzDO" useGeneratedKeys="true" keyProperty="id">
+		insert into wb_xmz
+		(
+			`parent_id`, 
+			`level`, 
+			`is_third`, 
+			`team`
+		)
+		values
+		(
+			#{parentId}, 
+			#{level}, 
+			#{isThird}, 
+			#{team}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.oa.domain.XmzDO">
+		update wb_xmz 
+		<set>
+			<if test="parentId != null">`parent_id` = #{parentId}, </if>
+			<if test="level != null">`level` = #{level}, </if>
+			<if test="isThird != null">`is_third` = #{isThird}, </if>
+			<if test="team != null">`team` = #{team}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from wb_xmz where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from wb_xmz where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<select id="getAll" resultType="com.bootdo.oa.domain.XmzDO">
+		select `id`,`parent_id`,`level`,`is_third`,`team` from wb_xmz
+	</select>
+
+</mapper>
