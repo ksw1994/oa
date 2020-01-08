@@ -101,7 +101,7 @@ public class OvertimeServiceImpl implements OvertimeService {
 
 	@Override
 	public void importExcelFile(MultipartFile file) {
-		List<List<String>> list = ExcelUtil.readExcel(file, 0);
+		List<List<String>> list = ExcelUtil.readExcel(file, 3);
 		String[] dates = list.get(0).get(0).split("报表生成时间：");
 		String yearMonth = dates[1].substring(0, 7);//该打卡记录的年月
 		list.remove(list.get(0));
@@ -140,8 +140,8 @@ public class OvertimeServiceImpl implements OvertimeService {
 				String[] times = strings.get(i).split("\n");
 				overtimeDO.setName(name);//名称
 				overtimeDO.setDeptName(deptName);//部门
-				overtimeDO.setStartTime(times[0].trim().substring(0, 5));//只取有效值
-				overtimeDO.setEndTime(times[times.length - 1].trim().substring(0, 5));//只取有效值
+				overtimeDO.setStartTime(times[0].trim());//只取有效值
+				overtimeDO.setEndTime(times[times.length - 1].trim());//只取有效值
 				overtimeDO.setDate(DateUtils.getDate(date.toString()));
 				if (isOk(strings.get(i), scopeList, date.toString()).equals(OvertimeDO.OVERTIME_STATUS)) {//加班打卡且有效
 					overtimeDO.setStatus(OvertimeDO.OVERTIME_STATUS);
@@ -504,7 +504,7 @@ public class OvertimeServiceImpl implements OvertimeService {
 
 	public BigDecimal getOvertime(List<OvertimeDO> overtimeList,String name,String date) throws ParseException {
 		for (OvertimeDO overtimeDO : overtimeList) {
-			if (overtimeDO.getName().equals(name) && DateUtils.format(overtimeDO.getDate(),DateUtils.DATE_PATTERN).equals(date)
+			if (overtimeDO.getName().equals(name) && DateUtils.isSameDay(overtimeDO.getDate(),DateUtils.getDate(date))
 			&& overtimeDO.getOvertime() != null && overtimeDO.getOvertime().doubleValue() > 0){
 				return overtimeDO.getOvertime();
 			}

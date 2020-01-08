@@ -8,6 +8,7 @@ import com.bootdo.common.config.ApplicationContextRegister;
 import com.bootdo.system.dao.RoleDao;
 import com.bootdo.system.dao.UserRoleDao;
 import com.bootdo.system.domain.UserToken;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -71,6 +72,7 @@ public class UserRealm extends AuthorizingRealm {
         UserRoleDao userRoleDao = ApplicationContextRegister.getBean(UserRoleDao.class);
         user.setRoleSigns(userRoleDao.listRoleSign(user.getUserId()));
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
+        this.clearCachedAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
         return info;
     }
 

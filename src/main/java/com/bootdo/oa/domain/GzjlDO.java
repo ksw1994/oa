@@ -19,15 +19,15 @@ public class GzjlDO extends BaseDO implements Serializable {
 	private String id;
 	//基础信息编号
 	private String jcxxId;
-	//公司名称
+	//公司名称  必填
 	private String companyName;
-	//开始日期
+	//开始日期 填写前设置单元格格式为文本(必填)格式为yyyy/mm/dd；判断开始时间小于结束时间；
 	private String sdate;
-	//结束日期
+	//结束日期 填写前设置单元格格式为文本(必填)格式为yyyy/mm/dd或至今
 	private String edate;
-	//职务描述
+	//职务描述 (必填)最多允许30汉字，不能为空；
 	private String desc;
-	//工作职责
+	//工作职责 (必填)最多允许300汉字，不能为空；
 	private String duty;
 	//姓名
 	private String name;

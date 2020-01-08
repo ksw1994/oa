@@ -17,29 +17,29 @@ public class JcxxDO extends BaseDO implements Serializable {
 	
 	//
 	private String id;
-	//
+	//姓名 必填
 	private String name;
-	//
+	//必填；（男、女）
 	private String sex;
-	//
+	//必填；
 	private String cardType;
-	//
+	//必填；
 	private String cardId;
-	//
+	//必填，不超过33个汉字；
 	private String address;
-	//
+	//必填数字，如无则填写为“1”；
 	private String phone;
-	//
+	//必填，必须是邮箱格式，如无则统一填写公司邮箱；
 	private String email;
-	//
+	//必填；
 	private String companyName;
-	//
+	//必填
 	private String site;
-	//
+	//必填；
 	private String desc;
-	//
+	//填写前设置单元格格式为文本(必填)格式为yyyy/mm/dd；开始时间小于到期时间；
 	private String pactSdate;
-	//
+	//填写前设置单元格格式为文本(必填)格式为yyyy/mm/dd，无限期的填写“无限期”；
 	private String pactEdate;
 	//
 	private String birthday;

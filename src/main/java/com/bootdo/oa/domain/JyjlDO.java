@@ -19,25 +19,25 @@ public class JyjlDO extends BaseDO implements Serializable {
 	private String id;
 	//基础信息编号
 	private String jcxxId;
-	//学历
+	//学历 必填
 	private String studyBg;
-	//学位
+	//学位 必填
 	private String degree;
-	//毕业学校名称
+	//毕业学校名称 必填
 	private String schoolName;
-	//毕业学校类别
+	//毕业学校类别 必填
 	private String schoolType;
-	//专业名称
+	//专业名称 必填
 	private String majorName;
-	//专业类别
+	//专业类别 必填
 	private String majorType;
-	//毕业证号
+	//毕业证号 没有就填无，不能空；
 	private String diplomaId;
-	//学位证号
+	//学位证号 没有就填无，不能空；
 	private String degreeId;
-	//入学日期
+	//入学日期 填写前设置单元格格式为文本(必填)格式为yyyy/mm/dd；判断入学时间小于毕业时间；
 	private String sdate;
-	//毕业日期
+	//毕业日期 填写前设置单元格格式为文本(必填)格式为yyyy/mm/dd
 	private String edate;
 	//姓名
 	private String name;

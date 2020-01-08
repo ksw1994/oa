@@ -5,7 +5,9 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
-import com.bootdo.common.utils.FileUtil;
+import com.bootdo.common.utils.*;
+import com.bootdo.oa.domain.WeekScopeDO;
+import com.bootdo.oa.service.WeekScopeService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -14,9 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.bootdo.oa.domain.OvertimeDO;
 import com.bootdo.oa.service.OvertimeService;
-import com.bootdo.common.utils.PageUtils;
-import com.bootdo.common.utils.Query;
-import com.bootdo.common.utils.R;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletException;
@@ -36,6 +35,9 @@ import javax.servlet.http.HttpServletResponse;
 public class OvertimeController {
 	@Autowired
 	private OvertimeService overtimeService;
+
+	@Autowired
+	private WeekScopeService weekScopeService;
 	
 	@GetMapping()
 	@RequiresPermissions("oa:overtime:overtime")
@@ -129,11 +131,16 @@ public class OvertimeController {
 	@GetMapping(value = "/exportOvertime",produces="application/json")
 	@ResponseBody
 	//@RequiresPermissions("oa:overtime:exportOvertime")
-	public R download(@RequestParam("date")String date,@RequestParam("deptName")String deptName,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public String download(@RequestParam("date")String date,@RequestParam("deptName")String deptName,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//jcxxId : 要导出的简历id
+		//先找这个月有没有周末
+		WeekScopeDO ws = weekScopeService.getByYearMonth(date.substring(0,7));
+		if (ws == null){
+			return "请设置该月的周末日期";
+		}
 		File file = overtimeService.exportOvertime(date,deptName);
 		if (file == null){
-			return R.error("没有加班数据");
+			return "没有加班数据";
 		}
 		if (file.exists()) {
 			// 设置强制下载不打开
@@ -177,7 +184,7 @@ public class OvertimeController {
 		}
 		//删除被下载的本地文件
 		file.delete();
-		return R.ok();
+		return null;
 	}
 
 	/**
