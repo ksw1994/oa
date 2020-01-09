@@ -1,49 +1,56 @@
-$().ready(function() {
-	validateRule();
-});
+$(function(){
+	var items=3,
+			curTime = new Date();
+	var curDate = curTime.getFullYear() + '-' + (curTime.getMonth()+1+'').padStart(2,'0');
 
-$.validator.setDefaults({
-	submitHandler : function() {
-		save();
+	function getNewDate(date,n){
+		if(!n) n = 1;
+		var d = new Date(date);
+		var dm = d.getMonth() + n;
+		d.setMonth(dm);
+		d_year = d.getFullYear();
+		d_month = (d.getMonth()+1+'').padStart(2,'0');
+		return (d_year+'-'+d_month);
 	}
-});
-function save() {
-	$.ajax({
-		cache : true,
-		type : "POST",
-		url : "/oa/wbRlpp/save",
-		data : $('#signupForm').serialize(),// 你的formid
-		async : false,
-		error : function(request) {
-			parent.layer.alert("Connection error");
-		},
-		success : function(data) {
-			if (data.code == 0) {
-				parent.layer.msg("操作成功");
-				parent.reLoad();
-				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
-				parent.layer.close(index);
 
-			} else {
-				parent.layer.alert(data.msg)
-			}
+	function rendTBody(){
+		$('#table1 tbody').html('<tr>'+
+									'<td style="text-align:center;">'+getNewDate(curDate,-2)+'</td>'+
+									'<td style="text-align:center;"><input name="items1" class="form-control" type="text"></td>'+
+									'<td></td>'+
+								'</tr>'+
+								'<tr>'+
+									'<td style="text-align:center;">'+getNewDate(curDate,-1)+'</td>'+
+									'<td style="text-align:center;"><input name="items2" class="form-control" type="text"></td>'+
+									'<td></td>'+
+								'</tr>'+
+								'<tr>'+
+									'<td style="text-align:center;">'+curDate+'</td>'+
+									'<td style="text-align:center;"><input name="items3" class="form-control" type="text"></td>'+
+									'<td></td>'+
+								'</tr>');
+	}
 
-		}
+	function init(){
+		$('#endDate').val(curDate);
+		rendTBody();
+	}
+	init();
+
+	$('#endDate').change(function(){
+		var $this = $(this);
+		items = 3;
+		if($this.val()) curDate = $this.val();
+		rendTBody();
 	});
 
-}
-function validateRule() {
-	var icon = "<i class='fa fa-times-circle'></i> ";
-	$("#signupForm").validate({
-		rules : {
-			name : {
-				required : true
-			}
-		},
-		messages : {
-			name : {
-				required : icon + "请输入姓名"
-			}
-		}
+	$('.addmore a').click(function(){
+		curDate = getNewDate(curDate);
+		items++;
+		$('#table1').append('<tr><td style="text-align:center;">'+ curDate +'</td><td style="text-align:center;"><input class="form-control" name="item'+items+'" type="text"></td><td><a class="btn btn-warning btn-sm" href="#" title="删除" onclick="removeTR(this)"><i class="fa fa-remove"></i></a></td></tr>');
 	})
+
+})
+function removeTR(t){
+	$(t).parent().parent().remove();
 }
