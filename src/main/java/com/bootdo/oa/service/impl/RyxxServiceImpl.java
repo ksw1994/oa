@@ -1,12 +1,10 @@
 package com.bootdo.oa.service.impl;
 
+import com.bootdo.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.bootdo.oa.dao.RyxxDao;
@@ -37,11 +35,13 @@ public class RyxxServiceImpl implements RyxxService {
 	
 	@Override
 	public int save(RyxxDO ryxx){
+		ryxx.setUpdateTime(DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
 		return ryxxDao.save(ryxx);
 	}
 	
 	@Override
 	public int update(RyxxDO ryxx){
+		ryxx.setUpdateTime(DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
 		return ryxxDao.update(ryxx);
 	}
 	

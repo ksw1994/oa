@@ -27,4 +27,6 @@ public interface ProjectService {
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
+
+	List<ProjectDO> getAll();
 }

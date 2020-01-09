@@ -29,4 +29,6 @@ public interface ProjectDao {
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
+
+    List<ProjectDO> getAll();
 }

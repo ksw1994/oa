@@ -51,5 +51,10 @@ public class ProjectServiceImpl implements ProjectService {
 	public int batchRemove(String[] ids){
 		return projectDao.batchRemove(ids);
 	}
-	
+
+	@Override
+	public List<ProjectDO> getAll() {
+		return projectDao.getAll();
+	}
+
 }

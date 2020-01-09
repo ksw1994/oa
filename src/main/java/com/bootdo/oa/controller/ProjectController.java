@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.bootdo.oa.domain.XmzDO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -200,5 +201,12 @@ public class ProjectController {
         model.addAttribute("work", returnMap);
         return "oa/project/project_attendance";
     }
+
+	@ResponseBody
+	@GetMapping("/getAll")
+	public List<ProjectDO> list(){
+		//所有项目信息
+		return projectService.getAll();
+	}
     
 }
