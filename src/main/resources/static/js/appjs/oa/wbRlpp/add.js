@@ -1,7 +1,9 @@
 $(function(){
-	var items=3,
-			curTime = new Date();
-	var curDate = curTime.getFullYear() + '-' + (curTime.getMonth()+1+'').padStart(2,'0');
+	var items = 3,
+			fdata = {},
+			dateArr = [],
+			curTime = new Date(),
+			curDate = curTime.getFullYear() + '-' + (curTime.getMonth()+1+'').padStart(2,'0');
 
 	function getNewDate(sp,n,date){
 		if(arguments.length === 1 && typeof arguments[0] === 'number') {
@@ -19,19 +21,20 @@ $(function(){
 	}
 
 	function rendTBody(){
+		dateArr.push(curDate, getNewDate(-1), getNewDate(-2));
 		$('#table1 tbody').html('<tr>'+
-			'<td style="text-align:center;">'+curDate+'</td>'+
-			'<td style="text-align:center;"><input name="items1-'+curDate.replace('-','')+'" class="form-control" type="text"></td>'+
+			'<td style="text-align:center;">'+getNewDate(-2)+'</td>'+
+			'<td style="text-align:center;"><input name="items1" class="form-control js_endD" data-edate="'+getNewDate('',-2)+'" type="number"></td>'+
 			'<td></td>'+
 		'</tr>'+
 		'<tr>'+
 			'<td style="text-align:center;">'+getNewDate(-1)+'</td>'+
-			'<td style="text-align:center;"><input name="items2-'+getNewDate('',-1)+'" class="form-control" type="text"></td>'+
+			'<td style="text-align:center;"><input name="items2" class="form-control js_endD" data-edate="'+getNewDate('',-1)+'" type="number"></td>'+
 			'<td></td>'+
 		'</tr>'+
 		'<tr>'+
-			'<td style="text-align:center;">'+getNewDate(-2)+'</td>'+
-			'<td style="text-align:center;"><input name="items3-'+getNewDate('',-2)+'" class="form-control" type="text"></td>'+
+			'<td style="text-align:center;">'+curDate+'</td>'+
+			'<td style="text-align:center;"><input name="items3" class="form-control js_endD" data-edate="'+curDate.replace('-','')+'" type="number"></td>'+
 			'<td></td>'+
 		'</tr>');
 		curDate = getNewDate(-2);
@@ -64,8 +67,9 @@ $(function(){
 
 	$('.addmore a').click(function(){
 		curDate = getNewDate(-1);
+		dateArr.push(curDate);
 		items++;
-		$('#table1').append('<tr><td style="text-align:center;">'+ curDate +'</td><td style="text-align:center;"><input class="form-control" name="items'+items+'-'+curDate.replace('-','')+'" type="text"></td><td><a class="btn btn-warning btn-sm" href="#" title="删除" onclick="removeTR(this)"><i class="fa fa-remove"></i></a></td></tr>');
+		$('#table1').prepend('<tr><td style="text-align:center;">'+curDate+'</td><td style="text-align:center;"><input class="form-control js_endD" data-edate="'+curDate.replace('-','')+'" name="items'+items+'" type="number"></td><td><a class="btn btn-warning btn-sm" href="#" title="删除" onclick="removeTR(this,\''+curDate+'\')"><i class="fa fa-remove"></i></a></td></tr>');
 	})
 
 	$('#signupForm').submit(function(e){
@@ -75,12 +79,23 @@ $(function(){
 	})
 
 	function save() {
+		var projectId = $('#projectId').val();
+		var endDate = $('#endDate').val();
+		$('.js_endD').each(function(i){
+			$this = $(this);
+			var val_d = $this.data('edate');
+			var val_v = $this.val();
+			fdata[i] = {
+				'projectId':projectId,
+				'endDate':endDate,
+				'date':val_d,
+				'count':val_v
+			}
+		})
 		$.ajax({
-			cache : true,
 			type : "POST",
 			url : "",
-			data : $('#signupForm').serialize(),// 你的formid
-			async : false,
+			data : fdata,
 			error : function(request) {
 				parent.layer.alert("Connection error");
 			},
@@ -96,7 +111,12 @@ $(function(){
 			}
 		});
 	}
+	function removeTR(t,d){
+		$this = $(t);
+		var idx = dateArr.indexOf(d);
+		dateArr.splice(idx,1);
+		curDate = dateArr.slice(-1);
+		$this.parent().parent().remove();
+	}
+	window.removeTR = removeTR;
 })
-function removeTR(t){
-	$(t).parent().parent().remove();
-}
