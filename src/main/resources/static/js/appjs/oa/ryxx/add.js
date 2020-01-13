@@ -1,4 +1,19 @@
 $().ready(function() {
+	$.ajax({
+		type : "get",
+		url : "/oa/xmz/getAll",
+		error : function(request) {
+			parent.layer.alert("Connection error");
+		},
+		success : function(data) {
+			if (data) {
+				for (var i = 0; i < data.length; i++) {
+					$('#teamId').append('<option value="'+data[i].id+'">'+data[i].team+'</option>');
+				};
+			}
+		}
+	});
+
 	validateRule();
 });
 
@@ -32,13 +47,37 @@ function save() {
 	});
 
 }
+
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
+	//手机号码验证
+	jQuery.validator.addMethod("isPhone",function(value,element){
+		var length = value.length;
+		var phone=/^1[3|4|5|7|8][0-9]\d{8}$/;
+		return this.optional(element)||(length == 11 && phone.test(value));
+	},icon + "请填写正确的11位手机号");
+
 	$("#signupForm").validate({
 		rules : {
-			name : {
-				required : true
-			}
+			teamId : "required",
+			name : "required",
+			sex : "required",
+			cardType : "required",
+			cardId : "required",
+			phone : {
+				required:true,
+				isPhone:true
+			},
+			email : {
+				required:true,
+				email:true
+			},
+			companyName : "required",
+			site : "required",
+			pactSdate : "required",
+			pactEdate : "required",
+			inSdate : "required",
+			status : "required"
 		},
 		messages : {
 			name : {
