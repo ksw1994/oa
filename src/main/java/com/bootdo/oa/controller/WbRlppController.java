@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -79,13 +80,13 @@ public class WbRlppController {
 	 * 保存
 	 */
 	@ResponseBody
-	@RequestMapping ("/save")
+	@RequestMapping (value = "/save",produces = MediaType.APPLICATION_JSON_VALUE,method = RequestMethod.POST)
 	@RequiresPermissions("oa:wbRlpp:add")
-	public R save(String params){
-		/*List<WbRlppDO> wbRlppList = JSONArray.parseArray(obj, WbRlppDO.class);
+	public R save(@RequestBody String params){
+		List<WbRlppDO> wbRlppList = JSONArray.parseArray(params, WbRlppDO.class);
 		if(wbRlppService.saveList(wbRlppList)>0){
 			return R.ok();
-		}*/
+		}
 		return R.error("外包人员数量不够！");
 	}
 	/**

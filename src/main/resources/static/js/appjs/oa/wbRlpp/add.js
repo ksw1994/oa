@@ -100,10 +100,13 @@ $(function(){
 				'monthSum':monthSum
 			})
 		})
+		var params = fdata;
 		$.ajax({
 			type : "POST",
-			url : "",
-			data : JSON.stringify(fdata),
+			url : "/oa/wbRlpp/save",
+			data : JSON.stringify(params),
+			contentType : "application/json;charsetset=UTF-8",//必须
+			dataType:"json",//必须
 			error : function(request) {
 				parent.layer.alert("Connection error");
 			},
