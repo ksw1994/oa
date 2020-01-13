@@ -82,6 +82,7 @@ $(function(){
 	})
 
 	function save() {
+		//if(!validateRule()) return;
 		var projectId = $('#projectId').val();
 		var endDate = $('#endDate').val();
 		var compact = $('#compact').val();
@@ -90,14 +91,14 @@ $(function(){
 			var val_d = $this.data('edate');
 			var val_v = $this.val();
 			var monthSum = $('.js_monthSum').eq(i).val();
-			fdata[i] = {
+			fdata.push({
 				'projectId':projectId,
 				'compact':compact,
 				'endDate':endDate,
 				'date':val_d,
 				'count':val_v,
 				'monthSum':monthSum
-			}
+			})
 		})
 		$.ajax({
 			type : "POST",
@@ -118,6 +119,16 @@ $(function(){
 			}
 		});
 	}
+
+	// function validateRule() {
+	// 	var compact = $('#compact').val();
+	// 	var t = /\.([0-9]*)/.exec(compact);
+	// 	if( t[1].length>2 ) {
+	// 		parent.layer.alert('只能保留两位小数！');
+	// 		return false;
+	// 	}
+	// }
+
 	function removeTR(t,d){
 		$this = $(t);
 		var idx = dateArr.indexOf(d);
