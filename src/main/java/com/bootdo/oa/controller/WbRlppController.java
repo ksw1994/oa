@@ -3,17 +3,13 @@ package com.bootdo.oa.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.bootdo.oa.domain.WbRlppDO;
 import com.bootdo.oa.service.WbRlppService;
@@ -69,7 +65,6 @@ public class WbRlppController {
 	
 	/**
 	 * 保存
-	 */
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("oa:wbRlpp:add")
@@ -77,6 +72,20 @@ public class WbRlppController {
 		if(wbRlppService.save(wbRlpp)>0){
 			return R.ok();
 		}
+		return R.error("外包人员数量不够！");
+	}*/
+
+	/**
+	 * 保存
+	 */
+	@ResponseBody
+	@RequestMapping ("/save")
+	@RequiresPermissions("oa:wbRlpp:add")
+	public R save(String params){
+		/*List<WbRlppDO> wbRlppList = JSONArray.parseArray(obj, WbRlppDO.class);
+		if(wbRlppService.saveList(wbRlppList)>0){
+			return R.ok();
+		}*/
 		return R.error("外包人员数量不够！");
 	}
 	/**

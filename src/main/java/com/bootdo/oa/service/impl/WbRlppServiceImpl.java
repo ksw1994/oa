@@ -11,7 +11,7 @@ import java.util.Map;
 import com.bootdo.oa.dao.WbRlppDao;
 import com.bootdo.oa.domain.WbRlppDO;
 import com.bootdo.oa.service.WbRlppService;
-
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -76,6 +76,18 @@ public class WbRlppServiceImpl implements WbRlppService {
 	public WbRlppDO getMaxCount(Integer projectId) {
 		WbRlppDO maxCount = wbRlppDao.getMaxCountByProjectId(projectId);
 		return maxCount;
+	}
+
+	@Transactional
+	@Override
+	public int saveList(List<WbRlppDO> wbRlppList) {
+		for (WbRlppDO wbRlppDO : wbRlppList) {
+			int r = save(wbRlppDO);
+			if (r == 0){
+				return 0;
+			}
+		}
+		return 1;
 	}
 
 	//从大的数组中获取更小的

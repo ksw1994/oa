@@ -34,4 +34,6 @@ public interface WbRlppService {
 	 * @return
 	 */
 	WbRlppDO getMaxCount(Integer projectId);
+
+	int saveList(List<WbRlppDO> wbRlppList);
 }
