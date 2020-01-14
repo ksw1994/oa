@@ -123,5 +123,13 @@ public class WbRlppController {
 		wbRlppService.batchRemove(ids);
 		return R.ok();
 	}
-	
+
+	/**
+	 * 获取该项目的第三方人员数
+	 */
+	@ResponseBody
+	@GetMapping ("/getThirdCount")
+	public Integer getThirdCount(Integer id){
+		return wbRlppService.getThirdCount(id);
+	}
 }
