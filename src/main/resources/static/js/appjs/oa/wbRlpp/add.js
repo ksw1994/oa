@@ -51,12 +51,15 @@ $(function(){
 				parent.layer.alert("Connection error");
 			},
 			success : function(data) {
-				//if (data.code == 0) {
-					console.log(data);
+				if (data) {
+					for (var i = 0; i < data.length; i++) {
+						$('#projectId').append('<option value="'+data[i].id+'">'+data[i].itemName+'</option>');
+					};
+				}
 			}
 		});
 
-		$('#endDate').val(curDate);
+		$('#endDate').val(curDate.replace('-',''));
 		rendTBody();
 	}
 	init();
@@ -64,7 +67,7 @@ $(function(){
 	$('#endDate').change(function(){
 		var $this = $(this);
 		items = 3;
-		if($this.val()) curDate = $this.val();
+		if($this.val()) curDate = $this.val().replace(/^([0-9][0-9][0-9][0-9])/,"$1-");
 		rendTBody();
 	});
 
@@ -82,7 +85,6 @@ $(function(){
 	})
 
 	function save() {
-		//if(!validateRule()) return;
 		var projectId = $('#projectId').val();
 		var endDate = $('#endDate').val();
 		var compact = $('#compact').val();
@@ -122,15 +124,6 @@ $(function(){
 			}
 		});
 	}
-
-	// function validateRule() {
-	// 	var compact = $('#compact').val();
-	// 	var t = /\.([0-9]*)/.exec(compact);
-	// 	if( t[1].length>2 ) {
-	// 		parent.layer.alert('只能保留两位小数！');
-	// 		return false;
-	// 	}
-	// }
 
 	function removeTR(t,d){
 		$this = $(t);

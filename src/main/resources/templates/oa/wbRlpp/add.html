@@ -17,6 +17,9 @@
 	.addmore>a {
 		display: inline-block;
 	}
+	.kalendae.k-floating {
+     width:50%;
+  }
 </style>
 <body class="gray-bg">
 	<div class="wrapper wrapper-content ">
@@ -28,17 +31,13 @@
 							<div class="form-group">	
 								<label class="col-sm-3 control-label">项目：</label>
 								<div class="col-sm-8">
-									<select  id="projectId" name="projectId">
-										<option value="1">项目1</option>
-										<option value="2">项目2</option>
-										<option value="3">项目3</option>
-									</select>
+									<select  id="projectId" name="projectId"></select>
 								</div>
 							</div> 
 							<div class="form-group">	
 								<label class="col-sm-3 control-label">截止日期：</label>
 								<div class="col-sm-8">
-									<input id="endDate" name="endDate" class="form-control" type="month">
+									<input id="endDate" name="endDate"  data-kal="mode:'single',format:'YYYYMM'" class="auto-kal form-control" autocomplete="off" type="text">
 								</div>
 							</div>
 							<div class="form-group">	
@@ -73,6 +72,8 @@
 	</div>
 	</div>
 	<div th:include="include::footer"></div>
+	<link rel="stylesheet" href="/js/appjs/oa/weekScope/kalendae.css" type="text/css">
+	<script type='text/javascript' src="/js/appjs/oa/weekScope/kalendae.standalone.js"></script>
 	<script type="text/javascript" src="/js/appjs/oa/wbRlpp/add.js"></script>
 </body>
 </html>
