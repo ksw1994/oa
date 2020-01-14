@@ -13,7 +13,6 @@ $().ready(function() {
 			}
 		}
 	});
-
 	validateRule();
 });
 
