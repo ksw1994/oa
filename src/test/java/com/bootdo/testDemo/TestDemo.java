@@ -4,6 +4,8 @@ package com.bootdo.testDemo;
 import com.bootdo.common.utils.Base64Utils;
 import com.bootdo.common.utils.UUIDUtils;
 import com.bootdo.common.word.WordExportUtil;
+import com.bootdo.oa.service.RyxxService;
+import com.bootdo.oa.service.WbRlppService;
 import com.xiaoleilu.hutool.collection.CollUtil;
 import com.xiaoleilu.hutool.poi.excel.ExcelUtil;
 import com.xiaoleilu.hutool.poi.excel.ExcelWriter;
@@ -11,6 +13,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import redis.clients.jedis.Jedis;
@@ -22,6 +25,8 @@ import java.util.*;
 @SpringBootTest
 public class TestDemo {
 
+    @Autowired
+    private WbRlppService wbRlppService;
 
     @Test
     public void test() {
@@ -147,5 +152,11 @@ public class TestDemo {
             jedis.close();
         }
         System.out.println("redis每秒写操作:"+i+"次");
+    }
+
+    @Test
+    public void thirdTest(){
+        int count = wbRlppService.getThirdCount(17);
+        System.out.println(count);
     }
 }

@@ -65,11 +65,23 @@ public class RyxxServiceImpl implements RyxxService {
 		List<Integer> userIdList = ryxxDao.getUserIdList();
 		List<Integer> temp = new ArrayList<>();
 		StringBuffer userIds = new StringBuffer();
-		for (int i = 0; i < count; i++) {
+		/*for (int i = 0; i < count; i++) {
 			Random random = new Random();
 			int n = random.nextInt(userIdList.size());
-			if (!temp.contains(n)){
+			if (!temp.contains(userIdList.get(n))){
 				temp.add(userIdList.get(n));
+			}
+		}*/
+		int countTemp = 0;
+		while (true){
+			Random random = new Random();
+			int n = random.nextInt(userIdList.size());
+			if (!temp.contains(userIdList.get(n))){
+				temp.add(userIdList.get(n));
+				countTemp ++;
+				if (countTemp == count){
+					break;
+				}
 			}
 		}
 		for (Integer userId : temp) {
@@ -79,6 +91,24 @@ public class RyxxServiceImpl implements RyxxService {
 		//去掉最后一个","
 		userIds.deleteCharAt(userIds.length()-1);
 		return userIds.toString();
+	}
+
+	@Override
+	public String getUserNameList(String userIds) {
+		List<String> userIdList = Arrays.asList(userIds.split(","));
+		StringBuffer userNameList = new StringBuffer();
+		for (String s : userIdList) {
+			RyxxDO ryxx = ryxxDao.get(Integer.valueOf(s));
+			userNameList.append(ryxx.getName());
+			userNameList.append(",");
+		}
+		userNameList.deleteCharAt(userNameList.length()-1);
+		return userNameList.toString();
+	}
+
+	@Override
+	public int isThird(Integer id) {
+		return ryxxDao.isThird(id);
 	}
 
 }

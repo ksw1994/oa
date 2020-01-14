@@ -158,4 +158,10 @@
 		select `id` from wb_ryxx
 	</select>
 
+	<select id="isThird" resultType="int">
+		select t2.is_third
+		from wb_ryxx t1 left join wb_xmz t2 on t1.team_id = t2.id
+		where t1.id  = #{value}
+	</select>
+
 </mapper>

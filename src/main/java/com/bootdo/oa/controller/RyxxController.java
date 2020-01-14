@@ -3,17 +3,14 @@ package com.bootdo.oa.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONArray;
+import com.bootdo.oa.domain.WbRlppDO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.bootdo.oa.domain.RyxxDO;
 import com.bootdo.oa.service.RyxxService;
@@ -112,6 +109,15 @@ public class RyxxController {
 	public R remove(@RequestParam("ids[]") Integer[] ids){
 		ryxxService.batchRemove(ids);
 		return R.ok();
+	}
+
+	/**
+	 *
+	 */
+	@ResponseBody
+	@GetMapping ("/getUserNameList")
+	public String getUserNameList(String userIds){
+		return ryxxService.getUserNameList(userIds);
 	}
 	
 }

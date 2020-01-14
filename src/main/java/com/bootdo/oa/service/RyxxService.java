@@ -40,4 +40,13 @@ public interface RyxxService {
 	 * @return
 	 */
 	String getRandomUserIds(int count);
+
+	String getUserNameList(String userIds);
+
+	/**
+	 * 判断该员工是否为第三方（0：否 1：是）
+	 * @param id
+	 * @return
+	 */
+	int isThird(Integer id);
 }
