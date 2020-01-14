@@ -34,6 +34,8 @@ public class XmzServiceImpl implements XmzService {
 	
 	@Override
 	public int save(XmzDO xmz){
+		xmz.setParentId(0);
+		xmz.setLevel(0);
 		return xmzDao.save(xmz);
 	}
 	
