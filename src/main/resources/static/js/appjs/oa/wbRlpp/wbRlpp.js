@@ -4,7 +4,7 @@ $(function () {
 });
 
 function createPopStr(str,l,t,w){
-    return '<div class="js_popoer popover right" style="display:block;left:'+(l+w)+'px;top:'+(t)+'px"><div class="arrow"></div><div class="popover-content">'+str+'</div></div>';
+    return '<div class="js_popoer popover right" style="display:block;left:'+(l+w)+'px;top:'+(t)+'px"><div class="arrow"></div><div class="popover-content">外包人员数为：<span style="color:red;">'+str+'</span></div></div>';
 }
 $(document.body).click(function(e){
     if(!$(e.target).hasClass('td-popover')) {
