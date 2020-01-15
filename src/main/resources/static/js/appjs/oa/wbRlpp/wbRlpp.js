@@ -3,6 +3,15 @@ $(function () {
     load();
 });
 
+function createPopStr(str,l,t,w){
+    return '<div class="js_popoer popover right" style="display:block;left:'+(l+w)+'px;top:'+(t)+'px"><div class="arrow"></div><div class="popover-content">'+str+'</div></div>';
+}
+$(document.body).click(function(e){
+    if(!$(e.target).hasClass('td-popover')) {
+        $('.js_popoer').remove();
+    }
+})
+
 function load() {
     $('#exampleTable')
         .bootstrapTable(
@@ -49,7 +58,8 @@ function load() {
                     {
                         field: 'itemName',
                         title: '项目',
-						align: "center"
+						align: "center",
+                        class:'td-popover'
                     },
                     {
                         field: 'compact',
@@ -92,7 +102,24 @@ function load() {
                                 + '\')"><i class="fa fa-key"></i></a> ';
                             return e + d;
                         }
-                    }]
+                    }],
+                    onClickCell:function(field, value, row, $element){
+                        if(field === 'itemName') {
+                            $('.js_popoer').remove();
+                            $.ajax({
+                                url: '/oa/wbRlpp/getThirdCount',
+                                type: "get",
+                                data: {
+                                    'id': row.id
+                                },
+                                success: function (r) {
+                                    var offset = $element.offset();
+                                    var w = $element.width();
+                                    $(document.body).append(createPopStr(r,offset.left,offset.top,w));
+                                }
+                            });
+                        }
+                    }
             });
 }
 
