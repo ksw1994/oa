@@ -57,6 +57,8 @@ public class RyxxDO implements Serializable {
 	private String updateTime;
 	//项目组名
 	private String teamName;
+	//是否外包公司 0:否，1-是
+	private Integer isThird;
 
 	/**
 	 * 设置：编号
@@ -305,5 +307,13 @@ public class RyxxDO implements Serializable {
 
 	public void setTeamName(String teamName) {
 		this.teamName = teamName;
+	}
+
+	public Integer getIsThird() {
+		return isThird;
+	}
+
+	public void setIsThird(Integer isThird) {
+		this.isThird = isThird;
 	}
 }

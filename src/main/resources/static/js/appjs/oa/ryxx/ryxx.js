@@ -78,6 +78,23 @@ function load() {
                          title: '电话'
                      },*/
                     {
+                        field: 'teamName',
+                        title: '项目组',
+                        align: "center"
+                    },
+                    {
+                        field: 'isThird',
+                        title: '是否第三方',
+                        align: "center",
+                        formatter: function (value) {
+                            if (value == '0'){
+                                return "否";
+                            }else if (value == '1'){
+                                return "是";
+                            }
+                        }
+                    },
+                    {
                         field: 'pactSdate',
                         title: '劳动合同开始日期',
                         align: "center"
