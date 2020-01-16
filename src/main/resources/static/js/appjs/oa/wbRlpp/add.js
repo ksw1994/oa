@@ -2,6 +2,7 @@ $(function(){
 	var items = 3,
 			fdata = [],
 			dateArr = [],
+			monthSumDef = 21,
 			curTime = new Date(),
 			curDate = curTime.getFullYear() + '-' + (curTime.getMonth()+1+'').padStart(2,'0');
 
@@ -25,19 +26,19 @@ $(function(){
 		$('#table1 tbody').html('<tr>'+
 			'<td style="text-align:center;">'+getNewDate(-2)+'</td>'+
 			'<td style="text-align:center;"><input name="items1" class="form-control js_endD" data-edate="'+getNewDate('',-2)+'" type="number"></td>'+
-			'<td><input name="monthSum1" class="form-control js_monthSum" type="number"></td>'+
+			'<td><input name="monthSum1" class="form-control js_monthSum" type="number" value="'+monthSumDef+'"></td>'+
 			'<td></td>'+
 		'</tr>'+
 		'<tr>'+
 			'<td style="text-align:center;">'+getNewDate(-1)+'</td>'+
 			'<td style="text-align:center;"><input name="items2" class="form-control js_endD" data-edate="'+getNewDate('',-1)+'" type="number"></td>'+
-			'<td><input name="monthSum2" class="form-control js_monthSum" type="number"></td>'+
+			'<td><input name="monthSum2" class="form-control js_monthSum" type="number" value="'+monthSumDef+'"></td>'+
 			'<td></td>'+
 		'</tr>'+
 		'<tr>'+
 			'<td style="text-align:center;">'+curDate+'</td>'+
 			'<td style="text-align:center;"><input name="items3" class="form-control js_endD" data-edate="'+curDate.replace('-','')+'" type="number"></td>'+
-			'<td><input name="monthSum3" class="form-control js_monthSum" type="number"></td>'+
+			'<td><input name="monthSum3" class="form-control js_monthSum" type="number" value="'+monthSumDef+'"></td>'+
 			'<td></td>'+
 		'</tr>');
 		curDate = getNewDate(-2);
@@ -75,7 +76,7 @@ $(function(){
 		curDate = getNewDate(-1);
 		dateArr.push(curDate);
 		items++;
-		$('#table1').prepend('<tr><td style="text-align:center;">'+curDate+'</td><td style="text-align:center;"><input class="form-control js_endD" data-edate="'+curDate.replace('-','')+'" name="items'+items+'" type="number"></td><td><input name="monthSum'+items+'" class="form-control js_monthSum" type="number"></td><td><a class="btn btn-warning btn-sm" href="#" title="删除" onclick="removeTR(this,\''+curDate+'\')"><i class="fa fa-remove"></i></a></td></tr>');
+		$('#table1').prepend('<tr><td style="text-align:center;">'+curDate+'</td><td style="text-align:center;"><input class="form-control js_endD" data-edate="'+curDate.replace('-','')+'" name="items'+items+'" type="number"></td><td><input name="monthSum'+items+'" class="form-control js_monthSum" type="number" value="'+monthSumDef+'"></td><td><a class="btn btn-warning btn-sm" href="#" title="删除" onclick="removeTR(this,\''+curDate+'\')"><i class="fa fa-remove"></i></a></td></tr>');
 	})
 
 	$('#signupForm').submit(function(e){

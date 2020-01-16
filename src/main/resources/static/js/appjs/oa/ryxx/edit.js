@@ -1,4 +1,20 @@
 $().ready(function() {
+	var teamId = +$('#teamId').val();
+	$.ajax({
+		type : "get",
+		url : "/oa/xmz/getAll",
+		error : function(request) {
+			parent.layer.alert("Connection error");
+		},
+		success : function(data) {
+			if (data) {
+				for (var i = 0; i < data.length; i++) {
+					var selected = +data[i].id === teamId ? 'selected':'';
+					$('#teamName').append('<option value="'+data[i].team+'" '+selected+'>'+data[i].team+'</option>');
+				};
+			}
+		}
+	});
 	validateRule();
 });
 
