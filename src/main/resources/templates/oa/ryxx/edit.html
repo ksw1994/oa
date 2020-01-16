@@ -2,6 +2,11 @@
 <html>
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
+<style type="text/css">
+    .kalendae.k-floating {
+        width:50%;
+    }
+</style>
 <body class="gray-bg">
 <div class="wrapper wrapper-content ">
     <div class="row">
@@ -26,8 +31,9 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">性别：</label>
                             <div class="col-sm-8">
-                                <input id="sex" name="sex" th:value="${ryxx.sex}" class="form-control" type="text"
-                                       placeholder="0：男，1：女，-1：未知">
+                                <label><input id="sex" name="sex" value="0" type="radio" th:class="${ryxx.sex} == 0?'js_checked'">男</label>
+                                <label><input id="sex" name="sex" value="1" type="radio" th:class="${ryxx.sex} == 1?'js_checked'">女</label>
+                                <label><input id="sex" name="sex" value="-1" type="radio" th:class="${ryxx.sex} == -1?'js_checked'">未知</label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -95,43 +101,41 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">劳动合同开始日期：</label>
                             <div class="col-sm-8">
-                                <input id="pactSdate" name="pactSdate" th:value="${ryxx.pactSdate}" class="form-control"
-                                       type="text" placeholder="格式为yyyy/mm/dd">
+                                <input id="pactSdate" name="pactSdate" th:value="${ryxx.pactSdate}" data-kal="mode:'single',format:'YYYY/MM/DD'" class="auto-kal form-control" autocomplete="off" type="text" placeholder="格式为yyyy/mm/dd">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">劳动合同结束日期：</label>
                             <div class="col-sm-8">
-                                <input id="pactEdate" name="pactEdate" th:value="${ryxx.pactEdate}" class="form-control"
-                                       type="text" placeholder="格式为yyyy/mm/dd，无限期的填写'无限期'">
+                                <input id="pactEdate" name="pactEdate" th:value="${ryxx.pactEdate}" data-kal="mode:'single',format:'YYYY/MM/DD'" class="auto-kal form-control" autocomplete="off" type="text" placeholder="格式为yyyy/mm/dd，无限期的填写'无限期'">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">入职日期：</label>
                             <div class="col-sm-8">
-                                <input id="inSdate" name="inSdate" th:value="${ryxx.inSdate}" class="form-control"
-                                       type="text" placeholder="格式为yyyy/mm/dd">
+                                <input id="inSdate" name="inSdate" th:value="${ryxx.inSdate}" data-kal="mode:'single',format:'YYYY/MM/DD'" class="auto-kal form-control" autocomplete="off" type="text" placeholder="格式为yyyy/mm/dd">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">离职日期：</label>
                             <div class="col-sm-8">
-                                <input id="outEdate" name="outEdate" th:value="${ryxx.outEdate}" class="form-control"
-                                       type="text" placeholder="格式为yyyy/mm/dd">
+                                <input id="outEdate" name="outEdate" th:value="${ryxx.outEdate}" data-kal="mode:'single',format:'YYYY/MM/DD'" class="auto-kal form-control" autocomplete="off" type="text" placeholder="格式为yyyy/mm/dd">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">出生日期：</label>
                             <div class="col-sm-8">
-                                <input id="birthday" name="birthday" th:value="${ryxx.birthday}" class="form-control"
-                                       type="text" placeholder="格式为yyyy/mm/dd">
+                                <input id="birthday" name="birthday" th:value="${ryxx.birthday}" data-kal="mode:'single',format:'YYYY/MM/DD'" class="auto-kal form-control" autocomplete="off" type="text" placeholder="格式为yyyy/mm/dd">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">状态：</label>
                             <div class="col-sm-8">
-                                <input id="status" name="status" th:value="${ryxx.status}" class="form-control"
-                                       type="text" placeholder="0：作废，1:入职，2：离职">
+                                <select  id="status" name="status">
+                                    <option value="0" th:class="${ryxx.status} == 0?'js_selecked'">作废</option>
+                                    <option value="1" th:class="${ryxx.status} == 1?'js_selecked'">入职</option>
+                                    <option value="2" th:class="${ryxx.status} == 2?'js_selecked'">离职</option>
+                                </select>
                             </div>
                         </div>
                        <!-- <div class="form-group">
@@ -153,34 +157,8 @@
     </div>
 </div>
 <div th:include="include::footer"></div>
-<script type="text/javascript" src="/js/appjs/oa/ryxx/edit.js">
-</script>
-<script type="text/javascript">
-    $(function () {
-        formatterSex();
-        formatterStatus();
-    })
-
-    function formatterSex() {
-        var sex = $("#sex").val();
-        if (sex == '0'){
-            $("#sex").val("男");
-        }else if (sex == '1'){
-            $("#sex").val("女");
-        }else if (sex == '-1'){
-            $("#sex").val("未知");
-        }
-    }
-    function formatterStatus() {
-        var status = $("#status").val();
-        if (status == '0'){
-            $("#status").val("作废");
-        }else if (status == '1'){
-            $("#status").val("入职");
-        }else if (status == '2'){
-            $("#status").val("离职");
-        }
-    }
-</script>
+<link rel="stylesheet" href="/js/appjs/oa/weekScope/kalendae.css" type="text/css">
+<script type='text/javascript' src="/js/appjs/oa/weekScope/kalendae.standalone.js"></script>
+<script type="text/javascript" src="/js/appjs/oa/ryxx/edit.js"></script>
 </body>
 </html>

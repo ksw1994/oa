@@ -15,6 +15,8 @@ $().ready(function() {
 			}
 		}
 	});
+	$('.js_checked')[0].checked = true
+	$('.js_selecked')[0].selected=true;
 	validateRule();
 });
 
