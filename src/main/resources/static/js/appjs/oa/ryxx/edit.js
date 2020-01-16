@@ -10,7 +10,7 @@ $().ready(function() {
 			if (data) {
 				for (var i = 0; i < data.length; i++) {
 					var selected = +data[i].id === teamId ? 'selected':'';
-					$('#teamName').append('<option value="'+data[i].team+'" '+selected+'>'+data[i].team+'</option>');
+					$('#teamName').append('<option data-teamid="'+data[i].id+'" value="'+data[i].team+'" '+selected+'>'+data[i].team+'</option>');
 				};
 			}
 		}
@@ -26,6 +26,7 @@ $.validator.setDefaults({
 	}
 });
 function update() {
+	$('#teamId').val($('#teamName option:selected').data('teamid'));
 	$.ajax({
 		cache : true,
 		type : "POST",
