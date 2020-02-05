@@ -7,11 +7,12 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.bootdo.oa.dao.WbRlppDao;
 import com.bootdo.oa.domain.WbRlppDO;
 import com.bootdo.oa.service.WbRlppService;
-
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -76,6 +77,32 @@ public class WbRlppServiceImpl implements WbRlppService {
 	public WbRlppDO getMaxCount(Integer projectId) {
 		WbRlppDO maxCount = wbRlppDao.getMaxCountByProjectId(projectId);
 		return maxCount;
+	}
+
+	@Transactional
+	@Override
+	public int saveList(List<WbRlppDO> wbRlppList) {
+		for (WbRlppDO wbRlppDO : wbRlppList) {
+			int r = save(wbRlppDO);
+			if (r == 0){
+				return 0;
+			}
+		}
+		return 1;
+	}
+
+	@Override
+	public int getThirdCount(Integer id) {
+		AtomicInteger count = new AtomicInteger(0);
+		WbRlppDO wbRlppDO = get(id);
+		String userId = wbRlppDO.getUserId();
+		List<String> userIdList = Arrays.asList(userId.split(","));
+		for (String s : userIdList) {
+			if (ryxxService.isThird(Integer.valueOf(s)) == 1){
+				count.incrementAndGet();
+			}
+		}
+		return count.intValue();
 	}
 
 	//从大的数组中获取更小的

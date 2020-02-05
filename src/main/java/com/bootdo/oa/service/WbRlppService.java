@@ -34,4 +34,13 @@ public interface WbRlppService {
 	 * @return
 	 */
 	WbRlppDO getMaxCount(Integer projectId);
+
+	int saveList(List<WbRlppDO> wbRlppList);
+
+	/**
+	 * 获取该项目中第三方公司的人员数
+	 * @param id
+	 * @return
+	 */
+	int getThirdCount(Integer id);
 }

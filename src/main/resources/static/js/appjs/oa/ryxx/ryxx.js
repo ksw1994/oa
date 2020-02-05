@@ -48,43 +48,85 @@ function load() {
                     },
                     {
                         field: 'name',
-                        title: '姓名'
+                        title: '姓名',
+                        align: "center"
                     },
                     {
                         field: 'sex',
-                        title: '性别'
+                        title: '性别',
+                        align: "center",
+                        formatter: function (value) {
+                            if (value == '0'){
+                                return "男";
+                            }else if (value == '1'){
+                                return "女";
+                            }else if (value == '-1'){
+                                return "未知";
+                            }
+                        }
                     },
-                   /* {
-                        field: 'cardType',
-                        title: '证件类型 '
+                    /* {
+                         field: 'cardType',
+                         title: '证件类型 '
+                     },
+                     {
+                         field: 'cardId',
+                         title: '证件号码  '
+                     },
+                     {
+                         field: 'phone',
+                         title: '电话'
+                     },*/
+                    {
+                        field: 'teamName',
+                        title: '项目组',
+                        align: "center"
                     },
                     {
-                        field: 'cardId',
-                        title: '证件号码  '
+                        field: 'isThird',
+                        title: '是否第三方',
+                        align: "center",
+                        formatter: function (value) {
+                            if (value == '0'){
+                                return "否";
+                            }else if (value == '1'){
+                                return "是";
+                            }
+                        }
                     },
-                    {
-                        field: 'phone',
-                        title: '电话'
-                    },*/
                     {
                         field: 'pactSdate',
-                        title: '劳动合同开始日期'
+                        title: '劳动合同开始日期',
+                        align: "center"
                     },
                     {
                         field: 'pactEdate',
-                        title: '劳动合同结束日期'
+                        title: '劳动合同结束日期',
+                        align: "center"
                     },
                     {
                         field: 'inSdate',
-                        title: '入职日期'
+                        title: '入职日期',
+                        align: "center"
                     },
                     {
                         field: 'outEdate',
-                        title: '离职日期'
+                        title: '离职日期',
+                        align: "center"
                     },
                     {
                         field: 'status',
-                        title: '状态'
+                        title: '状态',
+                        align: "center",
+                        formatter: function (value) {
+                            if (value == '0'){
+                                return "作废";
+                            }else if (value == '1'){
+                                return "入职";
+                            }else if (value == '2'){
+                                return "离职";
+                            }
+                        }
                     },
                     {
                         title: '操作',

@@ -1,4 +1,22 @@
 $().ready(function() {
+	var teamId = +$('#teamId').val();
+	$.ajax({
+		type : "get",
+		url : "/oa/xmz/getAll",
+		error : function(request) {
+			parent.layer.alert("Connection error");
+		},
+		success : function(data) {
+			if (data) {
+				for (var i = 0; i < data.length; i++) {
+					var selected = +data[i].id === teamId ? 'selected':'';
+					$('#teamName').append('<option data-teamid="'+data[i].id+'" value="'+data[i].team+'" '+selected+'>'+data[i].team+'</option>');
+				};
+			}
+		}
+	});
+	$('.js_checked')[0].checked = true
+	$('.js_selecked')[0].selected=true;
 	validateRule();
 });
 
@@ -8,6 +26,7 @@ $.validator.setDefaults({
 	}
 });
 function update() {
+	$('#teamId').val($('#teamName option:selected').data('teamid'));
 	$.ajax({
 		cache : true,
 		type : "POST",

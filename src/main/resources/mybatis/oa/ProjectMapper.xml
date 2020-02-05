@@ -199,4 +199,7 @@
 		</foreach>
 	</delete>
 
+	<select id="getAll" resultType="com.bootdo.oa.domain.ProjectDO">
+		select `id`,`item_name`,`is_jh_item`,`frame`,`is_zngj_item`,`is_nozngj_item`,`item_type`,`sdate`,`edate`,`witness`,`telephone`,`desc`,`company_name`,`in_sdate`,`out_sdate`,`work_num`,`c_work_num`,`z_work_num`,`g_work_num`,`demand`,`proceed_id`,`pact_id`,`help_name`,`pact_num`,`spot_num`,`in_num`,`change_staff`,`fail_staff`,`status` from jl_project
+	</select>
 </mapper>

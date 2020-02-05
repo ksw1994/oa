@@ -31,6 +31,8 @@ public class WbRlppDO implements Serializable {
 	private String userId;
 	//实际月打卡天数
 	private Integer monthSum;
+	//项目名称
+	private String itemName;
 
 	/**
 	 * 设置：编号
@@ -127,5 +129,13 @@ public class WbRlppDO implements Serializable {
 	 */
 	public Integer getMonthSum() {
 		return monthSum;
+	}
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
 }

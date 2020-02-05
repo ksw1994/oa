@@ -1,4 +1,5 @@
 $().ready(function() {
+	getUserNameList();
 	validateRule();
 });
 
@@ -46,4 +47,19 @@ function validateRule() {
 			}
 		}
 	})
+}
+
+function getUserNameList() {
+	var userIds =$("#userId").val();
+	$.ajax({
+		type : "GET",
+		url : "/oa/ryxx/getUserNameList",
+		data : {userIds:userIds},
+		success : function(data) {
+			$("#userId").val(data);
+		},
+		error : function(request) {
+			alert("错误");
+		},
+	});
 }

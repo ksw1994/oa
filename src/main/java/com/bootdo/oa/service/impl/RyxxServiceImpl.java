@@ -1,12 +1,10 @@
 package com.bootdo.oa.service.impl;
 
+import com.bootdo.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.bootdo.oa.dao.RyxxDao;
@@ -37,11 +35,13 @@ public class RyxxServiceImpl implements RyxxService {
 	
 	@Override
 	public int save(RyxxDO ryxx){
+		ryxx.setUpdateTime(DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
 		return ryxxDao.save(ryxx);
 	}
 	
 	@Override
 	public int update(RyxxDO ryxx){
+		ryxx.setUpdateTime(DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
 		return ryxxDao.update(ryxx);
 	}
 	
@@ -65,11 +65,23 @@ public class RyxxServiceImpl implements RyxxService {
 		List<Integer> userIdList = ryxxDao.getUserIdList();
 		List<Integer> temp = new ArrayList<>();
 		StringBuffer userIds = new StringBuffer();
-		for (int i = 0; i < count; i++) {
+		/*for (int i = 0; i < count; i++) {
 			Random random = new Random();
 			int n = random.nextInt(userIdList.size());
-			if (!temp.contains(n)){
+			if (!temp.contains(userIdList.get(n))){
 				temp.add(userIdList.get(n));
+			}
+		}*/
+		int countTemp = 0;
+		while (true){
+			Random random = new Random();
+			int n = random.nextInt(userIdList.size());
+			if (!temp.contains(userIdList.get(n))){
+				temp.add(userIdList.get(n));
+				countTemp ++;
+				if (countTemp == count){
+					break;
+				}
 			}
 		}
 		for (Integer userId : temp) {
@@ -79,6 +91,24 @@ public class RyxxServiceImpl implements RyxxService {
 		//去掉最后一个","
 		userIds.deleteCharAt(userIds.length()-1);
 		return userIds.toString();
+	}
+
+	@Override
+	public String getUserNameList(String userIds) {
+		List<String> userIdList = Arrays.asList(userIds.split(","));
+		StringBuffer userNameList = new StringBuffer();
+		for (String s : userIdList) {
+			RyxxDO ryxx = ryxxDao.get(Integer.valueOf(s));
+			userNameList.append(ryxx.getName());
+			userNameList.append(",");
+		}
+		userNameList.deleteCharAt(userNameList.length()-1);
+		return userNameList.toString();
+	}
+
+	@Override
+	public int isThird(Integer id) {
+		return ryxxDao.isThird(id);
 	}
 
 }
