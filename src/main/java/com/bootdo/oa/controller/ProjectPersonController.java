@@ -48,18 +48,18 @@ public class ProjectPersonController {
 	    return "oa/projectPerson/projectPerson";
 	}
 	
-
-//	@ResponseBody
-//	@GetMapping("/list")
-//	@RequiresPermissions("oa:projectPerson:projectPerson")
-//	public PageUtils list(@RequestParam Map<String, Object> params){
-//		//查询列表数据
-//        Query query = new Query(params);
-//		List<ProjectPersonDO> projectPersonList = projectPersonService.list(query);
-//		int total = projectPersonService.count(query);
-//		PageUtils pageUtils = new PageUtils(projectPersonList, total);
-//		return pageUtils;
-//	}
+	//分项目查看人员
+	@ResponseBody
+	@GetMapping("/personlist")
+	@RequiresPermissions("oa:projectPerson:personlist")
+	public PageUtils personlist(@RequestParam Map<String, Object> params){
+		//查询列表数据
+        Query query = new Query(params);
+		List<ProjectPersonDO> projectPersonList = projectPersonService.list(query);
+		int total = projectPersonService.count(query);
+		PageUtils pageUtils = new PageUtils(projectPersonList, total);
+		return pageUtils;
+	}
 	
 	/**
 	 * 改动
@@ -71,11 +71,11 @@ public class ProjectPersonController {
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("oa:projectPerson:projectPerson")
-	public PageUtils list(){
+	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询项目统计人员列表数据
-        //Query query = new Query(params);
-		List<ProjectPersonDO> projectPersonList = projectPersonService.projectList();
-		int total = projectPersonService.projectcount();
+        Query query = new Query(params);
+		List<ProjectPersonDO> projectPersonList = projectPersonService.projectList(query);
+		int total = projectPersonService.projectcount(query);
 		PageUtils pageUtils = new PageUtils(projectPersonList, total);
 		return pageUtils;
 	}
@@ -114,6 +114,14 @@ public class ProjectPersonController {
 	    return "oa/projectPerson/edit";
 	}
 	
+	@GetMapping("/personAdd/{projectId}")
+	@RequiresPermissions("oa:projectPerson:personAdd")
+	String personAdd(@PathVariable("projectId") Integer projectId,Model model){
+		ProjectPersonDO projectPersonAdd = projectPersonService.getProject(projectId);
+		model.addAttribute("projectPersonAdd", projectPersonAdd);
+	    return "oa/projectPerson/personAdd";
+	}
+	
 	/**
 	 * 保存
 	 * 同时删除选取trees的最高节点id：“-1”
@@ -125,6 +133,8 @@ public class ProjectPersonController {
 		if(projectPersonService.save(projectPerson)>0){
 			projectPersonService.removeByUserId("-1");
 			return R.ok();
+		}else if(projectPersonService.save(projectPerson)<0) {
+			return R.error("错误，请选择正确项目id");
 		}
 		return R.error();
 	}
@@ -166,4 +176,30 @@ public class ProjectPersonController {
 			return R.error();
 	}
 	
+	/**
+	 * 删除person
+	 */
+	@PostMapping( "/personRemove")
+	@ResponseBody
+	@RequiresPermissions("oa:projectPerson:personRemove")
+	public R personRemove(Integer id){
+		if(projectPersonService.remove(id)>0){
+		return R.ok();
+		}
+		return R.error();
+	}
+	
+	/**
+	 * 删除
+	 * 批量删除person
+	 */
+	@PostMapping( "/batchPersonRemove")
+	@ResponseBody
+	@RequiresPermissions("oa:projectPerson:batchPersonRemove")
+	public R personRemove(@RequestParam("ids[]") Integer[] ids){
+			if(projectPersonService.batchRemove(ids)>0){
+			return R.ok();
+			}
+			return R.error();
+	}
 }

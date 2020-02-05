@@ -43,15 +43,23 @@ public class ProjectPersonDO implements Serializable {
 	private String edate;
 	//基础信息表Ids
 	private List<String> userIds;
+	//基础信息人员名称
+	private String userName;
 	
 	
 	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	@Override
 	public String toString() {
 		return "ProjectPersonDO [id=" + id + ", userId=" + userId + ", projectId=" + projectId + ", einlass=" + einlass
 				+ ", examTime=" + examTime + ", exitTime=" + exitTime + ", remarks=" + remarks + ", countUserId="
 				+ countUserId + ", itemName=" + itemName + ", sdate=" + sdate + ", edate=" + edate + ", userIds="
-				+ userIds + "]";
+				+ userIds + ", userName=" + userName + "]";
 	}
 	public List<String> getUserIds() {
 		return userIds;

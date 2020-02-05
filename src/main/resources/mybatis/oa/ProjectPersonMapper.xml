@@ -13,7 +13,15 @@ GROUP BY jl_project.item_name -->
 		select count(user_id) countUserId, project_id,jl_project.item_name,jl_project.sdate,jl_project.edate
 		from jl_project_person JOIN jl_project ON
 		jl_project.id=jl_project_person.project_id
-		GROUP BY jl_project.item_name ORDER BY jl_project.item_name DESC
+		<where>  
+		  		  <if test="projectId != null and projectId != ''"> and project_id = #{projectId} </if>
+		  		  <if test="itemName != null and itemName != ''"> and item_name like '%${itemName}%' </if>
+		  		  
+		 </where>
+		GROUP BY jl_project.id ORDER BY jl_project.id DESC
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
 	</select>
 	<select id="projectcount" resultType="int">
 	SELECT COUNT(*) count FROM
@@ -21,23 +29,39 @@ GROUP BY jl_project.item_name -->
 	COUNT(user_id) countUserId ,project_id , jl_project.item_name,jl_project.sdate,jl_project.edate
 	from jl_project_person JOIN jl_project ON
 	jl_project.id=jl_project_person.project_id
+	<where>  
+		  		  <if test="projectId != null and projectId != ''"> and project_id = #{projectId} </if>
+		  		  <if test="itemName != null and itemName != ''"> and item_name like '%${itemName}%' </if>
+		  		  
+		 </where>
 	GROUP BY jl_project.item_name ) a
 	</select>
 	
 	<select id="get" resultType="com.bootdo.oa.domain.ProjectPersonDO">
-		select `id`,`user_id`,`project_id`,`einlass`,`exam_time`,`exit_time`,`remarks` from jl_project_person where id = #{value}
+		select jl_project.item_name,jl_project_person.id,jl_project_person.user_id,jl_project_person.project_id,jl_project_person.einlass,jl_project_person.exam_time,jl_project_person.exit_time,jl_project_person.remarks,jl_jcxx.name userName
+		from jl_project_person left join jl_jcxx on jl_jcxx.id=jl_project_person.user_id JOIN jl_project ON
+		jl_project.id=jl_project_person.project_id  where jl_project_person.id = #{value}
+	</select>
+	
+	<select id="getProject" resultType="com.bootdo.oa.domain.ProjectPersonDO">
+		select item_name,id projectId
+		from jl_project  where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.bootdo.oa.domain.ProjectPersonDO">
-		select `id`,`user_id`,`project_id`,`einlass`,`exam_time`,`exit_time`,`remarks` from jl_project_person
+		select jl_project.item_name,jl_project_person.id,jl_project_person.user_id,jl_project_person.project_id,jl_project_person.einlass,jl_project_person.exam_time,jl_project_person.exit_time,jl_project_person.remarks,jl_jcxx.name userName
+		from jl_project_person left join jl_jcxx on jl_jcxx.id=jl_project_person.user_id JOIN jl_project ON
+		jl_project.id=jl_project_person.project_id 
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="userName != null and userName != ''"> and name = #{userName} </if>
 		  		  <if test="projectId != null and projectId != ''"> and project_id = #{projectId} </if>
 		  		  <if test="einlass != null and einlass != ''"> and einlass = #{einlass} </if>
 		  		  <if test="examTime != null and examTime != ''"> and exam_time = #{examTime} </if>
 		  		  <if test="exitTime != null and exitTime != ''"> and exit_time = #{exitTime} </if>
 		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -53,10 +77,12 @@ GROUP BY jl_project.item_name -->
 	</select>
 	
  	<select id="count" resultType="int">
-		select count(*) from jl_project_person
+		select count(*) from jl_project_person left join jl_jcxx on jl_jcxx.id=jl_project_person.user_id JOIN jl_project ON
+		jl_project.id=jl_project_person.project_id 
 		 <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="userName != null and userName != ''"> and name = #{userName} </if>
 		  		  <if test="projectId != null and projectId != ''"> and project_id = #{projectId} </if>
 		  		  <if test="einlass != null and einlass != ''"> and einlass = #{einlass} </if>
 		  		  <if test="examTime != null and examTime != ''"> and exam_time = #{examTime} </if>
@@ -123,5 +149,10 @@ GROUP BY jl_project.item_name -->
 	<delete id="removeByProjectId">
 		delete from jl_project_person where project_id = #{projectId}
 	</delete>
-
+	
+	<delete id="removeRepeat">
+		delete from jl_project_person where user_id =#{userId} and project_id = #{projectId}
+	</delete>
+	
+	
 </mapper>

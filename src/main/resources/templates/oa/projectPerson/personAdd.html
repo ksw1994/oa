@@ -18,13 +18,12 @@
 								                        </div>
 							                            </div>
 														<div class="form-group">	
-								<label class="col-sm-3 control-label">项目Id：</label>
-								<div class="col-sm-8" >
-									<input id="projectId" name="projectId" class="form-control" type="text" 
-									autocomplete="off" list="projectIdList" placeholder="选择项目"> 
-									<dataList id="projectIdList"></dataList>
-									
-									
+								<label class="col-sm-3 control-label">项目名称：</label>
+								<div class="col-sm-8">
+									<input id="itemName"  name="itemName" th:value="${projectPersonAdd.itemName}" class="form-control" 
+									type="text" readonly="readonly"> 
+									<input id="projectId" name="projectId" th:value="${projectPersonAdd.projectId}"  type="hidden">
+      				
 								</div>
 								
 							</div>
@@ -65,7 +64,7 @@
 	</div>
 	</div>
 	<div th:include="include::footer"></div>
-	<script type="text/javascript" src="/js/appjs/oa/projectPerson/add.js">
+	<script type="text/javascript" src="/js/appjs/oa/projectPerson/personAdd.js">
 	</script>
 </body>
 </html>

@@ -10,6 +10,7 @@ import java.util.Map;
 
 import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.BuildTree;
+import com.bootdo.common.utils.R;
 import com.bootdo.oa.dao.JcxxDao;
 import com.bootdo.oa.dao.ProjectPersonDao;
 import com.bootdo.oa.domain.JcxxDO;
@@ -43,14 +44,27 @@ public class ProjectPersonServiceImpl implements ProjectPersonService {
 	@Override//
 	public int save(ProjectPersonDO projectPerson){
 		List<String> userIds = projectPerson.getUserIds();
-		int rows = 0;
-		for (String userId : userIds) {
-			projectPerson.setUserId(userId);
-			int row = projectPersonDao.save(projectPerson);
-			rows=row+rows;
+		Integer projectId = projectPerson.getProjectId();
+		try {
+			Integer pjId =projectPersonDao.getProject(projectId).getProjectId();
+			int rows = 0;
+			if(pjId!=null) {
+				for (String userId : userIds) {
+					projectPerson.setUserId(userId);	
+					//去重复
+					int rprow=projectPersonDao.removeRepeat(projectPerson.getUserId(),projectPerson.getProjectId());
+					int row = projectPersonDao.save(projectPerson);
+					
+					
+					rows=row+rows;
+				}
+			}
+			
+			return rows;
+			
+		} catch (Exception e) {
+			return -2;
 		}
-		
-		return rows;
 	}
 	
 	@Override
@@ -69,15 +83,15 @@ public class ProjectPersonServiceImpl implements ProjectPersonService {
 	}
 
 	@Override
-	public List<ProjectPersonDO> projectList() {
+	public List<ProjectPersonDO> projectList(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return projectPersonDao.projectList();
+		return projectPersonDao.projectList(map);
 	}
 
 	@Override
-	public int projectcount() {
+	public int projectcount(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return projectPersonDao.projectcount();
+		return projectPersonDao.projectcount(map);
 	}
 	//jcxx插入到tree里
 	@Override
@@ -114,6 +128,12 @@ public class ProjectPersonServiceImpl implements ProjectPersonService {
 	@Override
 	public int removeByProjectId(Integer projectId) {
 		return projectPersonDao.removeByProjectId(projectId);
+	}
+
+	@Override
+	public ProjectPersonDO getProject(Integer projectId) {
+		// TODO Auto-generated method stub
+		return  projectPersonDao.getProject(projectId);
 	}
 	
 }

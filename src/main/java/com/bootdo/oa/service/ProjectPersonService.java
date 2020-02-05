@@ -21,8 +21,8 @@ public interface ProjectPersonService {
 	
 	ProjectPersonDO get(Integer id);
 	//new
-	List<ProjectPersonDO >projectList();
-	int projectcount();
+	List<ProjectPersonDO >projectList(Map<String, Object> map);
+	int projectcount(Map<String, Object> map);
 	
 	List<ProjectPersonDO> list(Map<String, Object> map);
 	int count(Map<String, Object> map);
@@ -38,4 +38,5 @@ public interface ProjectPersonService {
 	int removeByUserId(String userId);
 	int batchRemoveByProjectId(Integer[] ids);
 	int removeByProjectId(Integer projectId);
+	ProjectPersonDO getProject(Integer projectId);
 }

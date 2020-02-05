@@ -7,15 +7,30 @@
 		<div class="col-sm-12">
 			<div class="ibox">
 				<div class="ibox-body">
-					<div class="fixed-table-toolbar">
+					<div class="fixed-table-toolbar" >
 						<div class="columns pull-left">
-							<button shiro:hasPermission="oa:projectPerson:add" type="button" class="btn  btn-primary" onclick="add()">
+							<button shiro:hasPermission="oa:projectPerson:back" type="button"  class="btn btn-success"
+								style="display:none;" id="btnback" onclick="showPorjectPerson()">
+								<i class="fa fa-mail-reply" aria-hidden="true"></i>项目人员管理
+							</button>
+							<button shiro:hasPermission="oa:projectPerson:add" type="button" class="btn  btn-primary" 
+								id="btnadd" onclick="add()">
 								<i class="fa fa-plus" aria-hidden="true"></i>添加
 							</button>
 							<button shiro:hasPermission="oa:projectPerson:batchRemove" type="button" class="btn  btn-danger"
-								onclick="batchRemove()">
+								id="btnbatchRemove" onclick="batchRemove()">
 								<i class="fa fa-trash" aria-hidden="true"></i>删除
 							</button>
+							<button shiro:hasPermission="oa:projectPerson:personAdd" type="button" class="btn  btn-primary" 
+								style="display:none;" id="btnpersonAdd" onclick="personAdd()">
+								<i class="fa fa-user-plus" aria-hidden="true"></i>添加
+							</button>
+							<button shiro:hasPermission="oa:projectPerson:batchPersonRemove" type="button" class="btn  btn-danger"
+								style="display:none;" id="btnbatchPersonRemove" onclick="batchPersonRemove()">
+								<i class="fa fa-user-times" aria-hidden="true"></i>删除
+							</button>
+							<input id="inprojectId" name="inprojectId"  type="hidden">
+							
 						</div>
 						<div class="columns pull-right">
 							<button class="btn btn-success" onclick="reLoad()">查询</button>
@@ -39,7 +54,7 @@
 				var s_resetPwd_h = 'hidden';
 			</script>
 		</div>
-		<div shiro:hasPermission="oa:projectPerson:edit">
+		<div shiro:hasPermission="oa:projectPerson:personlist">
 			<script type="text/javascript">
 				s_edit_h = '';
 			</script>
