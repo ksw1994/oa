@@ -1,29 +1,18 @@
 package com.bootdo.oa.service.impl;
 
-import cn.afterturn.easypoi.cache.manager.IFileLoader;
+
 import com.bootdo.common.excel.ExcelUtil;
 import com.bootdo.common.excel.WriteExcle;
-import com.bootdo.common.exception.BusinessException;
 import com.bootdo.common.utils.*;
 import com.bootdo.oa.domain.LeaveTimeDO;
 import com.bootdo.oa.domain.WeekScopeDO;
 import com.bootdo.oa.service.LeaveTimeService;
 import com.bootdo.oa.service.WeekScopeService;
 import io.netty.util.internal.StringUtil;
-import jxl.Workbook;
-import jxl.format.Alignment;
-import jxl.format.Border;
-import jxl.write.WritableWorkbook;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
-import org.apache.poi.xssf.streaming.SXSSFCell;
-import org.apache.poi.xssf.streaming.SXSSFRow;
-import org.apache.poi.xssf.streaming.SXSSFSheet;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -127,12 +116,12 @@ public class OvertimeServiceImpl implements OvertimeService {
 		}
 		for (List<String> strings : list) {
 			String name = strings.get(0).trim();
-			String deptName = strings.get(1).trim();
-			for (int i = 5; i < strings.size(); i++) {
+			String deptName = strings.get(2).trim();
+			for (int i = 6; i < strings.size(); i++) {
 				StringBuffer date = new StringBuffer();
 				date.append(yearMonth);
 				date.append("-");
-				date.append(i - 4);
+				date.append(i - 5);
 				if (isOk(strings.get(i), scopeList, date.toString()).equals("3")) {
 					continue;
 				}

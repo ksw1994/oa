@@ -94,7 +94,13 @@ public class LeaveTimeServiceImpl implements LeaveTimeService {
 				leaveTimeDO.setLeaveType(strings.get(14));
 				leaveTimeDO.setStart(strings.get(15));
 				leaveTimeDO.setEnd(strings.get(16));
-				leaveTimeDO.setDuration(getNum(strings.get(17)));
+				if (leaveTimeDO.getLeaveType().equals("病假") && getNum(strings.get(17)).doubleValue() == 3.5){
+					leaveTimeDO.setDuration(new BigDecimal(4));
+				}else if (leaveTimeDO.getLeaveType().equals("事假") && getNum(strings.get(17)).doubleValue() == 3.5){
+					leaveTimeDO.setDuration(new BigDecimal(4));
+				}else{
+					leaveTimeDO.setDuration(getNum(strings.get(17)));
+				}
 				leaveTimeDO.setReason(strings.get(18));
 				try {
 					leaveTimeDO.setLeaveDate(DateUtils.getDate(leaveTimeDO.getStart().substring(0,10)));
