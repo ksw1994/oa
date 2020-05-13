@@ -46,8 +46,10 @@ public class LeaveTimeServiceImpl implements LeaveTimeService {
 	@Override
 	public int save(LeaveTimeDO leaveTime){
 		leaveTime.setId(UUIDUtils.randomUUID());
-		leaveTime.setCreateBy(ShiroUtils.getUserId());//创建人用户id
-		leaveTime.setCreateTime(DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));//创建时间
+		//创建人用户id
+		leaveTime.setCreateBy(ShiroUtils.getUserId());
+		//创建时间
+		leaveTime.setCreateTime(DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
 		return leaveTimeDao.save(leaveTime);
 	}
 	
@@ -114,7 +116,8 @@ public class LeaveTimeServiceImpl implements LeaveTimeService {
 	}
 
 	public  BigDecimal getNum(String s) {
-		Pattern p = Pattern.compile("(\\d+\\.\\d+)");
+		String sp = "(\\d+\\.\\d+)";
+		Pattern p = Pattern.compile(sp);
 		//Matcher类的构造方法也是私有的,不能随意创建,只能通过Pattern.matcher(CharSequence input)方法得到该类的实例.
 		Matcher m = p.matcher(s);
 		//m.find用来判断该字符串中是否含有与"(\\d+\\.\\d+)"相匹配的子串
@@ -124,7 +127,8 @@ public class LeaveTimeServiceImpl implements LeaveTimeService {
 			s = m.group(1) == null ? "" : m.group(1);
 		} else {
 			//如果匹配不到小数，就进行整数匹配
-			p = Pattern.compile("(\\d+)");
+			String sp1 = "(\\d+)";
+			p = Pattern.compile(sp1);
 			m = p.matcher(s);
 			if (m.find()) {
 				//如果有整数相匹配

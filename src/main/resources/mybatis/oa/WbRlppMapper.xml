@@ -108,4 +108,11 @@
 		limit 1
 	</select>
 
+	<select id="getByEndDate" resultType="com.bootdo.oa.domain.WbRlppDO">
+		select t1.*,t2.item_name
+		from xm_wb_rlpp t1 left join jl_project t2 on t1.project_id = t2.id
+		where t1.end_date = #{value}
+		order by t1.date desc
+	</select>
+
 </mapper>

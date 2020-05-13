@@ -16,6 +16,8 @@
 								onclick="batchRemove()">
 								<i class="fa fa-trash" aria-hidden="true"></i>删除
 							</button>
+							<input id="endDate" name="endDate"  type="month" placeholder="请选择截止年月">
+							<button class="btn btn-success" onclick="exportExcle()">导出excel</button>
 						</div>
 						<div class="columns pull-right">
 							<button class="btn btn-success" onclick="reLoad()">查询</button>
@@ -57,5 +59,66 @@
 	</div>
 	<div th:include="include :: footer"></div>
 	<script type="text/javascript" src="/js/appjs/oa/wbRlpp/wbRlpp.js"></script>
+	<script>
+		function exportExcle() {
+        var endDate = $('#endDate').val().replace("-","");
+        if(endDate == null || endDate == ''){
+            layer.msg("请选择截止年月");
+            return;
+        }
+        var tishi = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
+        var url = "wbRlpp/exportExcle?endDate="+endDate;
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);    // 也可以使用POST方式，根据接口
+        xhr.responseType = "blob";  // 返回类型blob
+        // 定义请求完成的处理函数，请求前也可以增加加载框/禁用下载按钮逻辑
+
+        xhr.onload = function () {
+            let data = this.response;
+           // console.log(this);
+            if (this.response.type === 'application/json') {
+                var reader = new FileReader();
+                reader.readAsText(data, 'utf-8');
+                reader.onload = function (e) {
+                    var r = e.target.result;
+                    if (!isEmpty(r)){
+                        layer.msg(r);
+                    }
+                }
+            }else{
+                // 请求完成
+                if (this.readyState == 4 && this.status == 200) {
+                    // 返回200
+                    var blob = this.response;
+                    var reader = new FileReader();
+                    reader.readAsDataURL(blob);  // 转换为base64，可以直接放入a表情href
+                    reader.onload = function (e) {
+                        // 转换完成，创建一个a标签用于下载
+                        var a = document.createElement('a');
+                        a.download = '计划&实际执行表.xlsx';
+                        a.href = e.target.result;
+                        $("body").append(a);  // 修复firefox中无法触发click
+                        a.click();
+                        $(a).remove();
+                    }
+                }
+            }
+            layer.close(tishi);
+        };
+        // 发送ajax请求
+        xhr.send()
+    }
+
+    //判断字符是否为空的方法
+    function isEmpty(obj){
+        if(typeof obj == "undefined" || obj == null || obj == ""){
+            return true;
+        }else{
+            return false;
+        }
+    }
+	</script>
 </body>
 </html>

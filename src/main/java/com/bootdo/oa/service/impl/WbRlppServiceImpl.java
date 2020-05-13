@@ -1,12 +1,16 @@
 package com.bootdo.oa.service.impl;
 
+import com.bootdo.common.excel.WriteExcle;
 import com.bootdo.oa.service.RyxxService;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.bootdo.oa.dao.WbRlppDao;
@@ -22,6 +26,12 @@ public class WbRlppServiceImpl implements WbRlppService {
 
 	@Autowired
 	private RyxxService ryxxService;
+
+	@Value("${bootdo.templatePath}")
+	private String templatePath;
+
+	@Value("${bootdo.exportPath}")
+	private String exportPath;
 	
 	@Override
 	public WbRlppDO get(Integer id){
@@ -44,8 +54,9 @@ public class WbRlppServiceImpl implements WbRlppService {
 			return 0;
 		}
 		WbRlppDO maxCount = getMaxCount(wbRlpp.getProjectId());
-		if (maxCount != null){//如果不等于空 有3种情况 1：跟最大的相等   2：比最大的小  3：比最大的大
-			if (maxCount.getCount() == wbRlpp.getCount()){
+		//如果不等于空 有3种情况 1：跟最大的相等   2：比最大的小  3：比最大的大
+		if (maxCount != null){
+			if (maxCount.getCount().equals(wbRlpp.getCount()) ){
 				wbRlpp.setUserId(maxCount.getUserId());
 			}else if (maxCount.getCount() > wbRlpp.getCount()){
 				wbRlpp.setUserId(getMinUserIds(maxCount.getUserId(),wbRlpp.getCount()));
@@ -105,7 +116,50 @@ public class WbRlppServiceImpl implements WbRlppService {
 		return count.intValue();
 	}
 
-	//从大的数组中获取更小的
+	@Override
+	public File exportExcle(String endDate) {
+		List<WbRlppDO> wbRlppDOList = wbRlppDao.getByEndDate(endDate);
+		if (wbRlppDOList.isEmpty()){
+			return null;
+		}
+		//模板地址
+		StringBuffer tempPath = new StringBuffer();
+		tempPath.append(templatePath);
+		String newPath = exportPath+"计划&实际执行表.xlsx";
+		tempPath.append("计划&实际执行表.xlsx");
+		//新建一份excle
+		File newFile = WriteExcle.createNewFile(tempPath.toString(), newPath);
+
+		// 新文件写入数据，并下载
+		XSSFWorkbook workbook = null;
+		XSSFSheet sheet = null;
+		XSSFCellStyle style0 = null;
+		XSSFCellStyle style1 = null;
+		try {
+			// 创建个workbook
+			workbook = new XSSFWorkbook(new FileInputStream(newFile));
+			int month = new Date().getMonth();
+			workbook.setSheetName(0, month+1+"月实际");
+			workbook.setSheetName(1,getMonth(endDate)+"月实际更新");
+			// 写数据
+			FileOutputStream fos = new FileOutputStream(newFile);
+			fos.flush();
+			workbook.write(fos);
+			fos.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return newFile;
+	}
+
+	/**
+	 * 从大的数组中获取更小的
+	 * @param userIds
+	 * @param count
+	 * @return
+	 */
 	public String getMinUserIds(String userIds,Integer count){
 		StringBuffer s = new StringBuffer();
 		String[] u = userIds.split(",");
@@ -118,7 +172,12 @@ public class WbRlppServiceImpl implements WbRlppService {
 		return s.toString();
 	}
 
-	//从小的数组中获取更大的
+	/**
+	 * 从小的数组中获取更大的
+	 * @param userIds
+	 * @param count
+	 * @return
+	 */
 	public String getMaxUserIds(String userIds,Integer count){
 		StringBuffer s = new StringBuffer();
 		s.append(userIds);
@@ -140,6 +199,15 @@ public class WbRlppServiceImpl implements WbRlppService {
 		}
 		s.deleteCharAt(s.length()-1);
 		return userIds;
+	}
+
+	public String getMonth(String date){
+		String zero = "0";
+		String s = date.substring(4, 6);
+		if (zero.equals(s.subSequence(0,1))){
+			return s.substring(1,2);
+		}
+		return s;
 	}
 
 }

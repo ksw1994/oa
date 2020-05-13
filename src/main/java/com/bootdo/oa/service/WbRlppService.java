@@ -2,6 +2,7 @@ package com.bootdo.oa.service;
 
 import com.bootdo.oa.domain.WbRlppDO;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -43,4 +44,11 @@ public interface WbRlppService {
 	 * @return
 	 */
 	int getThirdCount(Integer id);
+
+	/**
+	 * 根据截止年月导出excle
+	 * @param endDate
+	 * @return
+	 */
+    File exportExcle(String endDate);
 }

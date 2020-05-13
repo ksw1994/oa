@@ -150,8 +150,8 @@ public class AttendanceController {
                 //校验Excel信息不能为空  为空返回提示信息
                 return R.error(BizExceptionEnum.FILE_EXCEL_NULL_ERROR.getMessage());
             } else {
-                StringBuilder returnMessage = new StringBuilder();
-                List<AttendanceDO> attendanceDOList = new ArrayList<>();
+                //StringBuilder returnMessage = new StringBuilder();
+                //List<AttendanceDO> attendanceDOList = new ArrayList<>();
                 for (AttendanceExcel attendanceExcel : attendanceExcelList) {
                     JcxxDO jcxxDO = new JcxxDO();
                     //判断身份证号是否为空 若不存在则跳过
@@ -162,8 +162,8 @@ public class AttendanceController {
                     }
                     AttendanceDO attendanceDO = AttendanceConvertor.convertToDO(attendanceExcel);
                     attendanceDO.setProjectId(projectId);
-                    attendanceDOList.add(attendanceDO);
-                    attendanceService.save(attendanceDO);
+                    //attendanceDOList.add(attendanceDO);
+                    //attendanceService.save(attendanceDO);
                     attendanceService.saveOrUpdate(attendanceDO);
                 }
               /*  resultList.addAll(workersDetailService.addWorkersDetailList(workersDetailAddReqList));*/

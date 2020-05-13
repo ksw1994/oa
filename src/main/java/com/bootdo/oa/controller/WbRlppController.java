@@ -1,10 +1,13 @@
 package com.bootdo.oa.controller;
 
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.bootdo.oa.domain.WeekScopeDO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -17,6 +20,10 @@ import com.bootdo.oa.service.WbRlppService;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 项目人力匹配表
@@ -131,5 +138,58 @@ public class WbRlppController {
 	@GetMapping ("/getThirdCount")
 	public Integer getThirdCount(Integer id){
 		return wbRlppService.getThirdCount(id);
+	}
+
+	//单文件导出加班数据
+	@GetMapping(value = "/exportExcle",produces="application/json")
+	@ResponseBody
+	public String download(@RequestParam("endDate")String endDate,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		File file = wbRlppService.exportExcle(endDate);
+		if (file == null){
+			return "该截止年月没有数据";
+		}
+		if (file.exists()) {
+			// 设置强制下载不打开
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/x-download charset=UTF-8");
+			//response.setContentType("application/vnd.ms-excel;charset=utf-8");
+			response.addHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(file.getName(),"utf-8"));
+			byte[] buffer = new byte[1024];
+			FileInputStream fis = null;
+			BufferedInputStream bis = null;
+			OutputStream outputStream = null;
+			try {
+				fis = new FileInputStream(file);
+				bis = new BufferedInputStream(fis);
+				outputStream = response.getOutputStream();
+				int i = bis.read(buffer);
+				while (i != -1) {
+					outputStream.write(buffer, 0, i);
+					i = bis.read(buffer);
+				}
+				outputStream.flush();
+				outputStream.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (bis != null) {
+					try {
+						bis.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				if (fis != null) {
+					try {
+						fis.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		//删除被下载的本地文件
+		file.delete();
+		return null;
 	}
 }

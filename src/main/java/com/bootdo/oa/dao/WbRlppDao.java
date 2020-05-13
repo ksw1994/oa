@@ -36,4 +36,6 @@ public interface WbRlppDao {
 	 * @return
 	 */
 	WbRlppDO getMaxCountByProjectId(Integer projectId);
+
+    List<WbRlppDO> getByEndDate(String endDate);
 }

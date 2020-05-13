@@ -49,7 +49,7 @@ function load() {
 								},{
 									field : 'itemName', 
 									title : '项目名称' 
-								},
+								},/*
 																{
 									field : 'isJhItem', 
 									title : '是否建行项目' 
@@ -65,7 +65,7 @@ function load() {
 																{
 									field : 'isNozngjItem', 
 									title : '是否中农工交以外其他银行' 
-								},
+								},*/
 																{
 									field : 'itemType', 
 									title : '项目业务类别' 
@@ -174,7 +174,7 @@ function load() {
 										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
 												+ row.id
 												+ '\')"><i class="fa fa-remove"></i></a> ';
-										var u = '<a class="btn btn-success btn-sm " href="#" title="上传"  mce_href="#" onclick="buttonUpload(\''
+										var u = '<a class="btn btn-success btn-sm " href="#" title="上传考勤信息"  mce_href="#" onclick="buttonUpload(\''
 												+ row.id
 												+ '\')"><i class="fa fa-upload"></i></a> ';
 										var f = '<a class="btn btn-success btn-sm" href="#" title="考勤信息"  mce_href="#" onclick="getAttendanceInfo(\''
